@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='utf-8'?>
+<transaction trcode="pibocw01" servicecode=""  type="row">
+	<value io="in"		name="symb"		type="string"	length="12"	comment="Stock symbol"/>
+	<value io="in"		name="lang"		type="string"	length="1"	comment="Language"/>
+	
+	<value io="out"		name="rcod"		type="string"	length="12"	comment="RTS Symbol"/>
+	<value io="out"		name="symb"		type="string"	length="12"	comment="Security Symbol"/>
+	<value io="out"		name="curr"		type="string"	length="9"	comment="Current Price"/>
+	<value io="out"		name="diff"		type="string"	length="7"	comment="Change"/>
+	<value io="out"		name="rate"		type="string"	length="7"	comment="% Change"/>
+	<value io="out"		name="avol"		type="string"	length="9"	comment="Acculumate Volume"/>
+	<value io="out"		name="gsga"		type="string"	length="9"	comment="Exercise Price"/>
+	<value io="out"		name="gratd"	type="string"	length="9"	comment="Conversion Ratio"/>
+	<value io="out"		name="cpgb"		type="string"	length="4"	comment="Call / put"/>
+	<value io="out"		name="jjis"		type="string"	length="4"	comment="remaing day"/>
+	<value io="out"		name="listed"	type="string"	length="12"	comment="listed share"/>
+	<value io="out"		name="valn"		type="string"	length="32"	comment="Issuer"/>
+	<value io="out"		name="ccil"		type="string"	length="8"	comment="final trading date"/>
+	<value io="out"		name="gsgs"		type="string"	length="8"	comment="payment date"/>
+	<value io="out"		name="uncod"	type="string"	length="12"	comment="underlying	stock code"/>
+	<value io="out"		name="uncurr"	type="string"	length="9"	comment="underlying	price"/>
+	<value io="out"		name="unrate"	type="string"	length="9"	comment="underlying	rate"/>
+	<value io="out"		name="fill1"	type="string"	length="9"	comment="filler not used 1"/>
+	<value io="out"		name="fill2"	type="string"	length="9"	comment="filler not used 2"/>
+	
+</transaction>

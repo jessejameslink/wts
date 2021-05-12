@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<transaction trcode="pibosvdt" servicecode=""  type="row">
+	
+	<value io="out"		name="date"		type="string"	length="20"	comment="yyyy:MM:dd"/>
+	<value io="out"		name="time"		type="string"	length="20"	comment="hh:mm:ss"/>
+	<value io="out"		name="wkday"	type="string"	length="1"	comment="1: working day 0: off day"/>
+	
+</transaction>

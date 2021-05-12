@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!--   거래량 순위  -->
+<transaction trcode="piboinco" servicecode=""  type="row">
+	
+	<value io="in"		name="symb"		type="string"		length="12"	comment="Search key "/>
+	<value io="in"		name="smkt"		type="string"		length="4"	comment="Market "/>
+	
+	<value io="out"		name="cntTotal"			type="string"		length="12"	comment="Total count"/>	
+	
+</transaction>

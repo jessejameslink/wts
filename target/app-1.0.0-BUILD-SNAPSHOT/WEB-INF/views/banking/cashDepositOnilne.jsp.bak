@@ -1,0 +1,163 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%
+	String langCd = (String) session.getAttribute("LanguageCookie");
+%>
+<html>
+<script>
+	$(document).ready(function() {
+
+	});
+</script>
+<div class="tab_content banking">
+	<div role="tabpanel" class="tab_pane" id="tab2">
+		<div class="cdo_header">
+			<p class="remitter">
+				<span><%= (langCd.equals("en_US") ? "Remitter" : "Người chuyển") %> : NGUYEN TUAN HAI</span>
+				<span><%= (langCd.equals("en_US") ? "Account No" : "Số tài khoản") %> : 077C080123</span>
+			</p>
+			<p><%= (langCd.equals("en_US") ? "Beneficiary : Please choose" : "Người thụ hưởng: Vui lòng chọn") %></p>
+		</div>
+
+		<div class="cdo_container">
+			<div class="pull_left">
+				<p>
+					<input type="radio" id="cdo_wms1" />
+					<label for="cdo_wms1"><%= (langCd.equals("en_US") ? "Mirae Asset Wealth Management Securities (Vietnam) Limited Liability Company" : "Công ty TNHH Chứng khoán Mirae Asset Wealth Management (Vietnam)") %></label>
+				</p>
+				<div class="grid_area" style="height:400px;">
+					<div class="group_table">
+						<table class="table">
+							<caption class="hidden">Mirae Asset Wealth Management Securities (Vietnam) Limited Liability Company</caption>
+							<colgroup>
+								<col width="50" />
+								<col />
+								<col />
+							</colgroup>
+							<thead>
+								<tr>
+									<th scope="col"><%= (langCd.equals("en_US") ? "No" : "STT") %></th>
+									<th scope="col"><%= (langCd.equals("en_US") ? "Account" : "Tài khoản") %></th>
+									<th scope="col"><%= (langCd.equals("en_US") ? "At Bank" : "Ngân hàng") %></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td colspan="3" class="text_left"><%= (langCd.equals("en_US") ? "Beneficiary Company : Mirae Asset Wealth Management Securities (Vietnam) Limited Liability" : "Bên thụ hưởng: Công ty TNHH Chứng khoán Mirae Asset Wealth Management (Vietnam)") %></td>
+								</tr>
+								<!-- 
+								<tr>
+									<td class="text_center">1</td>
+									<td class="text_left">
+										<input type="radio" id="cdo_wms1_1"/>
+										<label for="cdo_wms1_1">1301.0000.428.432</label>
+									</td>
+									<td class="text_left">BIDV-SGD-II</td>
+								</tr>
+								<tr>
+									<td class="text_center">2</td>
+									<td class="text_left">
+										<input type="radio" id="cdo_wms1_2"/>
+										<label for="cdo_wms1_2">1301.0000.428.432</label>
+									</td>
+									<td class="text_left">BIDV-SGD-II</td>
+								</tr>
+								<tr>
+									<td class="text_center">3</td>
+									<td class="text_left">
+										<input type="radio" id="cdo_wms1_3"/>
+										<label for="cdo_wms1_3">1301.0000.428.432</label>
+									</td>
+									<td class="text_left">BIDV-SGD-II</td>
+								</tr>
+								 -->					
+<tr><td class="text_center">1</td><td class="text_left"><input type="radio" id="cdo_wms1_1"/><label for="cdo_wms1_1">1301.0000.428.432</label></td><td class="text_left">BIDV-SGD-II</td></tr>
+<tr><td class="text_center">2</td><td class="text_left"><input type="radio" id="cdo_wms1_1"/><label for="cdo_wms1_1">DDA.912.046537</label></td><td class="text_left">Woori Bank – HCM Branch</td></tr>
+<tr><td class="text_center">3</td><td class="text_left"><input type="radio" id="cdo_wms1_1"/><label for="cdo_wms1_1">700-000-315906</label></td><td class="text_left">Shinhan Viet Nam Bank – HCM</td></tr>
+<tr><td class="text_center">4</td><td class="text_left"><input type="radio" id="cdo_wms1_1"/><label for="cdo_wms1_1">0764-000440-20-002</label></td><td class="text_left">IBK Bank – HCM</td></tr>
+<tr><td class="text_center">5</td><td class="text_left"><input type="radio" id="cdo_wms1_1"/><label for="cdo_wms1_1">0071-0009-45-205</label></td><td class="text_left">VCB – PGD số 3 – HCM</td></tr>
+<tr><td class="text_center">6</td><td class="text_left"><input type="radio" id="cdo_wms1_1"/><label for="cdo_wms1_1">031-704-070000-359</label></td><td class="text_left">HDBank – PGD Duy Tân – HCM</td></tr>
+<tr><td class="text_center">7</td><td class="text_left"><input type="radio" id="cdo_wms1_1"/><label for="cdo_wms1_1">673.999.89</label></td><td class="text_left">ACB – CN Sài gòn – HCM</td></tr>
+<tr><td class="text_center">8</td><td class="text_left"><input type="radio" id="cdo_wms1_1"/><label for="cdo_wms1_1">2001-150560-00020</label></td><td class="text_left">Eximbank – PGD Bến Thành – HCM</td></tr>
+<tr><td class="text_center">9</td><td class="text_left"><input type="radio" id="cdo_wms1_1"/><label for="cdo_wms1_1">6263812-001</label></td><td class="text_left">Indovina Bank – Chợ lớn Branch</td></tr>
+<tr><td class="text_center">10</td><td class="text_left"><input type="radio" id="cdo_wms1_1"/><label for="cdo_wms1_1">9999.9714.9999</label></td><td class="text_left">Buu Dien Lien Viet Bank – PGD Sài Gòn –  HCM</td></tr>
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+			<div class="pull_right">
+				<p>
+					<input type="radio" id="cdo_wms2" />
+					<label for="cdo_wms2" class="text_left"><%= (langCd.equals("en_US") ? "Mirae Asset Wealth  Management Securities (VN) LLC - Ha Noi Branch" : "Công ty TNHH Chứng khoán Mirae Asset Wealth  Management (VN) - Chi nhánh Hà Nội") %></label>
+				</p>
+				<div class="grid_area" style="height:400px;">
+					<div class="group_table">
+						<table class="table">
+							<caption class="hidden">Mirae Asset Wealth  Management Securities (VN) LLC - Ha Noi Branch</caption>
+							<colgroup>
+								<col width="50" />
+								<col />
+								<col />
+							</colgroup>
+							<thead>
+								<tr>
+									<th scope="col"><%= (langCd.equals("en_US") ? "No" : "") %></th>
+									<th scope="col"><%= (langCd.equals("en_US") ? "Account" : "") %></th>
+									<th scope="col"><%= (langCd.equals("en_US") ? "At Bank" : "") %></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td colspan="3"><%= (langCd.equals("en_US") ? "Beneficiary Company : Mirae Asset Wealth Management Securities (Vietnam) Limited Liability" : "Bên thụ hưởng: Công ty TNHH Chứng khoán Mirae Asset Wealth Management (Vietnam)") %></td>
+								</tr>
+								<!-- 
+								<tr>
+									<td class="text_center">1</td>
+									<td class="text_left">
+										<input type="radio" id="cdo_wms2_1"/>
+										<label for="cdo_wms2_1">1301.0000.428.432</label>
+									</td>
+									<td class="text_left">BIDV-SGD-III</td>
+								</tr>
+								<tr>
+									<td class="text_center">2</td>
+									<td class="text_left">
+										<input type="radio" id="cdo_wms2_2"/>
+										<label for="cdo_wms2_2">1301.0000.428.432</label>
+									</td>
+									<td class="text_left">BIDV-SGD-III</td>
+								</tr>
+								<tr>
+									<td class="text_center">3</td>
+									<td class="text_left">
+										<input type="radio" id="cdo_wms2_3"/>
+										<label for="cdo_wms2_3">1301.0000.428.432</label>
+									</td>
+									<td class="text_left">BIDV-SGD-III</td>
+								</tr>
+								 -->
+								 <tr><td class="text_center">1</td><td class="text_left"><input type="radio" id="cdo_wms1_1"/><label for="cdo_wms1_1">160.10.00.000841.7</label></td><td class="text_left">BIDV – SGD III</td></tr>
+								 <tr><td class="text_center">2</td><td class="text_left"><input type="radio" id="cdo_wms1_1"/><label for="cdo_wms1_1">DDA920065668</label></td><td class="text_left">Woori Bank – Hà nội Branch</td></tr>
+								 <tr><td class="text_center">3</td><td class="text_left"><input type="radio" id="cdo_wms1_1"/><label for="cdo_wms1_1">020040425226</label></td><td class="text_left">Sacombank – Hàng Bài Branch</td></tr>
+								 <tr><td class="text_center">4</td><td class="text_left"><input type="radio" id="cdo_wms1_1"/><label for="cdo_wms1_1">0011004019439</label></td><td class="text_left">VCB – SGD  – HN</td></tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- // .cdo_container -->
+
+		<div class="line_block">
+			<span><%= (langCd.equals("en_US") ? "Remark :" : "Ghi chú :") %></span><br /><%= (langCd.equals("en_US") ? "Deposit for contract No. 077C080123 of Mr/Mrs: NGUYEN TUAN HAI" : "NỘp tiền vào tài khoản số 077C080123 của Ông/Bà: NGUYEN TUAN HAI") %>
+		</div>
+
+		<div class="mdi_bottom center">
+			<input class="color" type="submit" value=<%= (langCd.equals("en_US") ? "Next" : "Tiếp theo") %>>
+			<input type="reset" value=<%= (langCd.equals("en_US") ? "Cancel" : "Hủy") %>>
+		</div>
+	</div>
+</div>
+</html>

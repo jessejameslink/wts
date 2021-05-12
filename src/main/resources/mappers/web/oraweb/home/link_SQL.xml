@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.vn.app.webmain.oraweb.home.service.impl.LinkDAO">
+	
+	<select id="getLinkDetail" resultType="LinkVO"  parameterType="string">
+		SELECT id, data, filename
+		FROM DATA_LINK
+		WHERE ID = UPPER(#{sid})
+	</select>
+</mapper>

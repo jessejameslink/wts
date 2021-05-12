@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <typeAliases>
+    	<typeAlias alias="SearchVO" type="com.vn.app.webmain.oraweb.home.service.SearchVO"/>
+    	<typeAlias alias="ResearchVO" type="com.vn.app.webmain.oraweb.home.service.ResearchVO"/>
+		<typeAlias alias="HomeVO" type="com.vn.app.webmain.oraweb.home.service.HomeVO"/>
+		<typeAlias alias="TablesVO" type="com.vn.app.webmain.oraweb.home.service.TablesVO"/>
+		<typeAlias alias="MiraeAssetNewsVO" type="com.vn.app.webmain.oraweb.home.service.MiraeAssetNewsVO"/>
+		<typeAlias alias="JobTitleVO" type="com.vn.app.webmain.oraweb.home.service.JobTitleVO"/>
+		<typeAlias alias="InvestorVO" type="com.vn.app.webmain.oraweb.home.service.InvestorVO"/>
+		<typeAlias alias="FundInfoVO" type="com.vn.app.webmain.oraweb.home.service.FundInfoVO"/>
+		<typeAlias alias="ItemVO" type="com.vn.app.webmain.oraweb.home.service.ItemVO"/>
+		<typeAlias alias="LinkVO" type="com.vn.app.webmain.oraweb.home.service.LinkVO"/>
+		<typeAlias alias="MarginListVO" type="com.vn.app.webmain.oraweb.home.service.MarginListVO"/>
+	</typeAliases>
+</configuration>

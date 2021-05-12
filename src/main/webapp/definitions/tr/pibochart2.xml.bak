@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<transaction trcode="pibomgop" servicecode="" host="">
+	<value io="inout"		name="1301"		type="string"		length="0"	comment="종목코드"/>
+	<!--  
+	<value io="out"		name="1023"		type="string"		length="0"	comment=""/>
+	<value io="out"		name="1027"		type="string"		length="0"	comment=""/>
+	<value io="out"		name="1028"		type="string"		length="0"	comment=""/>
+	-->
+	<value io="out"		name="1029"		type="string"		length="0"	comment="START"/>
+ 	<value io="out"		name="1030"		type="string"		length="0"	comment="HIGH"/>
+ 	<value io="out"		name="1031"		type="string"		length="0"	comment="LOW"/>
+ 	<value io="out"		name="1023"		type="string"		length="0"	comment="CLOSE"/>
+ 	<value io="out"		name="1027"		type="string"		length="0"	comment="VOLUME"/>
+ 	<value io="out"		name="1028"		type="string"		length="0"	comment="VOLUMEPRICE"/>
+ 	<value io="out"		name="1311"		type="string"		length="0"	comment="UPPER"/>
+ 	<value io="out"		name="1312"		type="string"		length="0"	comment="LOWER"/>
+ 	<value io="out"		name="1313"		type="string"		length="0"	comment="STANDARDPRICE"/>
+
+	
+	<table name="5500">
+	 	<value io="out"		name="302"		type="string"		length="0"	comment=""/>
+		<value io="out"		name="29"		type="string"		length="0"	comment=""/>
+		<value io="out"		name="30"		type="string"		length="0"	comment=""/>
+		<value io="out"		name="31"		type="string"		length="0"	comment=""/>
+		
+		<value io="out"		name="23"		type="string"		length="0"	comment=""/>
+		<value io="out"		name="27"		type="string"		length="0"	comment=""/>
+		<value io="out"		name="28"		type="string"		length="0"	comment=""/>
+	 
+	 <!-- 
+	 	<value io="out"		name="1029"		type="string"		length="0"	comment="START"/>
+	 	<value io="out"		name="1030"		type="string"		length="0"	comment="HIGH"/>
+	 	<value io="out"		name="1031"		type="string"		length="0"	comment="LOW"/>
+	 	<value io="out"		name="1023"		type="string"		length="0"	comment="CLOSE"/>
+	 	<value io="out"		name="1027"		type="string"		length="0"	comment="VOLUME"/>
+	 	<value io="out"		name="1028"		type="string"		length="0"	comment="VOLUMEPRICE"/>
+	 	<value io="out"		name="1311"		type="string"		length="0"	comment="UPPER"/>
+	 	<value io="out"		name="1312"		type="string"		length="0"	comment="LOWER"/>
+	 	<value io="out"		name="1313"		type="string"		length="0"	comment="STANDARDPRICE"/>
+	  -->
+	</table>
+	
+	
+</transaction>

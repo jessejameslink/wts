@@ -1,0 +1,288 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%
+	String langCd = (String) session.getAttribute("LanguageCookie");
+%>
+
+<HTML>
+<head>
+	<script type="text/javascript" src="/resources/js/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="/resources/js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="/resources/js/common/nexMdi.js"></script>
+	<script type="text/javascript" src="/resources/js/common/nexDialog.js"></script>
+	<script type="text/javascript" src="/resources/js/common/nexAjax.js"></script>
+	<script type="text/javascript" src="/resources/js/common/nexClient.js"></script>
+	<!-- 
+	<script type="text/javascript" src="/resources/js/utils/nexChartUtils.js"></script>
+	<script type="text/javascript" src="/resources/js/utils/commonUtils.js"></script>
+	<script type="text/javascript" src="/resources/js/utils/nexUtils.js"></script>
+	<script type="text/javascript" src="/resources/js/common/nexFmt.js"></script>
+	<script type="text/javascript" src="/resources/js/jquery.blockUI.min.js"></script>
+	 -->
+	<script type="text/javascript" src="/resources/js/jquery.blockUI.min.js"></script>
+	<script language="javascript" src="/resources/js/nexClient.js"></script>
+	<script language="javascript" src="/resources/js/chart_new/treeData1.js"></script>
+	<script language="javascript" src="/resources/js/chart_new/jquery.treeview.js"></script>
+	<!-- 
+	<script language="javascript" src="/resources/js/chart_new/highstock.src.js"></script>
+	<script language="javascript" src="/resources/js/chart_new/highcharts-more.src.js"></script>
+	 -->
+	<script language="javascript" src="/resources/js/chart_new/nexChart.js"></script>
+	<script language="javascript" src="/resources/js/chart_new/nexChartUtils.js"></script>
+	<script language="javascript" src="/resources/js/chart_new/nexUtils.js"></script>
+	<script language="javascript" src="/resources/js/chart_new/pqgrid.dev.inlab.js"></script>
+	<script language="javascript" src="/resources/js/chart_new/chartJS.js"></script>
+	<script language="javascript" src="/resources/js/chart_new/nexAjax.js"></script>
+	
+	<script>
+		this.Type;
+		this.Value;
+		this.$Scope;
+		this.ViewName;
+		this.RefCode;
+		this.SearchCheck = false;
+		this.GridObj;
+		this.ChartObj;
+		this.StockTreeObj;
+		this.ChartTreeObj;
+		this.ChartWidth = '809';
+		this.ChartHeight = '518';
+		this.ChartValueDefault = {
+		   	'candle'	: null,
+		   	'volume'	: null,
+		   	'sma'		: [{name:'MA1',value:5,lineColor:'#76B448',lineWidth:'1'},{name:'MA2',value:20,lineColor:'#E03433',lineWidth:'1'},{name:'MA3',value:60,color:'#337FE5',lineWidth:'1'},{name:'MA4',value:120,lineColor:'#FF59AC',lineWidth:'1'},{name:'MA5',value:200,lineColor:'#0059AC',lineWidth:'1'}],
+		   	'cna'		: [{name:'전환선',value:9},{name:'기준,후,선',value:26},{name:'선행스팬',value:52}],
+		   	'bollinger'	: [{name:'기간',value:20}],
+		   	'parabolic'	: [{name:'AF최대값',value:0.02}],
+		   	'envelope'	: [{name:'기간',value:20},{name:'가감값',value:5}],
+		   	'maribbon'	: [{name:'시작이평',value:5},{name:'증가',value:2},{name:'갯수',value:10}],
+		   	'macd'		: [{name:'단기이평',value:12},{name:'장기이평',value:26},{name:'Signal',value:9}],
+		   	'slowStc'	: [{name:'기간',value:5},{name:'Slow&K',value:5},{name:'Slow%D',value:3}],
+		   	'cci'		: [{name:'기간',value:14}],
+		   	'mental'	: [{name:'기간',value:10}],
+		   	'adx'		: [{name:'기간',value:14}],
+		   	'obv'		: [{name:'OBV',value:9}],
+		   	'sonar'		: [{name:'이평기간',value:12},{name:'비교기간',value:26},{name:'Signal',value:9}],
+		   	'vr'		: [{name:'기간',value:20}],
+		   	'trix'		: [{name:'기간',value:12},{name:'Signal',value:9}],
+		   	'roc'		: [{name:'기간',value:12}],
+		   	'williams'	: [{name:'williams %R',value:14},{name:'%D',value:3}],
+		   	'rsi'		: [{name:'기간',value:10},{name:'Signal',value:5}],
+		   	'dis'		: [{name:'이격1',value:5},{name:'이격2',value:10},{name:'이격3',value:20},{name:'이격4',value:40}]
+		};
+	
+		this.ChartValue = 	$.extend(true,{},this.ChartValueDefault); // deep copy
+		this.CurrDate 	= 	'';
+		// CHART INPUT DATA
+		this.Gubn 		=	'D';
+		this.Count		= 	"300"; 		// 조회기간
+		//this.Date		= 	nexUtils.getDate();	// 일자
+		this.Unit		= 	"1";			// 1:종목, 2:업종, 3:선물 ...등등
+		this.DataIndex	= 	"1";			// 1:일봉, 2:주봉, 3:월봉, 4:분봉, 5:틱
+		this.Gap		= 	"1";
+		this.DataKind	= 	" "; 			// 1:당일
+		var self=this;
+	
+		this.init=function($scope, type, value) {
+			this.Type=type;
+			this.Value=value;
+			this.$Scope=$scope;
+	
+			self.ViewName = $scope.info.viewName; // 화면번호
+	
+			if(type=='main') {
+				$scope.windowCtrl.event.init=function(window) { };
+				$scope.windowCtrl.event.activate=function(window) { };
+				$scope.windowCtrl.event.maximize=function(window) { };
+				$scope.windowCtrl.event.minimize=function(window) {	};
+				$scope.windowCtrl.event.close=function(window) {
+					clientSocket.pushViewOff(self.ViewName,'0560');
+					nexMdi.ctlDestroy({viewName:self.ViewName});
+				};
+			}
+			this.event();
+		};
+	
+	$(document).ready(function() {
+		initChart();
+		//init();
+	});
+	
+	/****************************************************************
+	 * 차트
+	 ****************************************************************/
+	
+	var self=this;
+	
+	
+	initChart = function() {
+		$("#tab23").block({message: "<span>LOADING...</span>"});
+		var url 	= '/trading/data/pibochart1.do';
+		var rcod	=	$("#dailySymb").val();
+		var param = {
+			rcod		:	rcod
+			, count		:	'000040'
+			, date		:	'20161013'
+			, unit		:	'1'
+			, dataIndex	:	'1'
+			, dataKind	:	' '
+			, dataKey	:	' '
+		};
+	
+		nexAjax.send({
+			url : url,
+			param : param,
+			dataType: 'json',
+			callback: function(data){
+				//console.log("NEX CALL BACK 확인2");
+				//console.log(data);
+				//에러 팝업 처리
+	
+				if(data.trResult === undefined || data.trResult > 0  || data.trResult == "error"){
+					var message = data.message || "데이터 로드 실패";
+					nexDialog.alert(message);
+					self.SearchCheck = false;
+					return;
+				}
+	
+				data	=	data.list;
+				var resData = []; // 최종 결과 데이터
+	
+				if(self.DataIndex == 5) { // 분봉일때
+					var chartData = data.a4500;
+	
+					for (var i = 0, len = chartData.length; i < len; i++) {
+					    var dateTime = nexUtils.date2Utc(chartData[i]['4646'] + chartData[i]['4034']); // 일자 + 체결시간
+					    var dataOpen = chartData[i]['4029']; // 시가
+					    var dataUp = chartData[i]['4030']; // 고가
+					    var dataDown = chartData[i]['4031']; // 저가
+					    var dataClose = chartData[i]['4023']; // 종가
+					    var dataVolume = chartData[i]['4032']; // 거래량
+	
+					    //날짜 또는 시간, 시가, 고가, 저가, 종가, 거래량
+					    resData.push([Number(dateTime), Number(dataOpen), Number(dataUp), Number(dataDown), Number(dataClose), Number(dataVolume), null]);
+					}
+					self.CurrDate = nexUtils.date2Utc(chartData[chartData.length-1]['4646'] + chartData[chartData.length-1]['4034']);
+	
+					var empty_len = 5; // 빈 데이터
+					// 일목균형 체크되어 있을시
+					if ( $("#mdi"+self.ViewName).find("#indicator_cna").is(':checked') ) {
+						empty_len = self.ChartValue.cna[1].value; // 기본값 26
+					}
+	
+					for (var i = 1, len = empty_len; i < len; i++) {
+						var dateTime = nexUtils.addDateFullTime(chartData[chartData.length-1]['4646'] + chartData[chartData.length-1]['4034'], "mi", self.Gap * i);
+						dateTime = nexUtils.date2Utc(dateTime);
+				        resData.push([Number(dateTime), null, null, null, null, null, 'except']);
+					}
+				} else { // 일주월년봉일때
+					var chartData = data.a5500;
+					for (var i = 1, len = chartData.length; i < len; i++) {
+					    var dateTime = nexUtils.date2Utc(chartData[i]['302']); //일자
+					    var dataOpen = chartData[i]['29']; //시가
+					    var dataUp = chartData[i]['30']; //고가
+					    var dataDown = chartData[i]['31']; //저가
+					    var dataClose = chartData[i]['23']; //종가
+					    var dataVolume = chartData[i]['27']; //거래량
+					    //날짜 또는 시간, 시가, 고가, 저가, 종가, 거래량
+					    resData.push([Number(dateTime), Number(dataOpen), Number(dataUp), Number(dataDown), Number(dataClose), Number(dataVolume), null]);
+					}
+					self.CurrDate = nexUtils.date2Utc(chartData[chartData.length-1]['302']);
+	
+					var empty_len = 5; // 빈 데이터
+					// 일목균형 체크되어 있을시
+					if ( $("#mdi"+self.ViewName).find("#indicator_cna").is(':checked') ) {
+						empty_len = self.ChartValue.cna[1].value; // 기본값 26
+					}
+	
+					for (var i = 1, len = empty_len; i < len; i++) {
+						var dateTime = nexUtils.addDateFullTime(chartData[chartData.length-1]['302'],"dd", i);
+						dateTime = nexUtils.date2Utc(dateTime);
+				        resData.push([Number(dateTime), null, null, null, null, null, 'except']);
+					}
+				}
+	
+				var monthSect = 2;
+				switch (self.DataIndex) {
+		            case '1' : monthSect = 2; break; //일
+		            case '2' : monthSect = 3; break; //주
+		            case '3' : monthSect = 4; break; //월
+		            case '4' : monthSect = 4; break; //년
+		            case '5' : monthSect = 1; break; //분
+				}
+	
+				var checked_main_series = $("#mdi"+self.ViewName).find("#tree0560_chart").find("input[type=radio]:checked");
+				var main_series_type = checked_main_series.length != 0 ? checked_main_series[0].id.split("_")[1] : "candle";
+	
+				//console.log("##########RES DATA##############");
+				//console.log(resData);
+				//console.log("VIEW NAME=>" + self.ViewName);
+				//console.log("monthSEch=>" + monthSect);
+				//console.log("height=>" + self.ChartHeight);
+				//console.log("width=>" + self.ChartWidth);
+				//console.log("value=>" + self.ChartValue);
+				//console.log(self.ChartValue);
+				//console.log("mainType=>" + main_series_type);
+				
+				self.ChartHeight	=	"300";
+				self.ChartWidth		=	"770";
+				
+				self.ChartObj = new nexChart({
+		    		data		: resData, //차트 기본 데이터
+		    		//renderTo	: $("#mdi"+self.ViewName).find("#chart0560_0560"), //차트가 그려질 div 위치
+		    		renderTo	: $("#tab23").find($(".grid_area")), //차트가 그려질 div 위치
+		    		screenNum	: self.ViewName,
+		    		monthSect	: monthSect,
+		    		height 		: self.ChartHeight,
+		    		width		: self.ChartWidth,
+		    		seriesData	: self.ChartValue,
+		    		mainType	: main_series_type,
+		    		valueDecimals: "0"
+		        });
+	
+				var checked_series = $("#mdi"+self.ViewName).find("#tree0560_chart").find("input:checked");
+				//console.log("CHART SERIES CCHECK==>" + checked_series.length);
+				for(var i=0;i<checked_series.length;i++){
+					var id = checked_series.eq(i)[0].id;
+					var series_gubn = id.split("_")[0];
+					var series_name = id.split("_")[1];
+					self.addSeries(series_gubn,series_name,false);
+				}
+				self.ChartObj.redraw();
+	
+				// 당일 일때만, 실시간처리
+				
+				//if(self.Date != nexUtils.getDate()) return;
+				//self.requestRTS();
+				
+			}
+		});
+		$("#tab23").unblock();
+	};
+	
+	</script>
+</head>
+<div class="tab_content" id="stockChartTab">
+	<div role="tabpanel" class="tab_pane" id="tab23">
+		<!-- Chart -->
+		<div class="chart_select">
+			<div class="button_set">
+				<input type="radio" id="datetime1" name="datetime"><label for="datetime1"><%= (langCd.equals("en_US") ? "Tick" : "Tick") %></label>
+				<input type="radio" id="datetime2" name="datetime" checked="checked"><label for="datetime2"><%= (langCd.equals("en_US") ? "Day" : "Ngày") %></label>
+				<input type="radio" id="datetime3" name="datetime"><label for="datetime3"><%= (langCd.equals("en_US") ? "Weeks" : "Tuần") %></label>
+				<input type="radio" id="datetime4" name="datetime"><label for="datetime4"><%= (langCd.equals("en_US") ? "Month" : "Tháng") %></label>
+			</div>
+		</div>
+		<div class="grid_area" style="height:318px;">
+			<!-- chart data -->
+		</div>
+		<!-- //Chart -->
+	</div>
+</div>
+	
+	
+	<script>
+		//$("#tab23").find('.button_set').buttonset();
+	</script>
+	
+	
+</HTML>

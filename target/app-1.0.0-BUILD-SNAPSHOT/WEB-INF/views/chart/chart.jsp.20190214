@@ -1,0 +1,1012 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ page import="m.config.SystemConfig"%>
+<%
+	String langCd = (String) session.getAttribute("LanguageCookie");
+	String userId	=	(String) session.getAttribute("ClientV");
+	String rtsServerIp	=	SystemConfig.get("SYSTEM.RTS.SERVER.IP");	
+%>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<link rel="shortcut icon" href="https://www.masvn.com/docs/image/favicon.ico">
+
+	<link href="/resources/css/common.css" rel="stylesheet">
+	<link href="/resources/js/chart_new/jquery.treeview.css" rel="stylesheet">
+	
+	<script type="text/javascript" src="/resources/js/nexClient.js"></script>
+	<script type="text/javascript" src="/resources/js/chart_new/treeData1.js"></script>
+	<script type="text/javascript" src="/resources/js/chart_new/jquery.treeview.js"></script>
+	<script type="text/javascript" src="/resources/js/chart_new/nexChart.js"></script>
+	<script type="text/javascript" src="/resources/js/chart_new/nexChartUtils.js"></script>
+	<script type="text/javascript" src="/resources/js/chart_new/nexUtils.js"></script>
+	<script type="text/javascript" src="/resources/js/chart_new/pqgrid.dev.inlab.js"></script>
+	<script type="text/javascript" src="/resources/js/chart_new/chartJS.js"></script>
+	<script type="text/javascript" src="/resources/js/chart_new/nexAjax.js"></script>
+	<script type="text/javascript" src="/resources/js/common/nexMdi.js"></script>
+	
+	<script>
+	/* 
+	// CHART INPUT DATA
+	this.Gubn 		= 'D';
+	this.Count		= "300"; 		// 조회기간
+	//this.Date		= nexUtils.getDate();	// 일자
+	this.Unit		= "1";			// 1:종목, 2:업종, 3:선물 ...등등
+	this.DataIndex	= "1";			// 1:일봉, 2:주봉, 3:월봉, 4:분봉, 5:틱
+	this.Gap		= "1";	
+	this.DataKind	= " "; 			// 1:당일	
+	
+	var self	=	this;
+	 */
+	
+	var chartObj = new Controller();	
+	var langType	=	"<%=langCd%>";
+	initChart = function() {
+		var rcod	=	$("#SectorInp").val();
+		var schDate	=	$(".datepicker").val();
+		schDate		=	schDate.split("/");
+		var mon		=	schDate[1];
+		var day		=	schDate[0];
+		var year	=	schDate[2];
+		schDate		=	year+mon+day;
+		
+		
+		var gubun = $(':radio[name="datetime"]:checked').val();
+
+		var url	=	"/trading/data/pibochart1.do";
+		switch (gubun) {
+		    case 'day' 	: gubun = 1; break; //일
+		    case 'week' : gubun = 2; break; //주
+		    case 'mon' 	: gubun = 3; break; //월
+		    case 'min' 	: gubun = 4; url = "/trading/data/pibochart3.do"; break; //분
+		    case 'tick' : gubun = 5; break; //틱
+		}
+		
+		
+		var param = {
+			rcod		:	rcod
+			, count		:	'000300'
+			, date		:	schDate
+			, unit		:	'1'
+			, dataIndex	:	gubun
+			, dataKind	:	' '
+			, dataKey	:	' '
+		};
+
+		getData(rcod);
+		
+		nexAjax.send({
+			url 		: url,
+			param 	: param,
+			dataType: 'json',
+			callback: function(data){
+				if(data.trResult === undefined || data.trResult > 0  || data.trResult == "error"){
+					var message = data.message || "데이터 로드 실패";
+					nexDialog.alert(message);
+					self.SearchCheck = false;
+					return;
+				}
+				data	=	data.list;
+				this.DataDump 	=	data;
+				/* 
+				//소캣연결
+				//nexClient.webSocketConnect();
+				//주식연결
+				$("#Connect").click(function(){
+					//rtsConnect();
+					rtsConnect($("#stockCode").val());
+				});
+				//연결중지
+				$("#disconect").click(function(){
+					nexClient.pushViewOff('1111','MAS');
+				});
+ 				*/
+ 				
+				//chart = new Controller();
+				chartObj.dataSet(this.DataDump);
+				chartObj.init();
+				//chart.initChart();
+			}
+		});
+	};
+
+	var MasterCode=null;
+	var chart=null; 
+	$(document).ready(function () {
+		document.title = "MIRAE ASSET WTS | <%= (langCd.equals("en_US") ? "CHART" : "BIỂU ĐỒ") %>";
+		if(!nexClient.socketConnection) {
+			nexClient.webSocketDisconnect();
+			nexClient.webSocketConnect(window.RTS_IP);
+		}
+		nexClient.pushViewOff('BID','BID');
+		nexClient.pushViewOff('BIDTP','BIDTP');
+		
+		var d = new Date();
+		$(".datepicker").datepicker({
+			showOn      : "button",
+			dateFormat  : "dd/mm/yy",
+			changeYear  : true,
+			changeMonth : true
+		});
+		$(".datepicker").datepicker("setDate", d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear());
+		$("#today").val(d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear());
+		initChart();
+		$("#schDate").datepicker("disable");
+	});
+	
+	
+	function getData(symbol) {
+		$("#mdi0560").block({message: "<span>LOADING...</span>"});
+		var param = {
+			  symb  : symbol
+			, lang  : ("<%= langCd %>" == "en_US" ? "1" : "0")
+		};
+		nexClient.pushViewOff('BID','BID');
+		nexClient.pushViewOff('BIDTP','BIDTP');
+		$.ajax({
+			url      : "/trading/data/getBid.do",
+			contentType	:	"application/json; charset=utf-8",
+			data     : param,
+			dataType : "json",
+			success  : function(data){
+				//console.log("GET BID DATA======>");
+				//console.log(data);
+				//setBID(data);
+
+				var tprc	=	data.tprc;
+				var curr	=	data.curr;
+
+				bidRcod =	curr.rcod;
+				bidMark	=	curr.mark;
+				
+				var cssColor  = displayColor(curr.diff.substring(0, 1));
+				var cssArrow  = displayArrow(curr.diff.substring(0, 1));
+				
+				var inHtml	=	"";
+				//inHtml	+=		"<div class=\"summary\">";
+				inHtml	+=		"<p id=\"curr_v\" class=\"price\">"+upDownNumList(curr.curr.substring(1))+"</p>";
+				inHtml	+=		"<p class=\"state\">";
+				inHtml	+=		"<span id=\"diff_v\" class='" + cssArrow + cssColor + "'>"+upDownNumList(curr.diff.substring(1))+"</span>";
+				inHtml	+=		"</p>";
+				inHtml	+=		"<p class=\"val\">";
+				inHtml	+=		"<span id=\"diff_p\" class='"+cssColor+"'>"+upDownNumList(curr.rate.substring(1))+"</span><span>%</span>";
+				inHtml	+=		"</p>";
+				inHtml	+=		"<p class=\"vol\">";
+				inHtml	+=		"<span class=\"label\"><%= (langCd.equals("en_US") ? "Volume" : "KLGD") %></span>";
+				inHtml	+=		"<span id=\"vol_p\">" + upDownNumList( String(Number(curr.avol)))+ "</span>";
+				inHtml	+=		"</p>";
+				inHtml	+=		"<p class=\"detail\">";
+				inHtml	+=		"<span id=\"open_c\" class='"+cssColor+"'>";
+				inHtml	+=		"<span class=\"label\"><%= (langCd.equals("en_US") ? "Open" : "Giá mở cửa") %></span>";
+				inHtml	+=		"<span id=\"low_p\" >" + upDownNumList(tprc.open.substring(1)) + "</span>";
+				inHtml	+=		"</span>";
+				inHtml	+=		"<span id=\"high_c\" class='"+cssColor+"'>";
+				inHtml	+=		"<span class=\"label\"><%= (langCd.equals("en_US") ? "High" : "Giá cao nhất") %></span>";
+				inHtml	+=		"<span id=\"high_p\" >" + upDownNumList(tprc.high.substring(1)) + "</span>";
+				inHtml	+=		"</span>";
+				inHtml	+=		"<span id=\"low_c\" class='"+cssColor+"'>";
+				inHtml	+=		"<span class=\"label\"><%= (langCd.equals("en_US") ? "Low" : "Giá thấp nhất") %></span>";
+				inHtml	+=		"<span id=\"low_p\">" + upDownNumList(tprc.lowe.substring(1)) + "</span>";
+				inHtml	+=		"</span>";
+				inHtml	+=		"</p>";
+				//inHtml	+=		"</div>";
+				
+				$("#open").val(tprc.open.substring(1));
+				$("#curData").html(inHtml);
+				
+				var timer1 = setTimeout(function (){
+					//console.log("소켓 확인======================>");
+					//console.log(nexClient.socketConnection);
+					if(!nexClient.socketConnection) {
+						nexClient.webSocketDisconnect();
+						nexClient.webSocketConnect(window.RTS_IP);
+					
+						var timer2 = setTimeout(function (){
+							rtsConnect(symbol);
+						}, 2000);
+					} else {
+						rtsConnect(symbol);
+					}
+					
+				}, 2000);
+ 				
+				$("#mdi0560").unblock();
+			}
+		});
+	}
+	
+	
+	
+	
+	function rcodSet(rcod) {
+		$("#SectorInp").val(rcod);
+		//initChart();
+		selChartItem();
+	}
+	
+	function selChartItem() {
+		var rcod	=	$("#SectorInp").val();
+		var schDate	=	$(".datepicker").val();
+		schDate		=	schDate.split("/");
+		var mon		=	schDate[1];
+		var day		=	schDate[0];
+		var year	=	schDate[2];
+		schDate		=	year+mon+day;
+		
+		getData(rcod);
+		var gubun 	= 	$(':radio[name="datetime"]:checked').val();
+		var count	=	0;
+		var url	=	"/trading/data/pibochart1.do";
+		var gap		=	"";
+		
+		//console.log("CKH GUBUN==>" + gubun);
+		
+		switch (gubun) {
+		/* 
+		    case 'day' 	: gubun = 1; count="300"; break; //일
+		    case 'week' : gubun = 2; count="300"; break; //주
+		    case 'mon' 	: gubun = 3; count="100"; break; //월
+		    case 'min' 	: gubun = 4; count="300"; url = "/trading/data/pibochart2.do"; break; //분
+		    case 'tick' : gubun = 5; count="300"; url = "/trading/data/pibochart2.do"; self.DataIndex = 5; break; //틱
+		 */    
+	 
+		    case 'day' 	: gubun = 1; count="300"; gap = ""; break; //일
+		    case 'week' : gubun = 2; count="300"; gap = ""; break; //주
+		    case 'mon' 	: gubun = 3; count="100"; gap = ""; break; //월
+		    case 'min' 	: gubun = 4; count="300"; gap = $("#term").val(); url = "/trading/data/pibochart3.do"; break; //분
+		    case 'tick' : gubun = 5; count="300"; gap = $("#term").val(); url = "/trading/data/pibochart2.do"; self.DataIndex = 5; break; //틱
+		}
+		
+		
+		//console.log("GUBUN==>"+ gubun);
+		//console.log("COUNT==>" + count);
+		
+		var param = {
+			rcod		:	rcod
+			, count		:	count
+			, date		:	schDate
+			, unit		:	'1'
+			, dataIndex	:	gubun
+			, dataKind	:	' '
+			, dataKey	:	' '
+			, gap		:	gap
+		};
+		
+		//console.log("===============PARAM--- LOG=======================");
+		//console.log(param)
+		
+		nexAjax.send({
+			url 		: url,
+			param 	: param,
+			dataType: 'json',
+			callback: function(data){
+				if(data.trResult === undefined || data.trResult > 0  || data.trResult == "error"){
+					var message = data.message || "데이터 로드 실패";
+					nexDialog.alert(message);
+					self.SearchCheck = false;
+					return;
+				}
+				//console.log("===============CONSOLE LOG=======================");
+				//console.log(data);
+				//console.log("=================================================");
+				data	=	data.list;
+				this.DataDump 	=	data;
+				//console.log("SELF DATA DUMP CHECK");
+				//console.log(this.DataDump);
+				
+				//소캣연결
+				//nexClient.webSocketConnect();
+				
+				//주식연결
+				$("#Connect").click(function(){
+					//rtsConnect();
+					rtsConnect($("#stockCode").val());
+				});
+
+				//연결중지
+				$("#disconect").click(function(){
+					nexClient.pushViewOff('1111','MAS');
+				});
+
+				//chart = new Controller();
+				chartObj.dataIndex	=	gubun;
+				chartObj.dataSet(this.DataDump);
+				chartObj.initChart();
+			}
+		});
+	}
+	
+	
+	
+	function rtsConnect(){
+		var gubuns = ['B'];
+		var vals = [];
+		
+
+		vals.push($("#stockCode").val());
+		//vals.push('021880');
+
+		nexClient.rtsReg({
+			pName	: '1111',	//실시간데이터받을 타겟팅ID (미래에셋증권 WTS에서는 화면번호로 적용중 )						
+			GUBUNS: gubuns,		//심볼 카테고리 (정의된 연결 키  A, B Q ...)
+			VALUES: vals		//요청 key value (주식코드,지수 등등..)
+		});
+		
+		var symbols = ['002023', //현재가
+					   '002311', //상한가
+					   '002024', //전일대비
+					   '002312', //하한가
+					   '002033', //등락률
+					   '002521', //제한폭				               
+					   '002027', //거래량				              
+					   ];
+		nexClient.pushStokOn({
+			pName	: '1111',		//실시간데이터받을 타겟팅ID (상기 동일)
+			key		: '001301',		//심볼 카테고리 필드
+			value	: $("#stockCode").val(),		//요청 key value
+			symbols	: symbols		//요청 심볼 필드
+		});			
+
+	}
+	
+	/* 
+	function realData_B(data){
+		console.log("REAL DATA B");
+		console.log(data);
+		$("#curr").val(data.value['023']);
+		$("#diff").val(data.value['027']);
+		$("#diff1").val(data.value['030']);
+		$("#diff2").val(data.value['031']);
+		//chartObj.realData_B(data);
+	}
+ */
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	function rtsConnect(symb) {
+		var vals = [];
+		vals.push(symb);
+		var gubuns = ['A'];
+		nexClient.rtsReg({
+			pName	:	'BID',		//	실시간데이터받을 타겟팅ID (미래에셋증권 WTS에서는 화면번호로 적용중 )						
+			GUBUNS	:	gubuns,		//	심볼 카테고리 (정의된 연결 키  A, B Q ...)
+			VALUES	: 	vals		//	요청 key value (주식코드,지수 등등..)
+		});
+		gubuns = ['B'];
+		nexClient.rtsReg({
+			pName	:	'BIDTP',		//	실시간데이터받을 타겟팅ID (미래에셋증권 WTS에서는 화면번호로 적용중 )						
+			GUBUNS	:	gubuns,		//	심볼 카테고리 (정의된 연결 키  A, B Q ...)
+			VALUES	:	vals		//	요청 key value (주식코드,지수 등등..)
+		});
+		gubuns = ['C'];
+		nexClient.rtsReg({
+			pName	:	'FBIDTP',	//	실시간데이터받을 타겟팅ID (미래에셋증권 WTS에서는 화면번호로 적용중 )						
+			GUBUNS	:	gubuns,		//	심볼 카테고리 (정의된 연결 키  A, B Q ...)
+			VALUES	:	vals		//	요청 key value (주식코드,지수 등등..)
+		});
+		
+		nexClient.pushCurrOn({
+			pName	: 'BID',		//실시간데이터받을 타겟팅ID (미래에셋증권 WTS에서는 화면번호로 적용중 )
+			symb	:	symb ,
+			lang	:	("<%= langCd %>" == "en_US" ? "1" : "0"),
+			symbols	: 	vals		//요청 심볼 필드
+		});
+		
+		
+		nexClient.pushTprcOn({
+			pName	:	'BIDTP',	//실시간데이터받을 타겟팅ID (미래에셋증권 WTS에서는 화면번호로 적용중 )
+			symb	:	symb,
+			lang	:	'0',
+			symbols	: 	vals		//요청 심볼 필드
+		});
+	}
+	
+ /*
+023:"57150"
+024:"590"
+027:"10674830"
+029:"57020"
+030:"57150"
+031:"57020"
+032:"+70"
+033:"51.24"
+034:"133531"
+ */
+	
+	function realData_A(data) { 
+		//console.log("REAL DATA A~~~");
+		//console.log(data);
+		setData_A(data);
+		//console.log("SECTOR INO==>" + $("#SectorInp").val() + ", DATA CODE==>" + data.code);
+		if($("#SectorInp").val() == data.code) {
+			var cssColor	=	displayColor(data.value['024'].substring(0, 1));
+			var cssArrow  	= 	displayArrow(data.value['024'].substring(0, 1));
+			$("#curr_v").html(upDownNumList(data.value['023'].substring(1)));
+			
+			$("#diff_v").removeClass($("#diff_v").attr('class'));
+			$("#diff_v").addClass(cssArrow+" "+cssColor).html(upDownNumList(data.value['024'].substring(1)));
+			
+			$("#diff_p").removeClass($("#diff_p").attr('class'));
+			$("#diff_p").addClass(cssColor).html(upDownNumList(data.value['033'].substring(1)));
+			
+			$("#vol_p").html(upDownNumList( String(data.value["027"])));
+			
+			$("#open_c").removeClass($("#open_c").attr('class'));
+			$("#open_c").addClass(cssColor);
+			$("#open_P").html(upDownNumList(data.value['031'].substring(1)));
+			
+			$("#high_c").removeClass($("#high_c").attr('class'));
+			$("#high_c").addClass(cssColor);
+			$("#high_P").html(upDownNumList(data.value['030'].substring(1)));
+			
+			$("#low_c").removeClass($("#low_c").attr('class'));
+			$("#low_c").addClass(cssColor);
+			$("#low_p").html(upDownNumList(data.value['031'].substring(1)));
+			
+			chartObj.realData_B(data);
+		}
+	}
+
+/*
+023:"57150"
+029:"57020"
+030:"57150"
+031:"57020"
+040:"133531"
+041:"25300"
+042:"52370"
+043:"6360"
+051:"57150"
+052:"57160"
+053:"57170"
+061:"95590"
+062:"59020"
+063:"12720"
+071:"57140"
+072:"57130"
+073:"57120"
+081:"-500"
+082:"0"
+083:"0"
+091:"0"
+092:"0"
+093:"-2000"
+101:"84030"
+106:"167330"
+ */
+	function realData_B(data) { 
+		//console.log("@@@@@@@@@@@VIEW CHECK#############");
+		//console.log(data);
+		
+	}
+	
+	function realData_C(data) { 
+		 //console.log("REAL DATA C");
+	}
+	
+	
+	 
+	 
+	 
+	 
+	 
+	 
+
+		function getStock(e) {
+			var $this;
+			var $tab;
+			var	$layer;
+			var $ulblock
+			
+			var tabid	=	"";
+			
+		
+			$this	=	$("#SectorInp");
+			$tab	=	$("#mdi0560");
+			$layer	=	$("#divStock");
+			$ulblock=	$("#ulStock");
+			
+			tabid	=	"stock";
+		
+			//console.log("BID DATA HECK===>" + $this);
+			//console.log($this);
+			
+			$this.val($this.val().toUpperCase());
+			if($this.val() == "") {
+				$layer.hide();
+				return;
+			}
+			
+			$tab.block({message: "<span>LOADING...</span>"});
+			var param	=	{
+					stockCd	:	$this.val()
+					, marketId	:	"ALL"
+			};
+			
+			$.ajax({
+				url      : "/trading/data/getMarketStockList.do",
+				data     : param,
+				dataType : 'json',
+				success  : function(data){
+					$layer.show();	
+					if(data.stockList.length != null) {
+						var stockStr	=	"";
+						if(data.stockList.length == 1) {
+							var stockList = data.stockList[0];
+							var stockNm   = ("<%=langCd%>" == "en_US" ? stockList.secNm_en : stockList.secNm_vn);
+							stockStr += "<li><a onclick=\"stockSelected('" + stockList.synm + "', '" + stockList.marketId + "', '" + tabid + "')\" style=\"cursor: pointer;\">" + stockList.synm + " - " + stockNm + "</a></li>";
+							$layer.hide();
+							$this.val(stockList.synm);
+							$("#mvMarketId").val(displayMarketID(stockList.marketId));
+							watchListSelect = false;
+							//console.log("GET MARKET STOKC LIST==>" + stockList.synm);
+							//stockChange();
+							selChartItem();
+						} else if(data.stockList.length > 1) {
+							for(var i=0; i < data.stockList.length; i++) {
+								var stockList = data.stockList[i];
+								var stockNm   = ("<%=langCd%>" == "en_US" ? stockList.secNm_en : stockList.secNm_vn);
+								stockStr += "<li><a onclick=\"stockSelected('" + stockList.synm + "', '" + stockList.marketId + "', '" + tabid + "')\" style=\"cursor: pointer;\">" + stockList.synm + " - " + stockNm + "</a></li>";
+							}
+							$tab.unblock();
+						} else {
+							if ("<%= langCd %>" == "en_US") {
+								alert($this.val() + " is not exist,please enter again!");
+							} else {
+								alert($this.val() + " không tồn tại, vui lòng nhập lại!");
+							}
+							
+							$this.val("").focus();
+							$layer.hide();
+							$tab.unblock();
+						}
+						$ulblock.html(stockStr);
+					} else {
+						$tab.unblock();
+					}
+				},
+				error     :function(e) {
+					console.log(e);
+					tab.unblock();
+				}
+			});
+		};
+		
+
+		function stockSelected(val, market, tabid) {
+			$("#divStock").hide();
+			rcodSet(val);
+		}
+	 
+	 	
+		
+		
+		
+		
+		function setData_A(data) {
+			//023현재가
+			//024대비
+			//033등락율
+			//027거래량
+			//030고가
+			//031저가
+			//console.log("+++++++++++++++++++++++++++++++++++++++");
+			//console.log(data);
+			$("#curr_v").html(upDownNumList(data.value['030']));
+			
+		}
+	 
+	 
+	 
+	 
+	 
+	/* 
+	$(function() {
+	
+		var $table		=	$('table.scroll');
+		var $bodyCells	=	$table.find('tbody tr:first').children();
+		var colWidth;
+	
+		$(window).resize(function() {
+			colWidth	=	$bodyCells.map(function() {
+				return	$(this).width();	
+			}).get();
+			
+			$table.find('thead tr').children().each(function(i, v) {
+				$(v).width(colWidth[i]);
+			});
+		}).resize();
+	});
+	 */
+	
+	</script>
+
+
+</head>
+  <body class="mdi">
+	<input type="hidden" id="open" value=""/>
+  	<div class="wrapper" id="mdi0560" style="margin-left: 0px;">
+		<!-- header -->
+		<!-- //header -->
+
+		<!-- 템플릿 사용부분 -->
+		<div class="mdi_container">
+			<div class="chart">
+				<div class="chart_search">
+				<%-- 
+					<div class="input_search">
+						<input id="SectorInp" type="text" value="HAG">
+						<input id="userId" name="userId" value="<%=userId%>" type="hidden"/>
+						<input id="langCd" name="langCd" value="<%=langCd%>" type="hidden"/>
+						<button type="button" class="btn_recent"><span class="screen_out">recent search</span></button>
+						<!-- layer_newest -->
+						<div class="layer_newest" style="display:none;">
+							<ol>
+								<li>value1</li>
+								<li>value2</li>
+								<li>value3</li>
+							</ol>
+						</div>
+						<!-- //layer_newest -->
+						<button type="button">Search</button>
+					</div>
+ 				--%>
+ 					<div class="input_search">
+ 						<div id="" class="input_dropdown" >
+							<span>
+								<input type="text" id="SectorInp" name="SectorInp" onkeyup="getStock(event)" value="HAG"/>
+								<input id="userId" name="userId" value="<%=userId%>" type="hidden"/>
+								<input id="langCd" name="langCd" value="<%=langCd%>" type="hidden"/>
+								<button type="button" onclick="divOrdShowHide()"></button>
+							</span>
+							<div id="divStock" class="divBidStockNew" style="z-index:999">
+								<ul id="ulStock">
+								</ul>
+							</div>
+						</div>
+ 					</div>
+ 				
+ 				
+ 				
+ 				
+ 				
+ 				
+ 				
+ 				
+ 				
+ 				
+					<div class="button_set">
+					 	<input type="radio" id="datetime1" name="datetime" checked="checked" value="day"><label for="datetime1"><%= (langCd.equals("en_US") ? "Daily" : "Theo Ngày") %></label>
+						<input type="radio" id="datetime2" name="datetime" value="week"><label for="datetime2"><%= (langCd.equals("en_US") ? "Weekly" : "Theo Tuần") %></label>
+						<input type="radio" id="datetime3" name="datetime" value="mon"><label for="datetime3"><%= (langCd.equals("en_US") ? "Monthly" : "Theo Tháng") %></label>
+						<input type="radio" id="datetime4" name="datetime" value="min"><label for="datetime4"><%= (langCd.equals("en_US") ? "Minute" : "Theo Phút") %></label>
+						<%-- 
+						<input type="radio" id="datetime4" name="datetime" value="tick"><label for="datetime4"><%= (langCd.equals("en_US") ? "Minute" : "Theo Phút") %></label>
+						 --%> 
+					</div>
+
+					<select id="term" name="term" disabled style="display:none;" onchange="research();">
+						<option value="0">select</option>
+						<option value="1">1</option>
+						<option value="3">3</option>
+						<option value="5">5</option>
+						<option value="10">10</option>
+						<option value="20">20</option>
+						<option value="30">30</option>
+						<option value="60">60</option>
+					</select>
+
+					<input id="schDate" name="schDate" type="text" class="datepicker" placeholder="13/05/2016" disabled="disabled" onchange="research();">
+<script>
+function chkChg() {
+	//console.log("CALL");
+	var gubun = $(':checkbox[name="today"]:checked').val();
+	if($("#today").is(":checked")) {
+		var d = new Date();
+		$(".datepicker").datepicker("setDate", d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear());
+		$(".ui-datepicker-trigger").attr("disabled", true);
+		$("#schDate").datepicker("disable");
+		
+		rcodSet($("#SectorInp").val());
+		//$("#schDate").val($(':checkbox[name="today"]:checked').val());
+	} else {
+		$("#schDate").datepicker("enable");
+	}
+}
+
+function research() {
+	rcodSet($("#SectorInp").val());
+	//initChart();
+}
+</script>
+
+
+					<span class="radio_area">
+						<input type="checkbox" id="today" name="today" checked="checked" value="" onchange="chkChg();"><label for="today">Today</label>
+					</span>
+					<a href="javascript:;"  onclick="research();" class="btn_rescan">Rescan</a>
+				</div>
+				<!-- LEFT -->
+				<!-- 
+				<div class="wrap_left">
+					<div class="tree_menu">
+						<ul class="tree_list">
+							<li>
+								<button type="button">All stock</button>
+								<ul>
+									<li>
+										<button type="button">Watch list</button>
+										<ul>
+											<li>
+												<button type="button">Watch list group</button>
+												<ul>
+													<li>
+														<button type="button">Group Item</button>
+														<ul>
+															<li><a href="#" class="on">HNXIndex</a></li>
+															<li><a href="#"> HNX30</a></li>
+														</ul>
+													</li>
+													<li>
+														<button type="button">Group Item</button>
+														<ul>
+															<li><a href="#" class="on">HNXIndex</a></li>
+															<li><a href="#"> HNX30</a></li>
+														</ul>
+													</li>
+												</ul>
+											</li>
+											<li>
+												<button type="button">Watch list group</button>
+												<ul>
+													<li>
+														<button type="button">Group Item</button>
+														<ul>
+															<li><a href="#" class="on">HNXIndex</a></li>
+															<li><a href="#"> HNX30</a></li>
+														</ul>
+													</li>
+												</ul>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<a href="#">My stock</a>
+									</li>
+									<li>
+										<a href="#">Stock exchange</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
+						<div class="sector">
+							<h2>Sector</h2>
+							<ul>
+								<li><span>AAA</span> Anphat Plastic</li>
+								<li><span>AAA</span> Anphat Plastic</li>
+								<li><span>AAA</span> Anphat Plastic</li>
+								<li><span>AAA</span> Anphat Plastic</li>
+								<li><span>AAA</span> Anphat Plastic</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				 -->
+				
+				
+				
+				 
+				<div class="wrap_left">
+					<div class="tree_menu" style="height:654px;">
+						<div class="cont_area">
+			<div class="aside">
+				<div name="tabs">
+					<ul class="nav nav_tabs" role="tablist">
+						<li role="tab" class="active"><a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">Stock</a></li>
+						<li role="tab"><a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">Indicators</a></li>
+					</ul>
+					<div class="tab_content">
+						<div role="tabpanel" class="" id="tab1">
+							<!-- 종목 -->
+							<h5 class="screen_out">종목선택</h5>
+							<div class="group_tree_box" style="overflow:auto">
+								<ul id="tree0560_stock"></ul>
+							</div>
+<!-- 
+							<h5 class="screen_out">종목선택</h5>
+							<div class="grid_area group_tree_box">
+								<div id="grid0560_0560"></div>
+							</div>
+							 -->
+
+							<h5 class="screen_out">종목선택</h5>
+ 							<div style="margin-top:30px;">
+ 								<div style="/* height:200px;  */ height:350px; overflow-y:scroll; overflow-x:hidden;"> 
+ 									<table style="height:150px;" class="scroll chartTable">
+ 										<colgroup>
+ 										<!-- 
+ 											<col style="width:41.7%;" />
+ 											<col style="width:auto" />
+ 										 -->	
+ 										 	<col style="width:30%;" />
+ 											<col style="" />
+ 										</colgroup>
+ 										<thead>
+ 											<th><%= (langCd.equals("en_US") ? "Stock Code" : "Mã CK") %></th>
+ 											<th><%= (langCd.equals("en_US") ? "Company Name" : "Tên Công Ty") %></th>
+ 										</thead>
+ 										<tbody id="rcodList" style="/*2017.04.12 수정 position:absolute; */ overflow-y:auto;overflow-x:hidden;width:100%;height:140px;">
+	 										
+ 										</tbody>
+ 									</table>
+ 								</div>
+ 							</div>
+						</div>
+
+								<div role="tabpanel" class="" id="tab2">
+									<!-- 지표 -->
+									<div class="btn_group">
+										<ul>
+											<li id="tab2_tab1" class="active"><button type="button">SELECT</button></li>
+											<li id="tab2_tab2" ><button type="button">SETTING</button></li>
+										</ul>
+									</div>
+									<div class="sub_tab">
+										<!-- 선택 -->
+										<div class="group_list_box" style="overflow:auto">
+											<ul class="treeview" id="tree0560_chart">
+											</ul>
+										</div>
+										<!-- //선택 -->
+										
+										<!-- 설정 -->
+										<div class="chart_set" style="display:none;">
+											<div>
+												 <select id="series_list"></select>
+											</div>
+											<ul id="ul_values" class="chart_index_set first"></ul>
+											<ul id="ul_colors" class="chart_index_set"></ul>
+											<div class="mdi_bottom">
+												<button id="btn_set_default" type="button">default</button>
+												<button id="btn_set_apply" type="button">apply</button>
+											</div>
+										</div>
+										<!-- //설정 -->
+									</div>
+									<!-- //지표 -->
+								</div>
+
+					</div>
+
+				</div>
+			</div>
+			</div>
+					</div>
+				</div>
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				<!-- //LEFT -->
+				<!-- RIGHT -->
+				<div class="wrap_right">
+				
+					<div class="summary"  id="curData">
+					<!-- 
+						<p class="price">49,000</p>
+						<p class="state">
+							<span class="arrow low">1,400</span>
+						</p>
+						<p class="val">
+							<span class="up">+0.37%</span>
+						</p>
+						<p class="vol">
+							<span class="label">Volume</span>
+							411,851
+						</p>
+						<p class="detail">
+							<span class="low">
+								<span class="label">Open</span>
+								22,950
+							</span>
+							<span class="up">
+								<span class="label">High</span>
+								23,445
+							</span>
+							<span class="low">
+								<span class="label">Low</span>
+								22,500
+							</span>
+						</p>
+						 -->
+					</div>
+				  
+					<div class="chart" id="">
+						<div id="chart0560_0560" style="height:100%; line-height:800px; font-size:20px; color:#fff; text-align:center; font-weight:700;">chart2</div>
+					</div>
+
+				</div>
+				<!-- //RIGHT -->
+			</div>
+		</div>
+		<!-- //템플릿 사용부분 -->
+
+
+  	</div>
+<script>
+
+/* 
+(function(){
+	function setInitEvt() {
+		$('.group_table').each(function() {
+			var table = $(this).find('table'),
+				tbody = table.find('tbody');
+
+			if(!tbody.find('th').length) {
+				tbody.find('tr:odd').addClass('even');
+			}
+
+			if(table.height() >= $(this).parent().height()) {
+				table.addClass('no_bbt');
+			}
+		});
+		$('div[name=tabs]').tabs();
+		$('.datepicker').datepicker({
+			showOn:"button",
+			changeYear:true,
+			changeMonth:true
+		});
+		$('.tree_list button').on('click', function(e) {
+			var self = $(this);
+			if(self.hasClass('on')) {
+				self.removeClass('on');
+				self.parent().find('ul').slideUp(150);
+				self.parent().find('button').removeClass('on');
+			} else {
+				self.addClass('on');
+				self.next('ul').slideDown(150);
+			}
+			e.preventDefault();
+		});
+	}
+	window.showFullLoading = function() {
+		$('.loading_cover').show();
+	}
+	window.hideFullLoading = function() {
+		$('.loading_cover').hide();
+	}
+
+	setInitEvt();
+	$(document).ajaxComplete(function() {
+		setInitEvt();
+	});
+}());
+ */
+
+</script>
+  </body>
+</html>

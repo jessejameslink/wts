@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>LOGIN</title>
+
+<link href="/resources/css/common.css" rel="stylesheet">
+
+</head>
+  <body class="login">
+	<h1><img src="/resources/US/images/logo.png" alt="MIRAE ASSET WTS"></h1>
+  	<div class="login_wrap">
+		<h2>trading online</h2>
+		<span class="language">
+			<button type="button"><img src="/resources/US/images/icon_lang_en.gif" alt="English"></button>
+			<button type="button" onclick="window.open('layer.jsp')"><img src="/resources/US/images/icon_lang_vi.gif" alt="vietnamese"></button>
+		</span>
+		<div class="input_area">
+			<label for="account">Account</label>
+			<input id="account" type="text" value="0000">
+			<label for="password">Password</label>
+			<input id="password" type="password" value="0000">
+			<!-- <p>Login using any of the following services.</p> -->
+		</div>
+
+		<div class="security_code">
+			<h3>Security Code</h3>
+			<div>
+				<input id="" type="text" value="0000">
+				<img src="/resources/US/images/security_code.gif" alt="Security Code">
+			</div>
+		</div>
+
+		<div class="btn_login"><button type="button">Login</button></div>
+
+		<ul class="address">
+			<li>
+				<strong>HEADQUARTER</strong>
+				<p>7th Floor, Sai Gon Royal building, 91 Pasteur street,<br>
+				Ben Nghe Ward, District 1, Ho Chi Minh <br>
+				TEL  84-8-3-9102222    Fax  84-8-3-9107222</p>
+			</li>
+			<li>
+				<strong>HA NOI BRANCH</strong>
+				<p>8th Floor, SacomBank building, 27 Hang Bai street,  <br>
+				Hoan Kiem District, Ha Noi<br>
+				TEL  84-4-62730541    Fax  84-4-62730544</p>
+			</li>
+		</ul>
+
+  	</div>
+
+<script src="/resources/js/jquery.min.js"></script>
+<script src="/resources/js/jquery-ui.min.js"></script>
+<script>
+(function(){
+	function setInitEvt() {
+		$('.group_table').each(function() {
+			var table = $(this).find('table'),
+				tbody = table.find('tbody');
+
+			if(!tbody.find('th').length) {
+				tbody.find('tr:odd').addClass('even');
+			}
+
+			if(table.height() >= $(this).parent().height()) {
+				table.addClass('no_bbt');
+			}
+		});
+		$('div[name=tabs]').tabs();
+		$('.datepicker').datepicker({
+			showOn:"button",
+			changeYear:true,
+			changeMonth:true
+		});
+	}
+	window.showFullLoading = function() {
+		$('.loading_cover').show();
+	}
+	window.hideFullLoading = function() {
+		$('.loading_cover').hide();
+	}
+
+	setInitEvt();
+	$(document).ajaxComplete(function() {
+		setInitEvt();
+	});
+}())
+</script>
+  </body>
+</html>

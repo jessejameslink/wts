@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.vn.app.webmain.oranews.home.service.impl.HomeDAO2">
+
+	<select id="getDBTime2" resultType="HomeVO2">
+		SELECT sysdate as timeStr FROM dual
+	</select>
+
+
+	<select id="getTables" resultType="TablesVO">
+		select category_name as tableName from adults_category
+	</select>
+
+
+</mapper>

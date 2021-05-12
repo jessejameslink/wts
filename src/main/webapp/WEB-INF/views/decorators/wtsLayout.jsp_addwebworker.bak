@@ -1,0 +1,1030 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
+<%@ taglib prefix="decorator" uri="http://www.opensymphony.com/sitemesh/decorator"%>
+<%@ taglib prefix="page" uri="http://www.opensymphony.com/sitemesh/page"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator" %>
+<%@ taglib uri="http://www.opensymphony.com/sitemesh/page" prefix="page" %>
+<%@ page import="m.config.SystemConfig"%>
+
+<%
+	String langCd 		=	(String) session.getAttribute("LanguageCookie");
+	String loginId		=	(String) session.getAttribute("ClientV");
+	String rtsServerIp	=	SystemConfig.get("SYSTEM.RTS.SERVER.IP");
+%>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>MIRAE ASSET WTS</title>
+
+<link href="/resources/css/common.css" rel="stylesheet">
+<script type="text/javascript" src="/resources/js/jquery.min.js"></script>
+<script type="text/javascript" src="/resources/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/resources/js/jquery.blockUI.min.js"></script>
+<script type="text/javascript" src="/resources/js/function_comm.js?600"></script>
+<script type="text/javascript" src="/resources/js/socket.io.js"></script>
+<script type="text/javascript" src="/resources/js/nexClient.js"></script>
+
+<script type="text/javascript" src="/resources/js/excel/excellentexport.min.js"></script>
+<script type="text/javascript" src="/resources/js/chart_new/highstock.src.js"></script>
+<script type="text/javascript" src="/resources/js/chart_new/highcharts-more.src.js"></script>
+
+
+<script type="text/javascript" src="/resources/js/jquery.floatThead.js"></script>
+<script type="text/javascript" src="/resources/js/perfect-scrollbar.min.js"></script>
+
+
+
+<script>
+	window.LOGIN_ID	=	"<%=loginId%>";
+	window.RTS_IP	=	"<%=rtsServerIp%>";
+	var sTradeTp = null;
+	var errSessionCnt	=	0;
+	var errCommCnt		=	0;
+	//console.log("$$$WTS LAYOUT START PAGE$$$");
+	
+	
+	var ttmRespone	=	"";
+	
+	$(document).ready(function() {
+		$("body").addClass("<%= langCd %>" == "en_US" ? "mdi L_EN" : "mdi L_VI");
+		$(".wts_menu > li").removeClass("on").removeClass("wide");
+		$(".wts_menu > li").addClass("wide");
+		$("#"+"${TAB_INFO}").removeClass("wide").addClass("on");
+		$("#"+"${TAB_INFO}").unbind('click');
+		$("#"+"${TAB_INFO} > button").unbind('click');
+		
+		sTradeTp = '<%=session.getAttribute("mvSTradeTp") %>';
+		if (sTradeTp == "null") {
+			$("#tradeTp").html("&nbsp;");
+		} else {
+			$("#tradeTp").html("" + <%= (langCd.equals("en_US") ? "sTradeTp" : "(sTradeTp==\"Trading\" ? \"Giao dịch\":\"Giao dịch ký quỹ\")") %> + "");
+		}
+		getClientDtl();
+		homeIdx();
+		homeNews();
+		getQueryAccountSummary();	
+		//Convert WEB WORKER LOGIC
+		startIdxWebWorker();
+		startNewsWebWorker();
+		//console.log("DOCUMENT READY+++++++++++++++++++++");
+	});
+	 
+	var idx_worker;
+	var news_worker;
+	var ttl_worker;
+	/*
+		Index GET WebWorker()
+	*/
+	function startIdxWebWorker() {
+		if(typeof(Worker) != "undefined") {
+			if(typeof(idx_worker) == "undefined") {
+				idx_worker	=	new Worker("/resources/js/worker_idx.js");
+			}
+			idx_worker.onmessage	=	function(event) {
+				updateIdx(event.data);
+			}
+			idx_worker.postMessage('작업개시');
+		} else {
+			//TTL INTERVAL CALL
+			setInterval(setIdx, 15000);
+		}
+	}
+	
+	/*
+		News GET WebWorker()
+	*/
+	function startNewsWebWorker() {
+		if(typeof(Worker) != "undefined") {
+			if(typeof(news_worker) == "undefined") {
+				news_worker	=	new Worker("/resources/js/worker_news.js");
+			}
+			news_worker.onmessage	=	function(event) {
+				updateNews(event.data);
+			}
+			var lang	=	"<%= langCd %>" == "en_US" ? "1" : "0";
+			news_worker.postMessage(lang);
+		} else {
+			setInterval(homeNews, 120000);
+		}
+	}
+	
+	function startTTLWebWorker() {
+		if(typeof(Worker) != "undefined") {
+			if(typeof(ttl_worker) == "undefined") {
+				ttl_worker	=	new Worker("/resources/js/worker_ttl.js");
+			}
+			ttl_worker.onmessage	=	function(event) {
+				//console.log("TTL LOG CHECK");
+				//console.log(event);
+				//updateNews(event.data);
+				updateTTLComet(event.data);
+			};
+			
+			ttl_worker.onerror	=	function(event) { 
+				//console.log("#[TTL]##ERROR##");
+				//console.log(event);
+				errCommCnt++;
+				if(errCommCnt > 5) {
+					errCommCnt	=	0;
+					if ("<%= langCd %>" == "en_US") {
+						alert("The connection to the server is unstable. Go to the main screen.");	
+					} else {
+						alert("Kết nối tới máy chủ không ổn định. Đi tới màn hình chính.");
+					}
+					clearInterval(checkSessions);
+					clearInterval(ttmRespone);
+					location.href	=	"/";
+				}
+			};
+			
+			ttl_worker.postMessage("");
+		} else {
+			ttmRespone = setInterval(ttlcomet, 3000);
+		}
+	}
+	
+	
+	function moveHome() {
+		if ("<%= langCd %>" == "en_US") {
+			alert("The connection to the server is unstable. Go to the main screen.");	
+		} else {
+			alert("Kết nối tới máy chủ không ổn định. Đi tới màn hình chính.");
+		}
+		clearInterval(checkSessions);
+		clearInterval(ttmRespone);
+		location.href	=	"/";
+	}
+	
+	function updateTTLComet(data) {
+		//console.log("UPDATE TTL COMET -------------------");
+		if(typeof(data) == "string") {
+			data	=	eval("("+data+")");
+		}
+		//console.log(data);
+		//console.log(data.trResult);
+		if(data.trResult == undefined) {
+			//console.log("ERROR TTL COMMET==>" + errCommCnt);
+			errCommCnt++;
+			if(errCommCnt > 5) {
+				errCommCnt	=	0;
+				if ("<%= langCd %>" == "en_US") {
+					alert("The connection to the server is unstable. Go to the main screen.");	
+				} else {
+					alert("Kết nối tới máy chủ không ổn định. Đi tới màn hình chính.");
+				}
+				clearInterval(checkSessions);
+				clearInterval(ttmRespone);
+				location.href	=	"/";
+			}
+		} else {
+			//console.log("SUCCESS TTL COMMET");
+			for(var key in data.ttl){
+				if(key == "mvAlert"){
+					//console.log("[TTL]MV ALERT");
+					//console.log(data.ttl[key]);
+					//mvAlert(data.ttl[key]);								//	체결알림 메시지
+				} else if(key == "mvMarketIndexList"){
+					//console.log("[TTL]MV MAERKET INDEX LIST");
+					//console.log(data.ttl[key]);
+				} else if(key == "mvStockWatchList"){
+					//console.log("왓치리스트및현재가 업데이트");
+					//console.log(data[key]);
+					//##openNowPrice(data[key]);
+				} else if(key == "time"){
+					//console.log("[TTL]MV TIME");
+					alert(data[key]);
+				} else if(key == "mvDynamicUpdatedOrderList"){
+					//console.log("주문정보 업데이트");
+					//console.log(data.ttl[key]);
+					//##DynamicUpdateOrderList(data[key]);
+					//##myPendingOrder();
+					mvAlertPush(data.ttl[key]);
+				}
+			}
+		}
+	}
+	
+	
+	
+	function updateNews(data) {
+		if(typeof(data) == "string") {
+			data	=	eval("("+data+")");
+		}
+		var marketLst	=	data.jsonObj.list;
+		if(marketLst != null) {
+			var htmlStr	=	"";
+			for(var i = 0; i < marketLst.length; i++) {
+				var stockNewsLst	=	marketLst[i];
+				htmlStr += "<li class=\"group_item news_list\" tabindex='" + (i + 1) + "' style=\"display: " + (htmlStr == "" ? "block" : "none") + ";\">";
+				htmlStr += "	<a onclick=\"newsView('"+stockNewsLst.articleId+"');\" style=\"cursor: pointer;font-size:13px;\">" + stockNewsLst.title + "</a>";
+				htmlStr += "</li>";
+			}
+			$("#newsList").html(htmlStr);
+		}
+	}
+	
+	
+	function homeNews() {
+		var param = {
+			  symb  : ""
+			, skey  : ""
+			, fdat  : ""
+			, tdat  : ""
+			, word  : ""
+			, mark	: "0"
+			, lang  : ("<%= langCd %>" == "en_US" ? "1" : "0")
+		};
+
+		$.ajax({
+			url      : "/market/data/getMarketNewsTop3List.do",
+			data     : param,
+			dataType : "json",
+			success  : function(data){
+				updateNews(data);
+			},
+			error     :function(e) {
+				console.log(e);
+			}
+		});
+	}
+
+	function homeIdx() {
+		$.ajax({
+			url      : "/home/homeJisu.do",
+			dataType : "json",
+			success  : function(data){
+				//console.log("HOME IDX");
+				//console.log(data)
+				
+				var kospiCnt     = 0;
+				var dowCnt       = 0;
+				var htmlDowStr   = "";
+				var htmlKospiStr = "";
+				for(var i=0; i < data.homejisu.list1.length; i++) {
+					var homejisu = data.homejisu.list1[i];
+					var inam     = homejisu.inam;
+					var rcod	=	homejisu.rcod;
+					if(inam == "VN" || inam == "VN30" || inam == "HNX" || inam == "UPCOM") {
+						dowCnt++;
+						htmlDowStr += "<div class=\"group_item Dow\" tabindex='" + dowCnt + "' style=\"display: " + (htmlDowStr == "" ? "block" : "none") + ";\">";
+						htmlDowStr += "	<h4>" + inam + "</h4>";
+						htmlDowStr += "	<ul class=\"items\">";
+						htmlDowStr += "		<li class=\"item1\"><span id=\"idx_"+rcod+"\" class='" + upDownColor(homejisu.indx) + "'>" + upDownNumZeroList(homejisu.indx) + "</span></li>";
+						htmlDowStr += "		<li class=\"item2\"><span id=\"diff_"+rcod+"\" class='" + upDownColor(homejisu.diff) + "'>" + upDownNumZeroList(homejisu.diff) + "</span></li>";
+						htmlDowStr += "		<li class=\"item3\"><span id=\"rate_"+rcod+"\" class='" + upDownColor(homejisu.diff) + "'>" + homejisu.rate + "</span></li>";
+						htmlDowStr += "	</ul>";
+						htmlDowStr += "</div>";
+					} else {
+						kospiCnt++;
+						htmlKospiStr += "<div class=\"group_item Kospi\" tabindex='" + kospiCnt + "' style=\"display: " + (htmlKospiStr == "" ? "block" : "none") + ";\">";
+						htmlKospiStr += "	<h4>" + inam + "</h4>";
+						htmlKospiStr += "	<ul class=\"items\">";
+						htmlKospiStr += "		<li class=\"item1\"><span id=\"idx_"+rcod+"\" class='" + upDownColor(homejisu.indx) + "'>" + upDownNumZeroList(homejisu.indx) + "</span></li>";
+						htmlKospiStr += "		<li class=\"item2\"><span id=\"diff_"+rcod+"\" class='" + upDownColor(homejisu.diff) + "'>" + upDownNumZeroList(homejisu.diff) + "</span></li>";
+						htmlKospiStr += "		<li class=\"item3\"><span id=\"rate_"+rcod+"\" class='" + upDownColor(homejisu.diff) + "'>" + homejisu.rate + "</span></li>";
+						htmlKospiStr += "	</ul>";
+						htmlKospiStr += "</div>";
+					}
+					$("#divKospi").html(htmlKospiStr);
+					$("#divDow").html(htmlDowStr);
+				}
+			},
+			error     :function(e) {
+				console.log(e);
+			}
+		});
+	}
+	
+	function setIdx() {
+		$.ajax({
+			url      : "/home/homeJisu.do",
+			dataType : "json",
+			success  : function(data){
+				var kospiCnt     = 0;
+				var dowCnt       = 0;
+				data	=	eval("("+data+")");
+				updateIdx(data);
+			},
+			error     :function(e) {
+				console.log(e);
+			}
+		});
+	}
+
+	function updateIdx(data) {
+		
+		if(typeof(data) == "string") {
+			data	=	eval("("+data+")");
+		}
+		for(var i=0; i < data.homejisu.list1.length; i++) {
+			var homejisu = data.homejisu.list1[i];
+			var inam     = homejisu.inam;
+			var rcod	=	homejisu.rcod;
+			$("#idx_"+rcod).removeClass("up").removeClass("upper").removeClass("low").removeClass("lower").removeClass("same").addClass(upDownColor(homejisu.indx)).html(upDownNumZeroList(homejisu.indx));
+			$("#diff_"+rcod).removeClass("up").removeClass("upper").removeClass("low").removeClass("lower").removeClass("same").addClass(upDownColor(homejisu.diff)).html(upDownNumZeroList(homejisu.diff));
+			$("#rate_"+rcod).removeClass("up").removeClass("upper").removeClass("low").removeClass("lower").removeClass("same").addClass(upDownColor(homejisu.diff)).html(upDownNumZeroList(homejisu.rate));
+		}
+	}
+	
+	function getClientDtl() {
+		var param = {};
+		$.ajax({
+			dataType  : "json",
+			url       : "/data/getClientDetail.do",
+			data      : param,
+			success   : function(data) {
+
+			},
+			error     :function(e) {
+				console.log(e);
+			}
+		});
+	}
+
+	function getQueryAccountSummary() {
+		var param = {};
+		$.ajax({
+			dataType  : "json",
+			url       : "/data/getQueryAccountSummary.do",
+			data      : param,
+			success   : function(data) {
+				
+			},
+			error     :function(e) {
+				console.log(e);
+			}
+		});
+	}
+
+	function logout() {
+		location.href="/login/logout.do";
+	}
+
+	function changeLan(str) {
+		if($('div[name=tabs]').length > 0) {
+			if("${TAB_INFO}" == "TRD_TAB") {
+				$("#tabOrdGrp1 > ul > li").each(function (i){
+					if($(this).attr("class") == "ui-state-default ui-corner-top ui-tabs-active ui-state-active") {
+						$("#TAB_IDX1").val(i);
+					}
+				});
+				$("#tabOrdGrp2 > ul > li").each(function (i){
+					if($(this).attr("class") == "ui-state-default ui-corner-top ui-tabs-active ui-state-active") {
+						$("#TAB_IDX2").val(i);
+					}
+				});
+				$("#tabOrdGrp3 > ul > li").each(function (i){
+					if($(this).attr("class") == "ui-state-default ui-corner-top ui-tabs-active ui-state-active") {
+						$("#TAB_IDX3").val(i);
+					}
+				});
+				$("#tabOrdGrp4 > ul > li").each(function (i){
+					if($(this).attr("class") == "ui-state-default ui-corner-top ui-tabs-active ui-state-active") {
+						$("#TAB_IDX4").val(i);
+					}
+				});
+			} else {
+				$("div[name=tabs] > ul > li").each(function (i){
+					if($(this).attr("class") == "ui-state-default ui-corner-top ui-tabs-active ui-state-active") {
+						$("#TAB_IDX1").val(i);
+					}
+				});
+			}
+		} else {
+			$("#TAB_IDX1").val("");
+			$("#TAB_IDX2").val("");
+			$("#TAB_IDX3").val("");
+			$("#TAB_IDX4").val("");
+		}
+
+		var param = {
+			mvCurrentLanguage : str
+			, request_locale  : str
+			, TAB_IDX1        : $("#TAB_IDX1").val()
+			, TAB_IDX2        : $("#TAB_IDX2").val()
+			, TAB_IDX3        : $("#TAB_IDX3").val()
+			, TAB_IDX4		  : $("#TAB_IDX4").val()
+		};
+		$("body").block({message: "<span>LOADING...</span>"});
+
+		$.ajax({
+			dataType  : "json",
+			url       : "/home/changelanguage.do",
+			data      : param,
+			success   : function(data) {
+				$("body").unblock();
+				if(data != null) {
+					//@TODO : 파이어 폭스에서 작동하지 않음 임시로 reload 로 변경함.
+					//history.go(0);			// page Refresh
+					location.reload();
+				}
+			},
+			error     :function(e) {
+				$("body").unblock();
+				console.log(e);
+			}
+		});
+	}
+
+	function moveWTS(mvTab, mvAction) {
+		<%
+		session.removeAttribute("TAB_IDX1");
+		session.removeAttribute("TAB_IDX2");
+		session.removeAttribute("TAB_IDX3");
+		session.removeAttribute("TAB_IDX4");
+		%>
+		location.href = mvAction;
+	}
+
+	function newsView(seqn) {
+		var param = {
+			  seqn  : seqn
+			, divId : "divNewsViewPop"
+		};
+
+		$.ajax({
+			type     : "POST",
+			url      : "/trading/popup/newsDetail.do",
+			data     : param,
+			dataType : "html",
+			success  : function(data){
+				$("#divNewsViewPop").fadeIn();
+				$("#divNewsViewPop").html(data);
+			},
+			error     :function(e) {
+				console.log(e);
+			}
+		});
+	}
+
+	function prevjisu(tagStr) {
+		var prev = "";
+		$(tagStr).each(function (){
+			if($(this).css("display") == "block") {
+				prev = $(this).attr("tabindex");
+			}
+		});
+
+		if(prev != 1) {
+			$(tagStr).each(function (){
+				if($(this).attr("tabindex") == (parseInt(prev) - 1)) {
+					$(this).css("display", "block");
+				} else {
+					$(this).css("display", "none");
+				}
+			});
+		} else {
+			$(tagStr).each(function (){
+				if($(this).attr("tabindex") == $(tagStr).length) {
+					$(this).css("display", "block");
+				} else {
+					$(this).css("display", "none");
+				}
+			});
+		}
+	}
+
+	function nextjisu(tagStr) {
+		var next = "";
+		$(tagStr).each(function (){
+			if($(this).css("display") == "block") {
+				next = $(this).attr("tabindex");
+			}
+		});
+
+		if(next < $(tagStr).length) {
+			$(tagStr).each(function (){
+				if($(this).attr("tabindex") == (parseInt(next) + 1)) {
+					$(this).css("display", "block");
+				} else {
+					$(this).css("display", "none");
+				}
+			});
+		} else {
+			$(tagStr).each(function (){
+				if($(this).attr("tabindex") == 1) {
+					$(this).css("display", "block");
+				} else {
+					$(this).css("display", "none");
+				}
+			});
+		}
+	}
+	
+	function wtsHome() {
+		location.href	=	"/wts/view/trading.do";
+	}
+	
+	function display_c(){
+		var refresh=1000; // Refresh rate in milli seconds
+		mytime=setTimeout('display_ct()',refresh)
+	}
+
+	function display_ct() {
+		var strcount
+		var d = new Date()
+		var datestring;
+		if ("<%= langCd %>" == "en_US") {
+			datestring = "Trandate " + ("0"+(d.getMonth()+1)).slice(-2) + "/" + ("0" + d.getDate()).slice(-2) + "/" + 
+		    d.getFullYear() + " " + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2) + ":" + ("0" + d.getSeconds()).slice(-2);
+		} else {
+			datestring = "Ngày GD " + ("0" + d.getDate()).slice(-2) + "/" + ("0"+(d.getMonth()+1)).slice(-2) + "/" +
+		    d.getFullYear() + " " + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2) + ":" + ("0" + d.getSeconds()).slice(-2);
+		}
+		document.getElementById('displayTime').innerHTML = datestring;
+		document.getElementById("currentDate").value =  ("0"+(d.getMonth()+1)).slice(-2) + "/" + ("0" + d.getDate()).slice(-2) + "/" +  d.getFullYear();
+	    
+		tt=display_c();
+		
+	} 
+	
+	function display_view() {
+		display_ct();
+	}
+	
+	
+	
+	function checkSession(){
+		$.ajax({
+			url:'/ttl/checkSession.do',
+			data:{chk:"checkSession"},
+			dataType: 'json',
+			success: function(data){
+				if(data.chkSession.success) {		//success flag true is multi login
+					alert(data.chkSession.mvResult_2);
+					location.href="/login/logout.do";
+				}
+			},
+			error:function(e){
+				//console.log(e);
+				//console.log("eeeeeeeeeee");
+				errSessionCnt++;
+				if(errSessionCnt > 5) {
+					if ("<%= langCd %>" == "en_US") {
+						alert("The connection to the server is unstable. Go to the main screen.");	
+					} else {
+						alert("Kết nối tới máy chủ không ổn định. Đi tới màn hình chính.");
+					}
+					
+					clearInterval(checkSessions);
+					clearInterval(ttmRespone);
+					location.href	=	"/";
+				}
+			}
+		});
+	}
+/*
+	/ttlcomet/comet.ttl?_dc=1473318395350&action=update&component=
+	{"mvDynamicUpdatedOrderList":[{"matchedDate":","mvAON":","mvAction":","mvActivationDate":"2016-09-07","mvAllorNothing":"N","mvApprovalReason":","mvApprovalRemark":","mvApprovalTime":","mvAvgPrice":"0.000","mvAvgPriceValue":"6.7","mvBS":"Buy","mvBSValue":"B","mvBankACID":","mvBankID":","mvBranchID":","mvBrokerID":","mvCancelIcon":"resources/images/en_US/Cancel_over.gif","mvCancelQty":"0","mvCancelQtyValue":"0","mvChannelID":"INT","mvClientID":"C084355","mvClientRemarks":","mvContactPhone":","mvCreateTime":","mvCurrencyID":"VND","mvDNSeq":","mvDateTime":","mvEntityID":","mvExceededAmt":","mvFilledPrice":","mvFilledQty":"0","mvGoodTillDate":","mvGrossAmt":"670.000","mvHedge":","mvHoldConfirmQty":","mvHostId":","mvInActive":","mvInputTime":"14:00:54","mvInstrumentId":","mvInstrumentShortName":","mvInvestorClassId":","mvInvestorGroupId":","mvIsManualTrade":","mvIsOddLot":","mvIsPostExecutedOrder":","mvIsPriceWarningResubmit":","mvIsReleased":","mvLastModifiedUserId":","mvLastTradeTime":","mvLotSize":10,"mvMarketID":"HO","mvModifiedDate":","mvModifiedDateTime":","mvModifiedTime":","mvModifyIcon":","mvModifyOrderID":","mvNetAmt":"671.005","mvNetAmtValue":"671.005","mvNotifiedFlag":","mvOSQty":"100","mvOSQtyValue":"100","mvOgackTime":","mvOrderBeanID":0,"mvOrderGroupID":"10333127","mvOrderID":"10422011","mvOrderType":"Limit","mvOrderTypeValue":"L","mvOrigin":","mvPendAction":","mvPendingPrice":"6.70","mvPendingQty":"100","mvPrevtradeConsideration":","mvPrice":"6.70","mvPriceValue":"6.7","mvQty":"100","mvQtyValue":"100","mvRejectReason":","mvRejectReasonDetail":","mvRemark":","mvRepOrterGroupId":","mvReporTackTime":","mvReporTime":","mvSCRIP":"N","mvShortName":","mvShortsell":","mvShowCancelIcon":"Y","mvShowModifyIcon":"Y","mvStatus":"NEW","mvStatusInternal":","mvStatusTarget":"NEW","mvStatus_Internal":","mvStockID":"ANV","mvStockName":"CT CP NAM VIET","mvStopOrderExpiryDate":","mvStopOrderType":"No","mvStopPrice":"No","mvStopPriceValue":"0","mvStopTriggerTime":","mvStopType":"STN","mvStopTypeValue":"N","mvSupervisorId":","mvSupervisorrejected":","mvTradeConsideration":","mvTradeTime":","mvUserID":","mvValidityDate":","price":","stockCode":","stockName":"}]}
+	/ttlcomet/comet.ttl?_dc=1473318395964&action=register&xtype=dynOrderList
+	{"success":true}
+	/ttlcomet/comet.ttl?_dc=1473318396965&action=update&component=
+	{"mvAlert":[{"alertType":"order","alertTime":"08/09/2016 02:00:55","stockId":"ANV","orderId":"10422011","orderGroupId":"10333127","orderStatus":"PSB"}]}
+	*/
+	function ttlInit() {
+		$.ajax({
+			url:'/ttl/ttlcomet.do',
+			data:{chk:"ttlInit"},
+			dataType: 'json',
+			success: function(data){
+				//ttmRespone = setInterval(ttlcomet, 3000);
+				startTTLWebWorker();
+			},
+			error:function(e){
+				//console.log(e);
+				console.log("eeeeeeeeeee"+e)
+			}
+		});
+	}
+
+	function ttlcomet(){
+		$.ajax({
+			url:'/ttl/ttlcomet.do',
+			data:{chk:"ttlcommet"},
+			dataType: 'json',
+			success: function(data){
+				for(var key in data.ttl){
+					if(key == "mvAlert"){
+						//console.log("[TTL]MV ALERT");
+						//console.log(data.ttl[key]);
+						//mvAlert(data.ttl[key]);								//	체결알림 메시지
+					} else if(key == "mvMarketIndexList"){
+						//console.log("[TTL]MV MAERKET INDEX LIST");
+						//console.log(data.ttl[key]);
+					} else if(key == "mvStockWatchList"){
+						//console.log("왓치리스트및현재가 업데이트");
+						//console.log(data[key]);
+						//##openNowPrice(data[key]);
+					} else if(key == "time"){
+						//console.log("[TTL]MV TIME");
+						alert(data[key]);
+					} else if(key == "mvDynamicUpdatedOrderList"){
+						//console.log("주문정보 업데이트");
+						//console.log(data.ttl[key]);
+						//##DynamicUpdateOrderList(data[key]);
+						//##myPendingOrder();
+						mvAlertPush(data.ttl[key]);
+					}
+				}
+			},
+			error:function(e){
+				//console.log(e);
+				console.log("eeeeeeeeeee"+e);
+				errCommCnt++;
+				if(errCommCnt > 5) {
+					errCommCnt	=	0;
+					if ("<%= langCd %>" == "en_US") {
+						alert("The connection to the server is unstable. Go to the main screen.");	
+					} else {
+						alert("Kết nối tới máy chủ không ổn định. Đi tới màn hình chính.");
+					}
+					clearInterval(checkSessions);
+					clearInterval(ttmRespone);
+					location.href	=	"/";
+				}
+			}
+		});
+	}
+
+	var noticePopupTimer = setTimeout(function(){}, 1);
+	var noticePopupDefaultOption = {
+		id: 'default',
+		message: '',
+		padding: '20px 40px',
+		fade: 500,
+		duration: 6000,
+		beforeShow: function(){},
+	};
+
+	function mvAlert(data) {
+		$("#tabOrdGrp2").tabs({active : 0});
+		var msg	=	"";
+		//{"mvAlert":[{"alertType":"order","alertTime":"08/09/2016 02:00:55","stockId":"ANV","orderId":"10422011","orderGroupId":"10333127","orderStatus":"PSB"}]}
+		msg	+=	"</br>";
+		msg	+=	"<p><b>ALERT TYPE : </b>" + data[0].alertType;
+		msg +=  "<p><b>ALERT TIME : </b>" + data[0].alertTime;
+		msg +=	"<p><b>STOCK ID : </b>" + data[0].stockId;
+		msg	+=	"<p><b>ORDER ID : </b>" + data[0].orderId;
+		msg +=	"<p><b>ORDER GROUP ID : </b>" + data[0].orderGroupId;
+		if (data[0].orderStatus == "PSB") {
+			msg +=	"<p><b>ORDER STATUS : </b>" + "NEW";
+		} else {
+			msg +=	"<p><b>ORDER STATUS : </b>" + data[0].orderStatus;	
+		}
+		msg +=	"</br>";
+		noticePopupDefaultOption.message	=	msg;
+		noticePopupInit(noticePopupDefaultOption);
+		$("#tabOrdGrp2").tabs({active : 0});
+		
+		try {
+			enquiryorder("ALL");
+		} catch (e) {
+			//console.log("NOT EXCUTE ENQUIRY ORDER");
+		}
+	}
+/* 
+	function mvAlert() {
+		$("#tabOrdGrp2").tabs({active : 0});
+		var msg	=	"";
+		//{"mvAlert":[{"alertType":"order","alertTime":"08/09/2016 02:00:55","stockId":"ANV","orderId":"10422011","orderGroupId":"10333127","orderStatus":"PSB"}]}
+		msg	+=	"</br>";
+		msg	+=	"<p><b>ALERT TYPE : </b>" + "order";
+		msg +=  "<p><b>ALERT TIME : </b>" + "08/09/2016 02:00:55";
+		msg +=	"<p><b>STOCK ID : </b>" + "ANV";
+		msg	+=	"<p><b>ORDER ID : </b>" + "10422011";
+		msg +=	"<p><b>ORDER GROUP ID : </b>" + "10333127";
+		msg +=	"<p><b>ORDER STATUS : </b>" + "PSB";
+		msg +=	"</br>";
+		noticePopupDefaultOption.message	=	msg;
+		noticePopupInit(noticePopupDefaultOption);
+	}
+ */
+	function mvAlertPush(data) {
+	 	//console.log("데이터 확인========>");
+	 	//console.log(data);
+		$("#tabOrdGrp2").tabs({active : 0});
+		var msg	=	"";
+		//{"mvDynamicUpdatedOrderList":[{"matchedDate":","mvAON":","mvAction":","mvActivationDate":"2016-09-07","mvAllorNothing":"N","mvApprovalReason":","mvApprovalRemark":","mvApprovalTime":","mvAvgPrice":"0.000","mvAvgPriceValue":"6.7","mvBS":"Buy","mvBSValue":"B","mvBankACID":","mvBankID":","mvBranchID":","mvBrokerID":","mvCancelIcon":"resources/images/en_US/Cancel_over.gif","mvCancelQty":"0","mvCancelQtyValue":"0","mvChannelID":"INT","mvClientID":"C084355","mvClientRemarks":","mvContactPhone":","mvCreateTime":","mvCurrencyID":"VND","mvDNSeq":","mvDateTime":","mvEntityID":","mvExceededAmt":","mvFilledPrice":","mvFilledQty":"0","mvGoodTillDate":","mvGrossAmt":"670.000","mvHedge":","mvHoldConfirmQty":","mvHostId":","mvInActive":","mvInputTime":"14:00:54","mvInstrumentId":","mvInstrumentShortName":","mvInvestorClassId":","mvInvestorGroupId":","mvIsManualTrade":","mvIsOddLot":","mvIsPostExecutedOrder":","mvIsPriceWarningResubmit":","mvIsReleased":","mvLastModifiedUserId":","mvLastTradeTime":","mvLotSize":10,"mvMarketID":"HO","mvModifiedDate":","mvModifiedDateTime":","mvModifiedTime":","mvModifyIcon":","mvModifyOrderID":","mvNetAmt":"671.005","mvNetAmtValue":"671.005","mvNotifiedFlag":","mvOSQty":"100","mvOSQtyValue":"100","mvOgackTime":","mvOrderBeanID":0,"mvOrderGroupID":"10333127","mvOrderID":"10422011","mvOrderType":"Limit","mvOrderTypeValue":"L","mvOrigin":","mvPendAction":","mvPendingPrice":"6.70","mvPendingQty":"100","mvPrevtradeConsideration":","mvPrice":"6.70","mvPriceValue":"6.7","mvQty":"100","mvQtyValue":"100","mvRejectReason":","mvRejectReasonDetail":","mvRemark":","mvRepOrterGroupId":","mvReporTackTime":","mvReporTime":","mvSCRIP":"N","mvShortName":","mvShortsell":","mvShowCancelIcon":"Y","mvShowModifyIcon":"Y","mvStatus":"NEW","mvStatusInternal":","mvStatusTarget":"NEW","mvStatus_Internal":","mvStockID":"ANV","mvStockName":"CT CP NAM VIET","mvStopOrderExpiryDate":","mvStopOrderType":"No","mvStopPrice":"No","mvStopPriceValue":"0","mvStopTriggerTime":","mvStopType":"STN","mvStopTypeValue":"N","mvSupervisorId":","mvSupervisorrejected":","mvTradeConsideration":","mvTradeTime":","mvUserID":","mvValidityDate":","price":","stockCode":","stockName":"}]}
+		
+		
+		
+		msg	+=	"</br>";
+		msg	+=	"<p><b>ORDER TYPE : </b>" + data[0].mvBS;
+		msg +=  "<p><b>TIME : </b>" + data[0].mvInputTime;
+		msg +=	"<p><b>STOCK ID : </b>" + data[0].mvStockID;
+		msg +=	"<p><b>STOCK NAME : </b>" + data[0].mvStockName;
+		if(data[0].mvFilledQty == "0" || data[0].mvFilledQty == 0) {
+			msg	+=	"<p><b>PRICE : </b>" + upDownNumList(String(data[0].mvPriceValue*1000));
+			msg	+=	"<p><b>VOLUME : </b>" + upDownNumList(data[0].mvQtyValue);
+		} else {
+			msg +=	"<p><b>EXECUTE VOlUME : </b>" + upDownNumList(data[0].mvFilledQty);
+			msg +=	"<p><b>AVG Price : </b>" + upDownNumList(String(data[0].mvAvgPrice*1000));
+		}
+		msg +=	"<p><b>ORDER STATUS : </b>" + data[0].mvStatus;
+		msg +=	"</br>";
+		
+		/*
+		msg	+=	"</br>";
+		msg	+=	"<p><b>ORDER TYPE : </b>" + data[0].mvBS;
+		msg	+=	"<p><b>STOCK ID : </b>" + data[0].mvStockID;
+		msg	+=	"<p><b>PRICE : </b>" + upDownNumList(String(data[0].mvPriceValue*1000));
+		msg	+=	"<p><b>VOLUME : </b>" + upDownNumList(data[0].mvQtyValue);
+		msg	+=	"<p><b>STATUS : </b>" + data[0].mvStatus;
+		msg	+=	"</br>";
+		*/
+		
+		noticePopupDefaultOption.message	=	msg;
+		noticePopupInit(noticePopupDefaultOption);
+		
+		$("#tabOrdGrp2").tabs({active : 0});
+		try {
+			enquiryorder("ALL");
+		} catch (e) {
+			console.log("NOT EXCUTE ENQUIRY ORDER");
+		}
+	}
+
+	function noticePopupInit(options) {
+		// Set Options
+		var settings = $.extend({}, noticePopupDefaultOption, options);
+		$("div.noticePopup").attr("id", settings.id);
+		var element = "div#"+settings.id+".noticePopup";
+
+		// Set Style
+		$(element).css("padding", settings.padding);
+		// Set Message
+		$(element+"> div.noticeMessage").html(settings.message);
+
+		// Set Position
+		var width = $(element).outerWidth();
+		var height = $(element).outerHeight();
+		$(element).css("margin-left", String(-width/2)+"px");
+		$(element).css("margin-top", String(-height/2)+"px");
+
+		// Clear Animation
+		$(element).stop();
+		clearTimeout(noticePopupTimer);
+		$(element).css("display", "none");
+
+		// Start Animation
+		$(element).fadeIn(settings.fade, function() {
+			noticePopupTimer = setTimeout(function()	{
+			$(element).fadeOut(settings.fade);
+			}, settings.duration);
+		});
+	}
+	
+	function showCardMatrixPopUp() {
+		var param = {};
+		$.ajax({
+			dataType  : "json",
+			url       : "/trading/data/showCardMatrixPopUp.do",
+			data      : param,
+			success   : function(data) {
+ 				//console.log("AUTH POPUP CHECK!!!!!!!!");
+ 				//console.log(data);
+			},
+			error     :function(e) {
+				console.log(e);
+			}
+		});
+	}
+	
+	function intervalJisu() {
+		nextjisu(".Kospi");
+	}
+
+	ttlInit();
+	checkSessions = setInterval(checkSession,7000);
+	//index change inter 10 seconds
+	indInter	=	setInterval(intervalJisu, 10000);
+	
+	//	TTL Relate END
+</script>
+<decorator:head />
+</head>
+
+<body onload="display_view();" class="flexible">
+	<div class="wrapper">
+		<input type="hidden" id="TAB_IDX1" name="TAB_IDX1" value=""/>
+		<input type="hidden" id="TAB_IDX2" name="TAB_IDX2" value=""/>
+		<input type="hidden" id="TAB_IDX3" name="TAB_IDX3" value=""/>
+		<input type="hidden" id="TAB_IDX4" name="TAB_IDX4" value=""/>
+		<!-- header -->
+		<header>
+		<div class="container">
+			<h1>
+				<img src="/resources/images/logo.png" alt="MIRAE ASSET WTS" onclick="wtsHome();" style="cursor:pointer;">
+			</h1>
+			<div class="right">
+				<div class="side">
+					<div class="buttons">
+					<!--
+						<button type="button" onclick="window.open('login.html')">Logout</button>
+					-->
+					<button type="button" onclick="javascript:logout();"><%= (langCd.equals("en_US") ? "Logout" : "Đăng xuất") %></button>
+						<span class="language">
+							<button type="button" onclick="changeLan('en_US');"<%= (langCd.equals("en_US") ? " class=\"on\"" : "") %>>
+								<img src="/resources/images/icon_lang_en.gif" alt="English">
+							</button>
+							<button type="button" onclick="changeLan('vi_VN');"<%= (langCd.equals("en_US") ? "" : " class=\"on\"") %>>
+								<img src="/resources/images/icon_lang_vi.gif" alt="vietnamese">
+							</button>
+						</span>
+					</div>
+					<div class="text">
+						<strong><%=session.getAttribute("ClientV") %></strong>
+						<em><%= ( "null".equals(session.getAttribute("mvSName")) ? session.getAttribute("mvSName") : "&nbsp;") %></em>
+						<span class="em" id="tradeTp"></span>
+						<span id="displayTime"></span>
+						<input id="currentDate" type="hidden"/>
+					</div>
+					<div class="wtsJisu">
+						<div class="wrap_ticker">
+							<div>
+								<h3 class="screen_out">주요지수 (국내/해외)</h3>
+								<div class="group_index">
+									<!-- KOSPI -->
+									<div class="index_area">
+										<div id="divKospi" class="group_wrap">
+										</div>
+										<div class="move_area">
+											<button type="button" id="kospiPrev" onclick="prevjisu('.Kospi')" class="btn_prev">prev</button>
+											<button type="button" id="kospiNext" onclick="nextjisu('.Kospi')" class="btn_next">next</button>
+										</div>
+									</div>
+									<!-- //KOSPI -->
+									<!-- DOW -->
+									<div class="index_area">
+										<div id="divDow" class="group_wrap">
+										</div>
+										<div class="move_area">
+											<button type="button" id="dowPrev" onclick="prevjisu('.Dow')" class="btn_prev">prev</button>
+											<button type="button" id="dowNext" onclick="nextjisu('.Dow')" class="btn_next">next</button>
+										</div>
+									</div>
+									<!-- //DOW -->
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- gnb -->
+		<div class="gnb">
+			<ul class="wts_menu">
+				<li id="TRD_TAB" class="wide">
+					<button type="button" onclick="moveWTS('TRD_TAB', 'trading.do')"><%= (langCd.equals("en_US") ? "TRADING" : "GIAO DỊCH") %></button>
+				</li>
+				<li id="PTF_TAB">
+					<button type="button" onclick="moveWTS('PTF_TAB', 'portfolio.do')"><%= (langCd.equals("en_US") ? "PORTFOLIO" : "DANH MỤC ĐẦU TƯ") %></button>
+				</li>
+				<li id="ONS_TAB" class="wide">
+					<button type="button" onclick="moveWTS('ONS_TAB', 'online.do')"><%= (langCd.equals("en_US") ? "ONLINE SERVICES" : "DỊCH VỤ TRỰC TUYẾN") %></button>
+				</li>
+				<li id="CHT_TAB">
+					<button type="button" onclick="moveWTS('CHT_TAB', 'chart.do')"><%= (langCd.equals("en_US") ? "CHART" : "BIỂU ĐỒ") %></button>
+				</li>
+				
+				<li id="BNK_TAB">
+				<%-- 
+					<button type="button" onclick="moveWTS('BNK_TAB', 'banking.do')"><%= (langCd.equals("en_US") ? "BANKING" : "CHUYỂN TIỀN") %></button>
+				 --%>
+				 	<button type="button" onclick="moveWTS('BNK_TAB', 'banking.do')"><%= (langCd.equals("en_US") ? "CASH SERVICE" : "DỊCH VỤ CHUYỂN TIỀN") %></button>
+				</li>
+				<%-- 
+				<li id="MIF_TAB" class="wide">
+					<button type="button" onclick="moveWTS('MIF_TAB', 'market.do')"><%= (langCd.equals("en_US") ? "MARKET INFORMATION" : "THÔNG TIN THỊ TRƯỜNG") %></button>
+				</li>
+				 --%>
+				<li id="MSL_TAB" class="wide">
+					<button type="button" onclick="moveWTS('MSL_TAB', 'margin.do')"><%= (langCd.equals("en_US") ? "MARGIN STOCK LIST" : "DANH MỤC CK KÝ QUỸ") %></button>
+				</li>
+				<li id="ACC_TAB" class="wide">
+					<button type="button" onclick="moveWTS('ACC_TAB', 'account.do')"><%= (langCd.equals("en_US") ? "ACCOUNT MANAGEMENT" : "QUẢN LÝ TÀI KHOẢN") %></button>
+				</li>
+			</ul>
+		</div>
+		<!-- //gnb --> </header>
+		<!-- //header -->
+
+		<!-- news Detail pop -->
+		<div id="divNewsViewPop" class="modal_wrap"></div>
+		<!-- news Detail pop -->
+
+		<!-- 템플릿 사용부분 -->
+		<!-- content -->
+		<decorator:body></decorator:body>
+		<!-- //템플릿 사용부분 -->
+
+		<div class="footer">
+			<!-- information -->
+			<!-- 
+			<div id="information">
+				<h2 class="screen_out">최근 조회 종목,주요지수,주요뉴스</h2>
+				<div class="wrap_ticker">
+					<div>
+						<h3 class="screen_out">주요지수 (국내/해외)</h3>
+						<div class="group_index">
+							KOSPI
+							<div class="index_area">
+								<div id="divKospi" class="group_wrap">
+								</div>
+								<div class="move_area">
+									<button type="button" id="kospiPrev" onclick="prev('.Kospi')" class="btn_prev">prev</button>
+									<button type="button" id="kospiNext" onclick="next('.Kospi')" class="btn_next">next</button>
+								</div>
+							</div>
+							//KOSPI
+							DOW
+							<div class="index_area">
+								<div id="divDow" class="group_wrap">
+								</div>
+								<div class="move_area">
+									<button type="button" id="dowPrev" onclick="prev('.Dow')" class="btn_prev">prev</button>
+									<button type="button" id="dowNext" onclick="next('.Dow')" class="btn_next">next</button>
+								</div>
+							</div>
+							//DOW
+						</div>
+					</div>
+				</div>
+			</div>
+			// information
+ -->
+			<div class="cb">
+				<div class="news">
+					<ul id="newsList" class="group_wrap">
+					</ul>
+					
+					
+    
+					
+					
+					<div class="move_area">
+						<!-- e: 이미지를 텍스트로 교체 -->
+						<button type="button" id="newsPrev" onclick="prevjisu('.news_list')" class="btn_prev" style="width: 15px;height: 15px;">prev</button>
+						<button type="button" id="newsNext" onclick="nextjisu('.news_list')" class="btn_next" style="width: 15px;height: 15px;">next</button>
+						<!-- // e: 이미지를 텍스트로 교체 -->
+					</div>
+				</div>
+				<div class="copy"><%= (langCd.equals("en_US") ? "© 2016 Mirae Asset Securities (Vietnam) LLC" : "© 2016 Công ty Trách nhiệm Hữu hạn Chứng khoán Mirae Asset (Việt Nam)") %></div>
+				<!-- 
+				<div class="copy">copyright &copy; MIRAE ASSET Securities Vietnam.</div>
+				 -->
+			</div>
+		</div>
+		
+		<div id="" class="noticePopup">
+			<div class="noticeMessage">
+	 		</div>
+		</div>
+		
+	</div>
+<!--
+	<div class="modal_wrap loading_cover">
+		<div class="modal"></div>
+		<div class="loading">loading</div>
+	</div>
+-->
+	<script>
+		(function(){
+			function setInitEvt() {
+				$(".group_table").each(function() {
+					var table = $(this).find("table"),
+						tbody = table.find("tbody");
+
+					if(!tbody.find("th").length) {
+						tbody.find("tr:odd").addClass("even");
+					}
+
+					if(table.height() >= $(this).parent().height()) {
+						table.addClass("no_bbt");
+					}
+				});
+			}
+			setInitEvt();
+/*
+			$.blockUI.defaults.onUnblock = function () {
+				setInitEvt();
+			}
+*/
+			$("div[name=tabs]").tabs();
+			$("#tabOrdGrp2").tabs("destroy");
+
+			window.showFullLoading = function() {
+				$(".loading_cover").show();
+			}
+			window.hideFullLoading = function() {
+				$(".loading_cover").hide();
+			}
+		}())
+	</script>
+</body>
+</html>

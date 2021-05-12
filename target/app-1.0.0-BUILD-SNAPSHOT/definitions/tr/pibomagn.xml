@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!--	홈화면 지수	-->
+
+<transaction trcode="pibomagn" servicecode=""  type="row">
+	<value io="in"		name="client_id"	type="string"	length="16"	comment="acount"/>
+	<value io="in"		name="user_id"		type="string"	length="16"	comment=""/>
+	<value io="in"		name="skey"			type="string"	length="20"	comment=""/>
+	<value io="in"		name="from_date"	type="string"	length="10"	comment=""/>
+	<value io="in"		name="to_date"		type="string"	length="10"	comment=""/>
+	
+	<value io="out"		name="nrec"			type="string"		length="5"	comment="# of record"/>
+	<value io="out"		name="next"			type="string"		length="2"	comment="Next Data ? (Y/N)"/>
+	<value io="out"		name="skey"			type="string"		length="30"	comment="Search Key"/>
+	<value io="out"		name="o_name"		type="string"		length="50"	comment=""/>
+	<value io="out"		name="o_date_ex"	type="string"		length="20"	comment=""/>
+	
+	<table name="list1" count="nrec">
+		<value io="out"	name="stt"				type="string"	length="5"	comment="stt"/>
+		<value io="out"	name="clientid"			type="string"	length="8"	comment=""/>
+		<value io="out"	name="tradingaccseq"	type="string"	length="2"	comment=""/>
+		<value io="out"	name="trandate"			type="string"	length="12"	comment=""/>
+		<value io="out"	name="loand"			type="string"	length="20"	comment=""/>
+		<value io="out"	name="cmanualreserve"	type="string"	length="20"	comment=""/>
+		<value io="out"	name="debitinterest"	type="string"	length="20"	comment=""/>		
+		<value io="out"	name="advanceavailable"	type="string"	length="20"	comment=""/>
+	</table>	
+</transaction>

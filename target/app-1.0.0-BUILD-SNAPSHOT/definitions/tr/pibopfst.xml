@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!--   거래량 순위  -->
+<transaction trcode="pibopfst" servicecode=""  type="row">
+	
+	<value io="in"		name="skey"		type="string"		length="12"	comment="Search key "/>
+	<value io="in"		name="lang"		type="string"		length="1"	comment="Language  0:VN  1:EN"/>
+	
+	<value io="out"		name="name"			type="string"		length="120"	comment="Company full name"/>
+	<value io="out"		name="sector1"		type="string"		length="120"	comment="Sector level 1"/>
+	<value io="out"		name="sector2"		type="string"		length="120"	comment="Sector level 2"/>
+	<value io="out"		name="sector3"		type="string"		length="120"	comment="Sector level 3"/>	
+	
+</transaction>

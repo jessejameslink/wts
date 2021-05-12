@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!--  관심종목 그룹 등록/수정/삭제	-->
+<!-- 
+func -> 필요한 변수
+'I'  -> usid, func, grpn, dscr, nrec, code
+'U'  -> usid, func, grpn, dscr, nrec, code
+'Q'  -> usid, func
+
+func -> 출력되는 변수
+'I'  -> rcod
+'U'  -> rcod
+'Q'  -> rcod, nrec, grid(grpn, qnum, dscr)
+
+ -->
+<transaction trcode="piho1001" servicecode=""  type="row">
+	<value io="in"		name="usid"		type="string"	length="16"	comment="USER ID"/>
+	<value io="in"		name="func"		type="string"	length="1"	comment="Function code'U/I': UPDATE  'Q' : QUERY"/>
+	<value io="in"		name="grpn"		type="string"	length="2"	comment="관심그룹코드 (1 ~ 10)"/>
+	<value io="in"		name="dscr"		type="string"	length="15"	comment="관심그룹명"/>
+	<value io="in"		name="nrec"		type="string"	length="4"	comment="종목개수 (1 ~ 80)"/>
+	<value io="in"		name="code"		type="string"	length="960"	comment="종목코드 MAX_KCOD : 80"/>
+	<value io="out"		name="rcod"		type="string"	length="1"	comment="'1':정상, '0':에러"/>
+	<value io="out"		name="nrec"		type="string"	length="4"	comment="그룹 개수"/>
+	<table name="list1" count="nrec">
+		<value io="out"	name="grpn"		type="string"	length="2"	comment="관심그룹코드 (1 ~ 10)"/>
+		<value io="out"	name="irec"		type="string"	length="4"	comment="종목개수"/>
+		<value io="out"	name="dscr"		type="string"	length="15"	comment="(조회용)관심그룹명"/>
+	</table>
+</transaction>

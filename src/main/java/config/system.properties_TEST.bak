@@ -1,0 +1,57 @@
+#
+#Tue Jul 23 14:45:48 KST 2013
+
+DOWNLOADABLE_DOCFILE_EXTENSION=pdf, xls, doc, txt, ppt, hwp
+TIMEWAIT=30000
+TIMEOUT=30000
+
+#\uC808\uB300\uACBD\uB85C
+#ABSOLUTE_PATH=/eclipse-jee-mars-2-win32/workspace/com
+ABSOLUTE_PATH=D:/Sinh-Handle/Eclipse/eclipse-jee-mars-2-win32/workspace/comv2/src/main/webapp
+#TR\uACBD\uB85C
+#DEFINITIONS_PATH=definitions/tr/
+DEFINITIONS_PATH=/definitions/tr/
+# Action \uACBD\uB85C
+ACTIONS_PATH=definitions/action/
+#Web Root \uACBD\uB85C
+#WEBROOT_DIR=/actus/web/docroot/
+WEBROOT_DIR=/usr/local/server/apache-tomcat-8.5.0/webapps/
+
+#\uC804\uC790\uC11C\uBA85 \uC11C\uBC84 \uC815\uBCF4 - \uC548\uC4F8\uAC70.
+
+SERVERIP=172016150167
+#\uC811\uC18D\uD560 BP \uC11C\uBC84 \uC815\uBCF4
+#BPHOST=172.16.150.65
+SERVERHOST=127.0.0.1
+BPHOST=10.0.31.9
+BPPORT=15204
+#\uBA54\uC77C \uBC1C\uC1A1 \uC11C\uBC84 
+#\uAC80\uC0C9\uC11C\uBC84 IP/Port
+
+#\uB85C\uADF8 \uC815\uBCF4
+ACCESSLOG=C:/log/access.log
+TRLOG=C:/log/kt_wtest_171_trlog.log
+LOGINLOG=C:/log/kt_wtest_171_login.log
+
+#\uAE30\uD0C0 \uC124\uC815
+MAXUSECOUNT=10000
+USEFALSIFY=FALSE
+SEED_KEY=8N9qU8aHUuA9g61v6wcXhw\=\=
+USEKEYPAD=TRUE
+GCINTERVAL=1000
+ISLOG=TRUE
+DB_DISABLED=false
+
+
+#NEW ADD ITEM
+FILE_DOWN=C:/filedown/
+
+
+
+SYSTEM.USER.AGENT		=	Mozilla/5.0
+SYSTEM.TTL.SERVER.IP	=	10.0.15.22
+SYSTEM.TTL.SERVER		=	http://10.0.15.22/
+#RTS SERVER Engine IP
+SYSTEM.RTS.SERVER.IP	=	10.0.31.9
+VN.WTS.ITEM.CODE		=	/resources/vn/conf/vncode.cod
+SYSTEM.LOCAL.IP			=	C:\

@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>BANKING</title>
+
+<link href="/resources/css/common.css" rel="stylesheet">
+
+</head>
+  <body class="mdi">
+
+  	<div class="wrapper">
+		<!-- header -->
+		<!-- //header -->
+
+		<!-- 템플릿 사용부분 -->
+		<div class="mdi_container">
+			<!-- tabs -->
+			<div name="tabs">
+				<ul class="nav nav_tabs " role="tablist">
+					<li role="presentation" class="active"><a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">Cash Transfer</a></li>
+					<li role="presentation"><a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">Cash Deposit Online</a></li>
+				</ul>
+				<div class="tab_content banking">
+
+					<!-- cash transfer -->
+					<div role="tabpanel" class="tab_pane" id="tab1">
+						<div class="wrap_left">
+							<div class="tf_place same on">
+								<div class="group_table">
+									<table class="table no_bbt">
+										<caption>Cash Transfer Place</caption>
+										<colgroup>
+											<col width="150" />
+											<col />
+										</colgroup>
+										<tbody>
+											<tr>
+												<th scope="row">Cash balance</th>
+												<td>100,000</td>
+											</tr>
+											<tr>
+												<th scope="row">Cash withdrawable</th>
+												<td>100,000</td>
+											</tr>
+											<tr>
+												<th scope="row">Transfer type</th>
+												<td class="text_left">
+													<div>
+														<input type="radio" id="type_ef" name="type_sm" />
+														<label for="type_ef">Excluding fee</label>
+													</div>
+													<div>
+														<input type="radio" id="type_if" name="type_sm" />
+														<label for="type_if">Including fee</label>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<th scope="row">Beneficiary<br />account number</th>
+												<td class="text_left">
+													<select>
+														<option>0000000</option>
+														<option>0000000</option>
+													</select>
+												</td>
+											</tr>
+											<tr>
+												<th scope="row">Account type</th>
+												<td>Banking Account</td>
+											</tr>
+											<tr>
+												<th scope="row">Beneficiary fullname</th>
+												<td class="input"><input class="text" type="text" value=""></td>
+											</tr>
+											<tr>
+												<th scope="row">Bank name</th>
+												<td class="input"><input class="text" type="text" value=""></td>
+											</tr>
+											<tr>
+												<th scope="row">Bank branch</th>
+												<td class="input"><input class="text" type="text" value=""></td>
+											</tr>
+											<tr>
+												<th scope="row">Transfer amount</th>
+												<td class="input"><input class="text won" type="text" value="0"></td>
+											</tr>
+											<tr>
+												<th scope="row">Remark</th>
+												<td class="input"><input class="text won" type="text" value="0"></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<div class="mdi_bottom cb">
+									<input class="color" type="submit" value="Submit" />
+									<input type="reset" value="Cancel" />
+								</div>
+								<p class="em">* Please enter the full name of  Beneficiary Bank and the Branch.</em></p>
+							</div>
+							<!-- // .tf_place.same -->
+
+							<div class="tf_place reg">
+								<div class="group_table">
+									<table class="table no_bbt">
+										<caption>Cash Transfer Place</caption>
+										<colgroup>
+											<col />
+											<col width="54%" />
+										</colgroup>
+										<tbody>
+											<tr>
+												<th scope="row">Cash balance</th>
+												<td>100,000</td>
+											</tr>
+											<tr>
+												<th scope="row">Cash withdrawable</th>
+												<td>100,000</td>
+											</tr>
+											<tr>
+												<th scope="row">Transfer type</th>
+												<td class="text_left">
+													<div>
+														<input type="radio" id="type_ef2" name="type_reg" />
+														<label for="type_ef2">Excluding fee</label>
+													</div>
+													<div>
+														<input type="radio" id="type_if2" name="type_reg"  />
+														<label for="type_if2">Including fee</label>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<th scope="row">Full name</th>
+												<td></td>
+											</tr>
+											<tr>
+												<th scope="row">Account Number</th>
+												<td class="text_left">
+													<div class="input_dropdown">
+														<span>
+															<input type="text" title="value">
+															<button type="button">show</button>
+														</span>
+														<div>
+															<ul>
+																<li><a href="">123-ABC-123</a></li>
+																<li><a href="">123-ABC-123</a></li>
+																<li><a href="">123-ABC-123</a></li>
+															</ul>
+														</div>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<th scope="row">Bank</th>
+												<td></td>
+											</tr>
+											<tr>
+												<th scope="row">Transfer amount</th>
+												<td class="input"><input class="text won" type="text" value="0"></td>
+											</tr>
+											<tr>
+												<th scope="row">Remark</th>
+												<td class="input"><input class="text won" type="text" value="0"></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<div class="mdi_bottom cb">
+									<input class="color" type="submit" value="Submit" />
+									<input type="reset" value="Cancel" />
+								</div>
+							</div>
+							<!-- // .tf_place.reg -->
+						</div>
+						<div class="wrap_right">
+							<div class="transfer_type">
+								Money transfer type :
+								<input type="radio" id="ba_sn" name="type" data-tg="same" checked="checked" />
+								<label for="ba_sn">Bank account with the same beneficiary name</label>
+								<input type="radio" id="ba_re" name="type" data-tg="reg" />
+								<label for="ba_re">Registered Bank Account</label>
+								<div class="input_dropdown">
+									<span>
+										<input type="text" title="value">
+										<button type="button">show</button>
+									</span>
+									<div>
+										<ul>
+											<li><a href="">123-ABC-123</a></li>
+											<li><a href="">123-ABC-123</a></li>
+											<li><a href="">123-ABC-123</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+
+							<div class="search_area in">
+								<label for="fromSearch">From</label>
+								<input id="fromSearch" type="text" class="datepicker" placeholder="13/05/2016">
+
+								<label for="toSearch">To</label>
+								<input id="toSearch" type="text" class="datepicker" placeholder="13/05/2016">
+
+								<button class="btn" type="button">Search</button>
+							</div>
+
+							<div class="group_table double">
+								<table class="table">
+									<caption>Cash Advance Transaction</caption>
+									<colgroup>
+										<col />
+										<col />
+										<col />
+										<col />
+										<col />
+										<col />
+										<col width="60" />
+									</colgroup>
+									<thead>
+										<tr>
+											<th scope="col" rowspan="2">Transfer Type</th>
+											<th scope="col" rowspan="2">Transfer amount</th>
+											<th scope="col">Beneficiary account</th>
+											<th scope="col">Bank name</th>
+											<th scope="col" rowspan="2">Status</th>
+											<th scope="col">Approve Time</th>
+											<th scope="col" rowspan="2">Cancel</th>
+										</tr>
+										<tr>
+											<th scope="col">Beneficiary name</th>
+											<th scope="col">Bank branch</th>
+											<th scope="col">Date</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td class="text_center"></td>
+											<td class="text_center"></td>
+											<td class="text_center">
+												<div>account</div>
+												<div>name</div>
+											</td>
+											<td class="text_center">
+												<div>bank</div>
+												<div>branch</div>
+											</td>
+											<td class="text_center"></td>
+											<td class="text_center">
+												<div>time</div>
+												<div>date</div>
+											</td>
+											<td class="text_center">
+												<button type="button" class="btn_del">cancel</button>
+											</td>
+										</tr>
+										<tr>
+											<td class="text_center"></td>
+											<td class="text_center"></td>
+											<td class="text_center">
+												<div>account</div>
+												<div>name</div>
+											</td>
+											<td class="text_center">
+												<div>bank</div>
+												<div>branch</div>
+											</td>
+											<td class="text_center"></td>
+											<td class="text_center">
+												<div>time</div>
+												<div>date</div>
+											</td>
+											<td class="text_center">
+												<button type="button" class="btn_del">cancel</button>
+											</td>
+										</tr>
+										<tr>
+											<td class="text_center"></td>
+											<td class="text_center"></td>
+											<td class="text_center">
+												<div>account</div>
+												<div>name</div>
+											</td>
+											<td class="text_center">
+												<div>bank</div>
+												<div>branch</div>
+											</td>
+											<td class="text_center"></td>
+											<td class="text_center">
+												<div>time</div>
+												<div>date</div>
+											</td>
+											<td class="text_center">
+												<button type="button" class="btn_del">cancel</button>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<!-- // cash transfer -->
+
+					<!-- cash deposit onilne -->
+					<div role="tabpanel" class="tab_pane" id="tab2">
+						<div class="cdo_header">
+							<p class="remitter">
+								<span>Remitter : NGUYEN TUAN HAI</span>
+								<span>Account No : 077C080123</span>
+							</p>
+							<p>Beneficiary : Please choose</p>
+						</div>
+
+						<div class="cdo_container">
+							<div class="pull_left">
+								<p>
+									<input type="radio" id="cdo_wms1" />
+									<label for="cdo_wms1">Mirae Asset Wealth Management Securities (Vietnam) Limited Liability Company</label>
+								</p>
+								<div class="grid_area" style="height:166px;">
+									<div class="group_table">
+										<table class="table">
+											<caption class="hidden">Mirae Asset Wealth Management Securities (Vietnam) Limited Liability Company</caption>
+											<colgroup>
+												<col width="50" />
+												<col />
+												<col />
+											</colgroup>
+											<thead>
+												<tr>
+													<th scope="col">No</th>
+													<th scope="col">Account</th>
+													<th scope="col">At Bank</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td colspan="3" class="text_left">Beneficiary Company : Mirae Asset Wealth Management Securities (Vietnam) Limited Liability</td>
+												</tr>
+												<tr>
+													<td class="text_center">1</td>
+													<td class="text_left">
+														<input type="radio" id="cdo_wms1_1"/>
+														<label for="cdo_wms1_1">1301.0000.428.432</label>
+													</td>
+													<td class="text_left">BIDV-SGD-II</td>
+												</tr>
+												<tr>
+													<td class="text_center">2</td>
+													<td class="text_left">
+														<input type="radio" id="cdo_wms1_2"/>
+														<label for="cdo_wms1_2">1301.0000.428.432</label>
+													</td>
+													<td class="text_left">BIDV-SGD-II</td>
+												</tr>
+												<tr>
+													<td class="text_center">3</td>
+													<td class="text_left">
+														<input type="radio" id="cdo_wms1_3"/>
+														<label for="cdo_wms1_3">1301.0000.428.432</label>
+													</td>
+													<td class="text_left">BIDV-SGD-II</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+
+							<div class="pull_right">
+								<p>
+									<input type="radio" id="cdo_wms2" />
+									<label for="cdo_wms2">Mirae Asset Wealth  Management Securities (VN) LLC - Ha Noi Branch</label>
+								</p>
+								<div class="grid_area" style="height:166px;">
+									<div class="group_table">
+										<table class="table">
+											<caption class="hidden">Mirae Asset Wealth  Management Securities (VN) LLC - Ha Noi Branch</caption>
+											<colgroup>
+												<col width="50" />
+												<col />
+												<col />
+											</colgroup>
+											<thead>
+												<tr>
+													<th scope="col">No</th>
+													<th scope="col">Account</th>
+													<th scope="col">At Bank</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td colspan="3" class="text_left">Beneficiary Company : Mirae Asset Wealth Management Securities (Vietnam) Limited Liability</td>
+												</tr>
+												<tr>
+													<td class="text_center">1</td>
+													<td class="text_left">
+														<input type="radio" id="cdo_wms2_1"/>
+														<label for="cdo_wms2_1">1301.0000.428.432</label>
+													</td>
+													<td class="text_left">BIDV-SGD-III</td>
+												</tr>
+												<tr>
+													<td class="text_center">2</td>
+													<td class="text_left">
+														<input type="radio" id="cdo_wms2_2"/>
+														<label for="cdo_wms2_2">1301.0000.428.432</label>
+													</td>
+													<td class="text_left">BIDV-SGD-III</td>
+												</tr>
+												<tr>
+													<td class="text_center">3</td>
+													<td class="text_left">
+														<input type="radio" id="cdo_wms2_3"/>
+														<label for="cdo_wms2_3">1301.0000.428.432</label>
+													</td>
+													<td class="text_left">BIDV-SGD-III</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- // .cdo_container -->
+
+						<div class="line_block">
+							<span>Remark :</span><br />Deposit for contract No. 077C080123 of Mr/Mrs: NGUYEN TUAN HAI
+						</div>
+
+						<div class="mdi_bottom center">
+							<input class="color" type="submit" value="Next">
+							<input type="reset" value="Cancel">
+						</div>
+					</div>
+					<!-- // enticash deposit online  -->
+
+				</div>
+			</div>
+		</div>
+		<!-- //템플릿 사용부분 -->
+
+
+  	</div>
+
+<script src="/resources/js/jquery.min.js"></script>
+<script src="/resources/js/jquery-ui.min.js"></script>
+<script>
+$('.transfer_type input').on('change', function() {
+	var tg = $(this).attr('data-tg');
+	$('.tf_place')
+		.removeClass('on')
+		.filter('.' + tg)
+		.addClass('on');
+});
+
+(function(){
+	function setInitEvt() {
+		$('.group_table').each(function() {
+			var table = $(this).find('table'),
+				tbody = table.find('tbody');
+
+			if(!tbody.find('th').length) {
+				tbody.find('tr:odd').addClass('even');
+			}
+
+			if(table.height() >= $(this).parent().height()) {
+				table.addClass('no_bbt');
+			}
+		});
+		$('div[name=tabs]').tabs();
+		$('.datepicker').datepicker({
+			showOn:"button",
+			changeYear:true,
+			changeMonth:true
+		});
+	}
+	window.showFullLoading = function() {
+		$('.loading_cover').show();
+	}
+	window.hideFullLoading = function() {
+		$('.loading_cover').hide();
+	}
+
+	setInitEvt();
+	$(document).ajaxComplete(function() {
+		setInitEvt();
+	});
+}())
+</script>
+  </body>
+</html>

@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!--   거래량 순위  -->
+<transaction trcode="pibopfbs" servicecode=""  type="row">
+		
+	<value io="in"		name="skey"		type="string"		length="12"	comment="Search key "/>
+	<value io="in"		name="lang"		type="string"		length="1"	comment="Language  0:VN  1:EN"/>
+	
+	<value io="out"		name="scope"			type="string"		length="2048"	comment="Scope Text"/>
+	<value io="out"		name="mileStone"		type="string"		length="2048"	comment="Milestone Text"/>
+	<value io="out"		name="scopel"			type="string"		length="5"		comment="Scopel Text Length"/>
+	<value io="out"		name="mileStonel"		type="string"		length="5"		comment="Milestone Text Length"/>
+	
+</transaction>

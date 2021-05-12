@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!--   홈화면 뉴스  -->
+<transaction trcode="pibotitl" servicecode=""  type="row">
+	<value io="in"		name="flag"		type="string"	length="1"	comment="1: Market News, 2: Research"/>
+	<value io="in"		name="skey"		type="string"	length="32"	comment="Search Key"/>
+	
+	<value io="out"		name="rcod"		type="string"	length="5"	comment="RTS Symbol"/>
+	<value io="out"		name="next"		type="string"	length="1"	comment="Next Data ? (Y/N)"/>
+	<value io="out"		name="nrec"		type="string"	length="4"	comment="# of Record"/>
+	<value io="out"		name="skey"		type="string"	length="32"	comment="Search Key"/>
+	
+	<table name="list1" count="nrec">
+		<value io="out"	name="seqn"		type="string"	length="20"	comment="Seqn for News Text"/>
+		<value io="out"	name="date"		type="string"	length="8"	comment="Date"/>
+		<value io="out"	name="time"		type="string"	length="6"	comment="Time"/>
+		<value io="out"	name="titl"		type="string"	length="80"	comment="News Title"/>
+		<value io="out"	name="sour"		type="string"	length="20"	comment="News Vender"/>
+		<value io="out"	name="symb"		type="string"	length="12"	comment="Security Symbol"/>
+	</table>
+</transaction>

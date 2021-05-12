@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!--   	Market News Title List  		-->
+<!-- 	전체조회 : fdat, tdat, word에 빈 값 	-->
+<!-- 	종목코드는 아직 안나옴 					-->
+<!-- 	mid->lang 값 0:베트남어, 1:영어 		-->
+<transaction trcode="pibonews" servicecode=""  type="row">
+	<value io="in"		name="skey"		type="string"		length="12"	comment="Search Key"/>
+	<value io="in"		name="symb"		type="string"		length="12"	comment="Security Symb"/>
+	<value io="in"		name="fdat"		type="string"		length="10"	comment="From Date 'DD/MM/YYYY'"/>
+	<value io="in"		name="tdat"		type="string"		length="10"	comment="To Date 'DD/MM/YYYY'"/>
+	<value io="in"		name="word"		type="string"		length="12"	comment="Search Keyword"/>
+	<value io="in"		name="mark"		type="string"		length="1"	comment="Market 0: ALL, 1: HOSE 2: HNX, 3: UPCOM"/>
+	<value io="in"		name="lang"		type="string"		length="1"	comment="Language  0:VN  1:EN"/>
+	<value io="out"		name="rcod"		type="string"		length="5"	comment="RTS Symbol"/>
+	<value io="out"		name="next"		type="string"		length="1"	comment="Next Data ? (Y/N)"/>
+	<value io="out"		name="nrec"		type="string"		length="4"	comment="# of Record"/>
+	<value io="out"		name="skey"		type="string"		length="12"	comment="Search Key"/>
+	
+	<table name="list1" count="nrec">
+		<value io="out"	name="seqn"		type="string"	length="12"	comment="Seqn for News Text"/>
+		<value io="out"	name="date"		type="string"	length="10"	comment="Date"/>
+		<value io="out"	name="time"		type="string"	length="8"	comment="Time"/>
+		<value io="out"	name="titl"		type="string"	length="80"	comment="News Title"/>
+		<value io="out"	name="sour"		type="string"	length="20"	comment="News Vender"/>
+		<value io="out"	name="symb"		type="string"	length="12"	comment="Security Symbol"/>
+	</table>
+	
+</transaction>

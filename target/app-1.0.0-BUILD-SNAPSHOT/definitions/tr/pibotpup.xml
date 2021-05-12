@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!--   현재가(3호가)  -->
+<transaction trcode="pibotpup" servicecode=""  type="row">
+	<value io="in"		name="symb"		type="string"	length="12"	comment="종목코드"/>
+	<value io="out"		name="rcod"		type="string"	length="12"	comment="실시간 심볼"/>
+	
+	<value io="out"		name="htim"		type="string"	length="6"	comment="호가시간"/>
+	<value io="out"		name="curr"		type="string"	length="9"	comment="시가"/>
+	
+	<value io="out"		name="open"		type="string"	length="9"	comment="시가"/>
+	<value io="out"		name="high"		type="string"	length="9"	comment="고가"/>
+	<value io="out"		name="lowe"		type="string"	length="9"	comment="저가"/>
+	
+	<value io="out"		name="ceil"		type="string"	length="9"	comment="상한가"/>
+	<value io="out"		name="floo"		type="string"	length="9"	comment="하한가"/>
+		
+	<value io="out"		name="selp1"		type="string"	length="9"	comment="매도1호가"/>
+	<value io="out"		name="selp2"		type="string"	length="9"	comment="매도2호가"/>
+	<value io="out"		name="selp3"		type="string"	length="9"	comment="매도3호가"/>
+	<value io="out"		name="selp4"		type="string"	length="9"	comment="매도3호가"/>
+	<value io="out"		name="selp5"		type="string"	length="9"	comment="매도3호가"/>
+	<value io="out"		name="selp6"		type="string"	length="9"	comment="매도3호가"/>
+	<value io="out"		name="selp7"		type="string"	length="9"	comment="매도3호가"/>
+	<value io="out"		name="selp8"		type="string"	length="9"	comment="매도3호가"/>
+	<value io="out"		name="selp9"		type="string"	length="9"	comment="매도3호가"/>
+	<value io="out"		name="selp10"		type="string"	length="9"	comment="매도3호가"/>
+		
+	<value io="out"		name="buyp1"		type="string"	length="9"	comment="매수1호가"/>
+	<value io="out"		name="buyp2"		type="string"	length="9"	comment="매수2호가"/>
+	<value io="out"		name="buyp3"		type="string"	length="9"	comment="매수3호가"/>
+	<value io="out"		name="buyp4"		type="string"	length="9"	comment="매수3호가"/>
+	<value io="out"		name="buyp5"		type="string"	length="9"	comment="매수3호가"/>
+	<value io="out"		name="buyp6"		type="string"	length="9"	comment="매수3호가"/>
+	<value io="out"		name="buyp7"		type="string"	length="9"	comment="매수3호가"/>
+	<value io="out"		name="buyp8"		type="string"	length="9"	comment="매수3호가"/>
+	<value io="out"		name="buyp9"		type="string"	length="9"	comment="매수3호가"/>
+	<value io="out"		name="buyp10"		type="string"	length="9"	comment="매수3호가"/>
+	
+	<value io="out"		name="selv1"		type="string"	length="9"	comment="매도1호가수량"/>
+	<value io="out"		name="selv2"		type="string"	length="9"	comment="매도2호가수량"/>
+	<value io="out"		name="selv3"		type="string"	length="9"	comment="매도3호가수량"/>
+	<value io="out"		name="selv4"		type="string"	length="9"	comment="매도3호가수량"/>
+	<value io="out"		name="selv5"		type="string"	length="9"	comment="매도3호가수량"/>
+	<value io="out"		name="selv6"		type="string"	length="9"	comment="매도3호가수량"/>
+	<value io="out"		name="selv7"		type="string"	length="9"	comment="매도3호가수량"/>
+	<value io="out"		name="selv8"		type="string"	length="9"	comment="매도3호가수량"/>
+	<value io="out"		name="selv9"		type="string"	length="9"	comment="매도3호가수량"/>
+	<value io="out"		name="selv10"		type="string"	length="9"	comment="매도3호가수량"/>
+	
+	<value io="out"		name="buyv1"		type="string"	length="9"	comment="매수1호가수량"/>
+	<value io="out"		name="buyv2"		type="string"	length="9"	comment="매수2호가수량"/>
+	<value io="out"		name="buyv3"		type="string"	length="9"	comment="매수3호가수량"/>
+	<value io="out"		name="buyv4"		type="string"	length="9"	comment="매수3호가수량"/>
+	<value io="out"		name="buyv5"		type="string"	length="9"	comment="매수3호가수량"/>
+	<value io="out"		name="buyv6"		type="string"	length="9"	comment="매수3호가수량"/>
+	<value io="out"		name="buyv7"		type="string"	length="9"	comment="매수3호가수량"/>
+	<value io="out"		name="buyv8"		type="string"	length="9"	comment="매수3호가수량"/>
+	<value io="out"		name="buyv9"		type="string"	length="9"	comment="매수3호가수량"/>
+	<value io="out"		name="buyv10"		type="string"	length="9"	comment="매수3호가수량"/>
+	
+	<value io="out"		name="selc1"		type="string"	length="7"	comment="매도1호가직전대비"/>
+	<value io="out"		name="selc2"		type="string"	length="7"	comment="매도2호가직전대비"/>
+	<value io="out"		name="selc3"		type="string"	length="7"	comment="매도3호가직전대비"/>
+	<value io="out"		name="selc4"		type="string"	length="7"	comment="매도3호가직전대비"/>
+	<value io="out"		name="selc5"		type="string"	length="7"	comment="매도3호가직전대비"/>
+	<value io="out"		name="selc6"		type="string"	length="7"	comment="매도3호가직전대비"/>
+	<value io="out"		name="selc7"		type="string"	length="7"	comment="매도3호가직전대비"/>
+	<value io="out"		name="selc8"		type="string"	length="7"	comment="매도3호가직전대비"/>
+	<value io="out"		name="selc9"		type="string"	length="7"	comment="매도3호가직전대비"/>
+	<value io="out"		name="selc10"		type="string"	length="7"	comment="매도3호가직전대비"/>
+	
+	<value io="out"		name="buyc1"		type="string"	length="7"	comment="매수1호가직전대비"/>
+	<value io="out"		name="buyc2"		type="string"	length="7"	comment="매수2호가직전대비"/>
+	<value io="out"		name="buyc3"		type="string"	length="7"	comment="매수3호가직전대비"/>
+	<value io="out"		name="buyc4"		type="string"	length="7"	comment="매수3호가직전대비"/>
+	<value io="out"		name="buyc5"		type="string"	length="7"	comment="매수3호가직전대비"/>
+	<value io="out"		name="buyc6"		type="string"	length="7"	comment="매수3호가직전대비"/>
+	<value io="out"		name="buyc7"		type="string"	length="7"	comment="매수3호가직전대비"/>
+	<value io="out"		name="buyc8"		type="string"	length="7"	comment="매수3호가직전대비"/>
+	<value io="out"		name="buyc9"		type="string"	length="7"	comment="매수3호가직전대비"/>
+	<value io="out"		name="buyc10"		type="string"	length="7"	comment="매수3호가직전대비"/>
+	
+	<value io="out"		name="svol"			type="string"	length="9"	comment="매도호가총수량"/>
+	<value io="out"		name="bvol"			type="string"	length="9"	comment="매수호가총수량"/>
+	
+	<value io="out"		name="self"			type="string"	length="9"	comment="Sell Foreign"/>
+	<value io="out"		name="buyf"			type="string"	length="9"	comment="Buy Foreign"/>
+	
+	<value io="out"		name="trom"			type="string"	length="16"	comment="Total Room"/>
+</transaction>

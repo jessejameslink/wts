@@ -1,0 +1,397 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%
+	String langCd = (String) session.getAttribute("LanguageCookie");
+	String loginId	=	(String) session.getAttribute("ClientV");
+%>
+
+<HTML>
+	<script language="javascript" src="/html/RTS/nexClient_test.js"></script>
+	<script type="text/javascript" src="/resources/js/socket.io.js"></script>
+	<script type="text/javascript" src="/resources/js/jquery.blockUI.min.js"></script>
+	<script>
+		if(!nexClient.socketConnection) {
+			nexClient.webSocketConnect();
+		}
+	
+		$(document).ready(function() {
+			$("#divAddStockPop").hide();
+			grpCombo();
+
+			$('.layer_sub_btn .layer_sub').hide();
+			$('.layer_sub_btn button').click(function(e){
+				var self = $(this);
+
+				if(self.closest('.btn_wrap').length){ // sub layer button
+					self.closest('.layer_sub').hide();
+					$('.layer_sub_btn button').removeClass('on');
+				} else { // layer toggle button
+					self.toggleClass('on');
+					$('.layer_sub_btn button').not(this).removeClass('on');
+					$('.layer_sub_btn .layer_sub').not($(this).next()).hide();
+					self.next().toggle();
+				}
+			});
+		});
+
+		function grpCombo() {
+			$("#grdWat").block({message: "<span>LOADING...</span>"});
+			var param = {
+				  usid  : $("#watUsid").val()
+				, func  : "Q"
+			};
+
+			$.ajax({
+				url      : "/trading/data/getGrpList.do",
+				data     : param,
+				dataType : 'json',
+				success  : function(data){
+					$("#watchGrp").find("option").remove();
+					if(data.grpList != null) {
+						if(data.grpList.list1 != null) {
+							for(var i=0; i < data.grpList.list1.length; i++) {
+								var grpCode = data.grpList.list1[i];
+								$("#watchGrp").append("<option value='" + grpCode.grpn + "'>" + grpCode.dscr + "</option>");
+							}
+						}
+						$("#grdWat").unblock();
+
+						if($("#grpId").val() != "") {
+							$("#watchGrp").val($("#grpId").val());
+							$("#grpId").val("");
+						}
+
+						getWatchList();
+					}
+				},
+				error     :function(e) {
+					$("#grdWat").unblock();
+					console.log(e);
+					if(e.status == "404") {
+						alert("Please re-search.....");
+					}
+				}
+			});
+		}
+
+		function getWatchList() {
+			$("#grdWat").block({message: "<span>LOADING...</span>"});
+			var param = {
+				  usid  : $("#watUsid").val()
+				, grpn  : $("#watchGrp").val()
+				, lang  : ("<%= langCd %>" == "en_US" ? "1" : "0")
+			};
+
+			$.ajax({
+				url      : "/trading/data/getWatchList.do",
+				data     : param,
+				dataType : 'json',
+				success  : function(data){
+					
+					console.log("GET WATCH LIST");
+					console.log(data);
+					
+					
+					$("#grdWat").unblock();
+					if(data.watchList != null) {
+						if(data.watchList.list1 != null) {
+							var watchStr = "";
+							for(var i=0; i < data.watchList.list1.length; i++) {
+								var watchList = data.watchList.list1[i];
+								var cssColor  = displayColorWatch(watchList.diff.substring(0, 1));
+								watchStr += "<tr id=\"srow_"+watchList.rcod+"\" onclick=\"selItem('" + watchList.rcod + "');\">";
+								watchStr += "	<td style=\"cursor: pointer;\" class=\"text_left c_code\" id='trStock'>" + watchList.rcod + "</td>";                       // Stock
+								watchStr += "	<td style=\"cursor: pointer;\" class=\"text_left c_code dotted\" id='trMarket'>" + watchList.mark + "</td>";               // Market
+								watchStr += "	<td style=\"cursor: pointer;\" class=\"upper\">" + upDownNumList(watchList.ceil) + "</td>";                    // CE
+								watchStr += "	<td style=\"cursor: pointer;\" class=\"dotted lower\" id='trFL'>" + upDownNumList(watchList.floo) + "</td>";          // FL
+								watchStr += "	<td style=\"cursor: pointer;\" class=\"dotted same1\" id='trRef'>" + upDownNumList(watchList.pcpr) + "</td>";             // Ref
+								
+								watchStr += "	<td style=\"cursor: pointer;\" id='trBidPri1' class=' " + cssColor + "'>" + diffNum(watchList.buye) + "</td>";               // Pri.1
+								watchStr += "	<td style=\"cursor: pointer;\" class=\"dotted "+cssColor+"\" id='trBidVol1'>" + upDownNumList(watchList.bvol) + "</td>";         // Vol.1
+								
+								watchStr += "	<td style=\"cursor: pointer;\" id='trPrice' class='" + cssColor + "'>" + upDownNumList(watchList.mpic.substring(1)) + "</td>";   // Price
+								watchStr += "	<td style=\"cursor: pointer;\" class=\"dotted " + cssColor +"\" id='trVol'>" + upDownNumList(watchList.mvol) + "</td>";             // Vol
+								watchStr += "	<td style=\"cursor: pointer;\" class=\"dotted " + cssColor + "\" id='trUpDown'>" + upDownNumList(watchList.mdif.substring(1)) + "</td>";       // +/-
+								
+								watchStr += "	<td style=\"cursor: pointer;\" class=\"dotted " + cssColor + "\" id='trPer'>" + upDownNumList(watchList.mrat.substring(1)) + "</td>";          // %
+								watchStr += "	<td style=\"cursor: pointer;\" class=\"dotted " + cssColor + "\" id='trTotalVol'>" + upDownNumList(watchList.avol) + "</td>";        // Total Vol.
+								watchStr += "	<td style=\"cursor: pointer;\" id='trAskPri1' class=' " + cssColor + "'>" + upDownNumList(watchList.sell.substring(1)) + "</td>";               // Pri.1
+								watchStr += "	<td style=\"cursor: pointer;\" class=\"dotted  " + cssColor + "\" id='trAskVol1'>" + upDownNumList(watchList.svol) + "</td>";         // Vol.1
+								
+								watchStr += "	<td style=\"cursor: pointer;\" id='trOpen' class='" + displayColorWatch(watchList.open.substring(0, 1)) + "'>" + diffNum(watchList.open) + "</td>";                  // Open
+								watchStr += "	<td style=\"cursor: pointer;\" class=\"dotted " + displayColorWatch(watchList.high.substring(0, 1)) + "\" id='trHigh'>" + diffNum(watchList.high) + "</td>";         // High
+								watchStr += "	<td style=\"cursor: pointer;\" class=\"dotted " + displayColorWatch(watchList.lowe.substring(0, 1)) + "\" id='trLow'>" + diffNum(watchList.lowe) + "</td>";          // Low
+								
+								watchStr += "	<td style=\"cursor: pointer;\" id='trFBuy' class=''>" + upDownNumList(watchList.buyf) + "</td>";                  // F.Buy
+								watchStr += "	<td style=\"cursor: pointer;\" class=\"dotted\" id='trFSell'>" + upDownNumList(watchList.self) + "</td>";        // F.Sell
+								watchStr += "	<td style=\"cursor: pointer;\" class=\"dotted\" id='trRoom'>" + upDownNumList(watchList.trom) + "</td>";         // Room
+								watchStr += "</tr>";
+							}
+
+							$("#trWatchList").html(watchStr);
+							
+							
+							console.log(data.watchList.list1);
+							console.log(data.watchList.list1.length)
+							
+							if(data.watchList.list1.length != 0) {
+								selItem(data.watchList.list1[0].rcod);
+							}
+						}
+						//실시간 시세 호출
+						myStock();
+					}
+				},
+				error     :function(e) {
+					console.log(e);
+					$("#grdWat").unblock();
+				}
+			});
+		}
+
+		function addGroup() {
+			$("#grpId").val($("#watchGrp").val());
+			$.ajax({
+				type     : "POST",
+				url      : "/trading/popup/watchListGroup.do",
+				data     : $("#frmAddGroup").serialize(),
+				dataType : "html",
+				success  : function(data){
+					$("#divAddStockPop").fadeIn();
+					$("#divAddStockPop").html(data);
+				},
+				error     :function(e) {
+					console.log(e);
+				}
+			});
+		}
+
+		/*
+		function selItem(pTr) {
+			var _this = $(pTr).closest("tr");
+			alert(_this.find("#trStock").text());
+//			trdSelItem();
+		}
+		*/
+		/*
+			Trading Company changes the entire screen when you select favorite stocks
+			@TODO : Full and sole window when the window Add consider when distinguishing code
+			@Create Date : 2016/08/31
+			@Create By : Temi
+			@Modyfy History
+			-
+		*/
+		function selItem(rcod) {
+			trdSelItem(rcod);                               // Trading Window Action Define
+		}
+		
+		function realData_B(data) {
+			console.log("@@@@  REAL DATA B CALL");
+			console.log(data);
+			bindTprc(data);
+		}
+		
+		/*
+		<tr>	
+		<td class="text_center">13:59:04</td>	
+		<td>11,380</td>	
+		<td class="arrow upper upper">90</td>	
+		<td class="upper">6.52</td>	
+		<td></td>	
+		<td>11,500</td>
+		</tr>
+		
+		*/
+		
+		/*
+			000	RTS-Type
+			034	체결시간
+			023	현재가
+			024	대비
+			033	등락율
+			032	체결수량
+			027	거래량
+			030	고가
+			031	저가
+		*/
+		function timeFormat(str) {
+			return str.substring(0, 2) + ":" + str.substring(2, 4) + ":" + str.substring(4, 6);
+		}
+		
+		function bindTimely(data) {
+			console.log("BIND TIMELY CALL");
+			console.log(data);
+			var $setTr	=	$("#grdTimely");
+			var htmlStr	=	"";
+			var cssColor  = displayColor(data.value["024"].substring(0, 1));
+			var cssArrow  = displayArrow(data.value["024"].substring(0, 1));
+			
+			htmlStr += "<tr>";
+			htmlStr += "	<td class=\"text_center\">" + getTime(data.value["034"]) + "</td>"; 					// Time
+			htmlStr += "	<td>" + upDownNumList(data.value["023"].substring(1)) + "</td>"; 									// Current
+			htmlStr += "	<td class='" + cssArrow + cssColor + "'>" + data.value["024"].substring(1) + "</td>"; 	// +/-
+			htmlStr += "	<td class='" + cssColor + "'>" + data.value["033"].substring(1) + "</td>"; 				// %Change
+			htmlStr += "	<td></td>"; 																			// Executed vol.
+			htmlStr += "	<td>" + upDownNumList(data.value["032"], "null") + "</td>"; 							// Volume
+			htmlStr += "</tr>";
+			
+			$setTr.before(htmlStr)
+			
+		}
+		
+		var trCnt	=	10;
+		
+		function bindT() {
+			var $setTr	=	$("#grdTimely");
+			var htmlStr	=	"";
+		
+			htmlStr += "<tr>";
+			htmlStr += "	<td class=\"text_center\">" + trCnt + "</td>"; 					// Time
+			htmlStr += "	<td>" + trCnt + "</td>"; 									// Current
+			htmlStr += "	<td>" + trCnt + "</td>"; 									// Current
+			htmlStr += "	<td>" + trCnt + "</td>"; 									// Current
+			htmlStr += "	<td>" + trCnt + "</td>"; 									// Current
+			htmlStr += "	<td>" + trCnt + "</td>"; 									// Current
+			htmlStr += "</tr>";
+			
+			trCnt++;
+			$("#grdTimely").append(htmlStr)
+		}
+		
+		
+		
+		
+		
+		function realData_A(data) {
+			realBindWatch(data);
+			bindTimely(data);
+		}
+		
+		function realBindWatch(data) {
+			console.log("REAL BIND WATCH");
+			console.log(data);//td[id='bid_rcod']
+			var cssColor  = displayColorWatch(data.value["024"].substring(0, 1));
+			$("#srow_"+data.code).find("#trPrice").html(upDownNumList(data.value["023"].substring(1))).removeClass("upper").removeClass("up1").removeClass("same1").removeClass("low1").removeClass("lower").addClass(cssColor);	//	현재가
+			$("#srow_"+data.code).find("#trVol").html(upDownNumList(data.value["032"].substring(1))).removeClass("upper").removeClass("up1").removeClass("same1").removeClass("low1").removeClass("lower").addClass(cssColor);		//	체결수량
+			$("#srow_"+data.code).find("#trUpDown").html(upDownNumList(data.value["024"].substring(1))).removeClass("upper").removeClass("up1").removeClass("same1").removeClass("low1").removeClass("lower").addClass(cssColor);	//	대비
+			$("#srow_"+data.code).find("#trPer").html(upDownNumList(data.value["033"].substring(1))).removeClass("upper").removeClass("up1").removeClass("same1").removeClass("low1").removeClass("lower").addClass(cssColor);		//	등락율
+			$("#srow_"+data.code).find("#trTotalVol").html(upDownNumList(data.value["027"])).removeClass("upper").removeClass("up1").removeClass("same1").removeClass("low1").removeClass("lower").addClass(cssColor);				//	거래량
+			$("#srow_"+data.code).find("#trHigh").html(diffNum(data.value["030"])).removeClass("upper").removeClass("up1").removeClass("same1").removeClass("low1").removeClass("lower").addClass(cssColor);						//	고가
+			$("#srow_"+data.code).find("#trLow").html(diffNum(data.value["031"])).removeClass("upper").removeClass("up1").removeClass("same1").removeClass("low1").removeClass("lower").addClass(cssColor);						//	저가
+		}
+		
+		/*
+		000	RTS-Type
+		034	체결시간
+		023	현재가
+		024	대비
+		033	등락율
+		032	체결수량
+		027	거래량
+		030	고가
+		031	저가
+		
+		$("#srow_BVH).find("#trPrice")
+		*/
+		function realData_wat_(data) {
+			console.log(data);//td[id='bid_rcod']
+			var cssColor  = displayColorWatch(data.value["024"].substring(0, 1));
+			$("#srow_"+data.code).find("#trPrice").html(upDownNumList(data.value["023"].substring(1))).removeClass("upper").removeClass("up1").removeClass("same1").removeClass("low1").removeClass("lower").addClass(cssColor);	//	현재가
+			$("#srow_"+data.code).find("#trVol").html(upDownNumList(data.value["032"].substring(1))).removeClass("upper").removeClass("up1").removeClass("same1").removeClass("low1").removeClass("lower").addClass(cssColor);		//	체결수량
+			$("#srow_"+data.code).find("#trUpDown").html(upDownNumList(data.value["024"].substring(1))).removeClass("upper").removeClass("up1").removeClass("same1").removeClass("low1").removeClass("lower").addClass(cssColor);	//	대비
+			$("#srow_"+data.code).find("#trPer").html(upDownNumList(data.value["033"].substring(1))).removeClass("upper").removeClass("up1").removeClass("same1").removeClass("low1").removeClass("lower").addClass(cssColor);		//	등락율
+			$("#srow_"+data.code).find("#trTotalVol").html(upDownNumList(data.value["027"])).removeClass("upper").removeClass("up1").removeClass("same1").removeClass("low1").removeClass("lower").addClass(cssColor);				//	거래량
+			$("#srow_"+data.code).find("#trHigh").html(diffNum(data.value["030"])).removeClass("upper").removeClass("up1").removeClass("same1").removeClass("low1").removeClass("lower").addClass(cssColor);						//	고가
+			$("#srow_"+data.code).find("#trLow").html(diffNum(data.value["031"])).removeClass("upper").removeClass("up1").removeClass("same1").removeClass("low1").removeClass("lower").addClass(cssColor);						//	저가
+		}
+		
+		
+		function myStock() {
+			//var gubuns = ['wat_'];
+			var gubuns = ['A'];
+			var vals = [];
+			var symbols = [];
+			vals.push("<%=loginId%>");
+			symbols.push("<%=loginId%>");
+			console.log("____MY STOCK__C__");
+			nexClient.rtsReg({
+				pName	: 'WATCHLST',	//실시간데이터받을 타겟팅ID (미래에셋증권 WTS에서는 화면번호로 적용중 )						
+				GUBUNS	: gubuns,		//심볼 카테고리 (정의된 연결 키  A, B Q ...)
+				VALUES	: vals		//요청 key value (주식코드,지수 등등..)
+			});
+			
+			
+			
+			nexClient.pushMystOn({
+				pName	: 	'WATCHLST'	//실시간데이터받을 타겟팅ID (미래에셋증권 WTS에서는 화면번호로 적용중 )
+				, usid	:	"<%=loginId%>"
+				, grpn	:	'1 '
+				, lang	:	'1'
+				, symbols	: 	symbols
+				, receive	:	function(data) {
+						console.log("-----------WATCH LIST DATA---------");
+						console.log(data);
+				}
+			});
+		}
+	</script>
+<body class="mdi">
+	<form id="frmAddGroup">
+		<input type="hidden" id="watUsid" name="watUsid" value="<%= session.getAttribute("ClientV") %>">
+		<input type="hidden" id="divId" name="divId" value="divAddStockPop">
+		<input type="hidden" id="grpId" name="grpId" value="">
+	</form>
+	<div class="tab_content">
+		<div role="tabpanel" class="tab_pane" id="tab1">
+			<div class="table_right">
+				<select id="watchGrp" name="watchGrp" onchange="getWatchList()">
+				</select>
+				<button class="btn" type="button" id="addGroup" name="addGroup" onclick="addGroup()">+ <%= (langCd.equals("en_US") ? "Add" : "Thêm") %></button>
+			</div>
+			<div id="grdWat" class="grid_area" style="height:251px;">
+				<div class="group_table dark">
+					<table class="table">
+						<thead>
+							<tr>
+								<th class="bd_bt2" colspan="2"><%= (langCd.equals("en_US") ? "Name" : "Tên CK") %></th>
+								<th class="bd_bt2" colspan="3"><%= (langCd.equals("en_US") ? "Reference" : "Tham chiếu") %></th>
+								<th class="bd_bt2" colspan="2"><%= (langCd.equals("en_US") ? "Best Bid" : "Dư mua") %></th>
+								<th class="bd_bt2" colspan="5"><%= (langCd.equals("en_US") ? "Matching" : "Khớp lệnh") %></th>
+								<th class="bd_bt2" colspan="2"><%= (langCd.equals("en_US") ? "Best Ask" : "Dư bán") %></th>
+								<th class="bd_bt2" colspan="3"><%= (langCd.equals("en_US") ? "Price history" : "Lịch sử giá") %></th>
+								<th class="bd_bt2" colspan="3"><%= (langCd.equals("en_US") ? "Foreign Investment" : "Giao dịch NN") %></th>
+							</tr>
+							<tr>
+								<th><%= (langCd.equals("en_US") ? "Stock" : "Mã CK") %></th>
+								<th><%= (langCd.equals("en_US") ? "Market" : "Sàn") %></th>
+								<th><%= (langCd.equals("en_US") ? "CE" : "Trần") %></th>
+								<th><%= (langCd.equals("en_US") ? "FL" : "Sàn") %></th>
+								<th><%= (langCd.equals("en_US") ? "Ref" : "TC") %></th>
+								<th><%= (langCd.equals("en_US") ? "Pri.1" : "Giá 1") %></th>
+								<th><%= (langCd.equals("en_US") ? "Vol.1" : "KL 1") %></th>
+								<th><%= (langCd.equals("en_US") ? "Price" : "Giá") %></th>
+								<th><%= (langCd.equals("en_US") ? "Vol" : "KL") %></th>
+								<th><%= (langCd.equals("en_US") ? "+/-" : "+/-") %></th>
+								<th><%= (langCd.equals("en_US") ? "%" : "%") %></th>
+								<th><%= (langCd.equals("en_US") ? "Total Vol." : "Tổng KL") %></th>
+								<th><%= (langCd.equals("en_US") ? "Pri.1" : "Giá 1") %></th>
+								<th><%= (langCd.equals("en_US") ? "Vol.1" : "KL 1") %></th>
+								<th><%= (langCd.equals("en_US") ? "Open" : "Mở") %></th>
+								<th><%= (langCd.equals("en_US") ? "High" : "Cao") %></th>
+								<th><%= (langCd.equals("en_US") ? "Low" : "Thấp") %></th>
+								<th><%= (langCd.equals("en_US") ? "F.Buy" : "NN Mua") %></th>
+								<th><%= (langCd.equals("en_US") ? "F.Sell" : "NN bán") %></th>
+								<th><%= (langCd.equals("en_US") ? "Room" : "Room") %></th>
+							</tr>
+						</thead>
+						<tbody id="trWatchList">
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- //WATCH LIST GROUP -->
+	<div id="divAddStockPop" class="modal_wrap"></div>
+	<!-- //WATCH LIST GROUP -->
+</body>
+</HTML>

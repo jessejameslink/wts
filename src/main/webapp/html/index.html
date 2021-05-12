@@ -1,0 +1,2270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>MIRAE ASSET WTS</title>
+
+<link href="/resources/css/common.css" rel="stylesheet">
+
+</head>
+  <body class="mdi">
+
+	<!-- e: 클래스 추가 -->
+  	<div class="wrapper">
+  	<!-- // e: 클래스 추가 -->
+		<!-- header -->
+		<header>
+			<div class="container">
+				<h1><img src="/resources/images/logo.png" alt="MIRAE ASSET WTS"></h1>
+				<div class="right">
+					<div class="side">
+						<div class="buttons">
+							<button type="button" onclick="window.open('login.jsp')">Logout</button>
+							<span class="language">
+								<button type="button" class="on"><img src="/resources/images/icon_lang_en.gif" alt="English"></button>
+								<button type="button" onclick="window.open('layer.jsp')"><img src="/resources/images/icon_lang_vi.gif" alt="vietnamese"></button>
+							</span>
+						</div>
+						<div class="text">
+							<strong>077C080123</strong>
+							<em>Nnnnnn nnnn nnn</em>
+							<!-- e: 추가 -->
+							<span class="em">Margin trading</span>
+							<!-- // e: 추가 -->
+							<span>Trandate 21/05/2016 18:18:18</span>
+						</div>
+					</div>
+
+					<!-- e: information 삭제, 푸터로 이동 -->
+					<!-- information -->
+					<!--
+					<div id="information">
+						...
+					</div>
+					-->
+					<!-- // information -->
+
+				</div>
+			</div>
+
+			<!-- gnb -->
+			<div class="gnb">
+				<ul class="wts_menu">
+					<li class="on">
+						<button type="button">TRADING</button>
+					</li>
+					<!-- <li class="wide">
+						<button type="button">CURRENT STATUS</button>
+					</li> -->
+					<li>
+						<button type="button" onclick="window.open('portfolio.html')">PORTFOLIO</button>
+					</li>
+					<li class="wide">
+						<button type="button" onclick="window.open('online.html')">ONLINE SERVICES</button>
+					</li>
+					<li>
+						<button type="button" onclick="window.open('chart.html')">CHART</button>
+					</li>
+					<li>
+						<button type="button" onclick="window.open('banking.html')">BANKING</button>
+					</li>
+					<li class="wide">
+						<button type="button" onclick="window.open('market.html')">MARKET INFORMATION</button>
+					</li>
+					<li class="wide">
+						<button type="button" onclick="window.open('margin.html')">MARGIN STOCK LIST</button>
+					</li>
+					<li class="wide">
+						<button type="button" onclick="window.open('account.html')">ACCOUNT MANAGEMENT</button>
+					</li>
+				</ul>
+			</div>
+			<!-- //gnb -->
+		</header>
+		<!-- //header -->
+
+
+		<!-- 템플릿 사용부분 -->
+		<div class="mdi_container">
+			<div class="mdi_content">
+				<!-- LEFT -->
+				<div class="wrap_left">
+					<!-- tabs -->
+					<div name="tabs">
+						<ul class="nav nav_tabs " role="tablist">
+							<li role="presentation" class="active"><a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">Watch List</a></li>
+							<li role="presentation"><a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">Sector</a></li>
+							<li role="presentation"><a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">Ranking</a></li>
+						</ul>
+						<div class="tab_content">
+
+							<div role="tabpanel" class="tab_pane" id="tab1">
+								<!-- My Stocks -->
+								<!-- <div class="btn_group">
+									<div>
+										<ul>
+											<li><button class="on" type="button">Group 1</button></li>
+											<li><button type="button">Group</button></li>
+											<li><button type="button">Group</button></li>
+											<li><button type="button">Group</button></li>
+										</ul>
+									</div>
+									<div class="btn_paging">
+										<button class="prev" type="button">prev</button>
+										<button class="next" type="button">next</button>
+									</div>
+									<button class="btn_write" type="button">+ Add</button>
+								</div> -->
+
+								<div class="table_right">
+									<select>
+										<option>Group1</option>
+										<option>Group1</option>
+										<option>Group1</option>
+									</select>
+									<button class="btn" type="button">+ Add</button>
+								</div>
+								<!-- e: height 수정 -->
+								<div class="grid_area" style="height:251px;">
+									<!-- e: style 삭제 -->
+									<div class="group_table dark">
+										<!-- e: 클래스추가 -->
+										<table class="table">
+											<!-- e: 너비 삭제 -->
+											<colgroup>
+												<col /> <!-- Name : Stock -->
+												<col /> <!-- Name : Market -->
+												<col /> <!-- Reference : CE -->
+												<col /> <!-- Reference : FL -->
+												<col /> <!-- Reference : Ref -->
+												<col /> <!-- Best Bid : Pri.1 -->
+												<col /> <!-- Best Bid : Vol.1 -->
+												<col /> <!-- Matching : Price -->
+												<col /> <!-- Matching : Vol -->
+												<col /> <!-- Matching : +/- -->
+												<col /> <!-- Matching : % -->
+												<col /> <!-- Matching : Total Vol. -->
+												<col /> <!-- Best Ask : Pri.1	 -->
+												<col /> <!-- Best Ask : Vol.1 -->
+												<col /> <!-- Price history : Open -->
+												<col /> <!-- Price history : High -->
+												<col /> <!-- Price history : Low -->
+												<col /> <!-- Foreign Investment : F.Buy -->
+												<col /> <!-- Foreign Investment : F.Sell -->
+												<col /> <!-- Foreign Investment : Room -->
+											</colgroup>
+											<!-- // e: 너비 삭제 -->
+											<thead>
+												<tr>
+													<th class="bd_bt2" colspan="2">Name</th>
+													<th class="bd_bt2" colspan="3">Reference</th>
+													<th class="bd_bt2" colspan="2">Best Bid</th>
+													<th class="bd_bt2" colspan="5">Matching</th>
+													<th class="bd_bt2" colspan="2">Best Ask</th>
+													<th class="bd_bt2" colspan="3">Price history</th>
+													<th class="bd_bt2" colspan="3">Foreign Investment</th>
+												</tr>
+												<tr>
+													<th>Stock</th>
+													<th>Market</th>
+													<th>CE</th>
+													<th>FL</th>
+													<th>Ref</th>
+													<th>Pri.1</th>
+													<th>Vol.1</th>
+													<th>Price</th>
+													<th>Vol</th>
+													<th>+/-</th>
+													<th>%</th>
+													<th>Total Vol.</th>
+													<th>Pri.1</th>
+													<th>Vol.1</th>
+													<th>Open</th>
+													<th>High</th>
+													<th>Low</th>
+													<th>F.Buy</th>
+													<th>F.Sell</th>
+													<th>Room</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td class="text_left c_code">ABV</td>
+													<td class="text_left c_code dotted">HNX</td>
+													<td>000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td>000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>00,000,000</td>
+													<td class="dotted">00,000,000</td>
+													<td class="dotted">00,000,000</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV</td>
+													<td class="text_left c_code dotted">HNX</td>
+													<td>000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td>000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>00,000,000</td>
+													<td class="dotted">00,000,000</td>
+													<td class="dotted">00,000,000</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV</td>
+													<td class="text_left c_code dotted">HNX</td>
+													<td>000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td>000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>00,000,000</td>
+													<td class="dotted">00,000,000</td>
+													<td class="dotted">00,000,000</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV</td>
+													<td class="text_left c_code dotted">HNX</td>
+													<td>000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td>000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>00,000,000</td>
+													<td class="dotted">00,000,000</td>
+													<td class="dotted">00,000,000</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV</td>
+													<td class="text_left c_code dotted">HNX</td>
+													<td>000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td>000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>00,000,000</td>
+													<td class="dotted">00,000,000</td>
+													<td class="dotted">00,000,000</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV</td>
+													<td class="text_left c_code dotted">HNX</td>
+													<td>000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td>000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>00,000,000</td>
+													<td class="dotted">00,000,000</td>
+													<td class="dotted">00,000,000</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV</td>
+													<td class="text_left c_code dotted">HNX</td>
+													<td>000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td>000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>00,000,000</td>
+													<td class="dotted">00,000,000</td>
+													<td class="dotted">00,000,000</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV</td>
+													<td class="text_left c_code dotted">HNX</td>
+													<td>000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td>000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>00,000,000</td>
+													<td class="dotted">00,000,000</td>
+													<td class="dotted">00,000,000</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV</td>
+													<td class="text_left c_code dotted">HNX</td>
+													<td>000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td>000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>00,000,000</td>
+													<td class="dotted">00,000,000</td>
+													<td class="dotted">00,000,000</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<!-- //My Stocks -->
+							</div>
+
+							<div role="tabpanel" class="tab_pane" id="tab2">
+								<!-- Sector -->
+								<div class="table_right">
+									<select id="mark">
+										<option value="0">All</option>
+										<option value="4">VN</option>
+										<option value="5">VN30</option>
+										<option value="2">HNX</option>
+										<option value="3">HOSE</option>
+										<option value="1">UPCOM</option>
+									</select>
+									<button class="btn btn_search" type="button" onclick="searchSectorList()">Search</button>
+								</div>
+								<!-- e: style수정 -->
+								<div class="grid_area" style="height:251px;">
+									<div class="group_table">
+										<table class="table">
+											<colgroup>
+												<col width="11%" />
+												<col />
+												<col />
+												<col />
+												<col />
+												<col />
+												<col />
+												<col />
+											</colgroup>
+											<thead>
+											<!-- e: tr삭제 -->
+												<tr>
+													<th>Stock | Market</th>
+													<th>Current</th>
+													<th>+/-</th>
+													<th>%Change</th>
+													<th>Volume</th>
+													<th>Open</th>
+													<th>High</th>
+													<th>Low</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td class="text_left c_code">ABV (HNX)</td>
+													<td class="text_left">AAAAAA</td>
+													<td class="arrow up">000000000</td>
+													<td class="up">+15.00%</td>
+													<td>000000000</td>
+													<td>00.00</td>
+													<td>00.00</td>
+													<td>00.00</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV (HNX)</td>
+													<td class="text_left">AAAAAA</td>
+													<td class="arrow up">000000000</td>
+													<td class="upper">+15.00%</td>
+													<td>000000000</td>
+													<td>00.00</td>
+													<td>00.00</td>
+													<td>00.00</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV (HNX)</td>
+													<td class="text_left">AAAAAA</td>
+													<td class="arrow low">000000000</td>
+													<td class="low">+15.00%</td>
+													<td>000000000</td>
+													<td>00.00</td>
+													<td>00.00</td>
+													<td>00.00</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV (HNX)</td>
+													<td class="text_left">AAAAAA</td>
+													<td class="arrow low">000000000</td>
+													<td class="lower">+15.00%</td>
+													<td>000000000</td>
+													<td>00.00</td>
+													<td>00.00</td>
+													<td>00.00</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV (HNX)</td>
+													<td class="text_left">AAAAAA</td>
+													<td class="">000000000</td>
+													<td class="">+15.00%</td>
+													<td>000000000</td>
+													<td>00.00</td>
+													<td>00.00</td>
+													<td>00.00</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV (HNX)</td>
+													<td class="text_left">AAAAAA</td>
+													<td class="">000000000</td>
+													<td class="">+15.00%</td>
+													<td>000000000</td>
+													<td>00.00</td>
+													<td>00.00</td>
+													<td>00.00</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV (HNX)</td>
+													<td class="text_left">AAAAAA</td>
+													<td class="">000000000</td>
+													<td class="">+15.00%</td>
+													<td>000000000</td>
+													<td>00.00</td>
+													<td>00.00</td>
+													<td>00.00</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV (HNX)</td>
+													<td class="text_left">AAAAAA</td>
+													<td class="">000000000</td>
+													<td class="">+15.00%</td>
+													<td>000000000</td>
+													<td>00.00</td>
+													<td>00.00</td>
+													<td>00.00</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV (HNX)</td>
+													<td class="text_left">AAAAAA</td>
+													<td class="">000000000</td>
+													<td class="">+15.00%</td>
+													<td>000000000</td>
+													<td>00.00</td>
+													<td>00.00</td>
+													<td>00.00</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV (HNX)</td>
+													<td class="text_left">AAAAAA</td>
+													<td class="">000000000</td>
+													<td class="">+15.00%</td>
+													<td>000000000</td>
+													<td>00.00</td>
+													<td>00.00</td>
+													<td>00.00</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV (HNX)</td>
+													<td class="text_left">AAAAAA</td>
+													<td class="">000000000</td>
+													<td class="">+15.00%</td>
+													<td>000000000</td>
+													<td>00.00</td>
+													<td>00.00</td>
+													<td>00.00</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<!-- //Sector -->
+							</div>
+
+							<div role="tabpanel" class="tab_pane" id="tab3">
+								<!-- Ranking -->
+								<div class="table_right">
+									<select id="mark">
+										<option value="0">All</option>
+										<option value="">VN</option>
+										<option value="">VN30</option>
+										<option value="2">HNX</option>
+										<option value="">HSX</option>
+										<option value="3">UPCOM</option>
+									</select>
+									<select id="updn">
+										<option value="0">UP</option>
+										<option value="1">Down</option>
+									</select>
+									<label for="fromSearch">From</label>
+									<input id="fromSearch" type="text" class="datepicker" name="fromDate">
+									<label for="toSearch">To</label>
+									<input id="toSearch" type="text" class="datepicker" name="toDate">
+									<button class="btn" type="button" onclick="searchRankingList()">Search</button>
+								</div>
+								<!-- e: style수정 -->
+								<div class="grid_area" style="height:251px;">
+									<div class="group_table">
+										<table class="table">
+											<colgroup>
+												<col width="11%" />
+												<col />
+												<col />
+												<col />
+												<col />
+												<col />
+												<col />
+												<col width="11%" />
+												<col width="11%" />
+											</colgroup>
+											<thead>
+												<tr>
+													<th>Stock | Market</th>
+													<th>Current</th>
+													<th>+/-</th>
+													<th>%Change</th>
+													<th>Volume</th>
+													<th>Advanced Ratio</th>
+													<th>Advanced Range</th>
+													<th>Start Date</th>
+													<th>End Date</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td class="text_left c_code">ABV (HNX)</td>
+													<td class="text_left">AAAAAA</td>
+													<td class="arrow up">000000000</td>
+													<td class="up">+15.00%</td>
+													<td>000000000</td>
+													<td>000000000</td>
+													<td>000000000</td>
+													<td class="text_center">13/05/2016</td>
+													<td class="text_center">13/05/2016</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV (HNX)</td>
+													<td class="text_left">AAAAAA</td>
+													<td class="arrow up">000000000</td>
+													<td class="up">+15.00%</td>
+													<td>000000000</td>
+													<td>000000000</td>
+													<td>000000000</td>
+													<td class="text_center">13/05/2016</td>
+													<td class="text_center">13/05/2016</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV (HNX)</td>
+													<td class="text_left">AAAAAA</td>
+													<td class="arrow up">000000000</td>
+													<td class="up">+15.00%</td>
+													<td>000000000</td>
+													<td>000000000</td>
+													<td>000000000</td>
+													<td class="text_center">13/05/2016</td>
+													<td class="text_center">13/05/2016</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV (HNX)</td>
+													<td class="text_left">AAAAAA</td>
+													<td class="arrow up">000000000</td>
+													<td class="up">+15.00%</td>
+													<td>000000000</td>
+													<td>000000000</td>
+													<td>000000000</td>
+													<td class="text_center">13/05/2016</td>
+													<td class="text_center">13/05/2016</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV (HNX)</td>
+													<td class="text_left">AAAAAA</td>
+													<td class="arrow up">000000000</td>
+													<td class="up">+15.00%</td>
+													<td>000000000</td>
+													<td>000000000</td>
+													<td>000000000</td>
+													<td class="text_center">13/05/2016</td>
+													<td class="text_center">13/05/2016</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV (HNX)</td>
+													<td class="text_left">AAAAAA</td>
+													<td class="arrow up">000000000</td>
+													<td class="up">+15.00%</td>
+													<td>000000000</td>
+													<td>000000000</td>
+													<td>000000000</td>
+													<td class="text_center">13/05/2016</td>
+													<td class="text_center">13/05/2016</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV (HNX)</td>
+													<td class="text_left">AAAAAA</td>
+													<td class="arrow up">000000000</td>
+													<td class="up">+15.00%</td>
+													<td>000000000</td>
+													<td>000000000</td>
+													<td>000000000</td>
+													<td class="text_center">13/05/2016</td>
+													<td class="text_center">13/05/2016</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV (HNX)</td>
+													<td class="text_left">AAAAAA</td>
+													<td class="arrow up">000000000</td>
+													<td class="up">+15.00%</td>
+													<td>000000000</td>
+													<td>000000000</td>
+													<td>000000000</td>
+													<td class="text_center">13/05/2016</td>
+													<td class="text_center">13/05/2016</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<!-- //Ranking -->
+							</div>
+						</div>
+					</div>
+					<!-- tabs -->
+					<div name="tabs">
+						<ul class="nav nav_tabs " role="tablist">
+							<li role="presentation" class="active"><a href="#tab21" aria-controls="tab21" role="tab" data-toggle="tab">Order Journal</a></li>
+							<li role="presentation"><a href="#tab22" aria-controls="tab22" role="tab" data-toggle="tab">Balance</a></li>
+							<li role="presentation"><a href="#tab23" aria-controls="tab23" role="tab" data-toggle="tab">Chart</a></li>
+							<li role="presentation"><a href="#tab24" aria-controls="tab24" role="tab" data-toggle="tab">Daily</a></li>
+							<li role="presentation"><a href="#tab25" aria-controls="tab25" role="tab" data-toggle="tab">Timely</a></li>
+							<li role="presentation"><a href="#tab26" aria-controls="tab26" role="tab" data-toggle="tab">Stock news</a></li>
+							<!-- <li role="presentation"><a href="#tab26" aria-controls="tab26" role="tab" data-toggle="tab">Pending order</a></li>
+							<li role="presentation"><a href="#tab27" aria-controls="tab27" role="tab" data-toggle="tab">Executed history</a></li> -->
+						</ul>
+						<div class="tab_content">
+							<div role="tabpanel" class="tab_pane" id="tab21">
+								<!-- Order Journal -->
+								<div class="search_area in total">
+									<div class="pull_left">
+										<label for="ojSel1">Select</label>
+										<select id="ojSel1">
+											<option>All</option>
+										</select>
+										<label for="ojSel2">Type</label>
+										<select id="ojSel2">
+											<option>All</option>
+										</select>
+										<label for="ojSel3">Buy/Sell</label>
+										<select id="ojSel3">
+											<option>All</option>
+										</select>
+									</div>
+									<div class="pull_right">
+										<label for="stockInp">Stock</label>
+										<div class="input_search">
+											<input id="stockInp" type="text" style="width:100px;">
+											<button type="button">Search</button>
+										</div>
+										<!-- e: 삭제 -->
+										<!--
+										<span class="total">Total(Fee + Tax) : 0</span>
+										-->
+										<!-- // e: 삭제 -->
+									</div>
+								</div>
+								<!-- e: height 수정 -->
+								<div class="grid_area oj_grid" style="height:293px;">
+									<div class="group_table center double">
+										<table class="table">
+											<thead>
+												<tr>
+													<th>Cancel</th>
+													<th rowspan="2">Stock</th>
+													<th class="bd_bt2">Buy/Sell</th>
+													<th class="bd_bt2">Vol</th>
+													<th class="bd_bt2">Executed Vol.</th>
+													<th rowspan="2">status</th>
+													<th class="bd_bt2">Type</th>
+													<th class="bd_bt2">Reject Reason</th>
+												</tr>
+												<tr>
+													<th>Modify</th>
+													<th>Price (VND)</th>
+													<th>Oebdubg Vol.</th>
+													<th>Avg Price.</th>
+													<th>Fee + Tax</th>
+													<th>Date</th>
+												</tr>
+											</thead>
+											<!-- // e: thead 수정 -->
+											<tbody>
+												<tr>
+													<td>
+														<div><button class="btn_s" type="button"><img src="../resources/images/btn_s_cancel.png" alt="Cancel"></button></div>
+														<div><button class="btn_s" type="button"><img src="../resources/images/btn_s_modify.png" alt="Modify"></button></div>
+													</td>
+													<td>VND</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>Queued</td>
+													<td>
+														<div>Sell</div>
+														<div>000,00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00:00:00 13/05/2016</div>
+													</td>
+												</tr>
+												<tr class="even">
+													<td>
+														<div><button class="btn_s" type="button"><img src="../resources/images/btn_s_cancel.png" alt="Cancel"></button></div>
+														<div><button class="btn_s" type="button"><img src="../resources/images/btn_s_modify.png" alt="Modify"></button></div>
+													</td>
+													<td>VND</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>Queued</td>
+													<td>
+														<div>Sell</div>
+														<div>000,00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<p>00:00:00 13/05/2016</p>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<div><button class="btn_s" type="button"><img src="../resources/images/btn_s_cancel.png" alt="Cancel"></button></div>
+														<div><button class="btn_s" type="button"><img src="../resources/images/btn_s_modify.png" alt="Modify"></button></div>
+													</td>
+													<td>VND</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>Queued</td>
+													<td>
+														<div>Sell</div>
+														<div>000,00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00:00:00 13/05/2016</div>
+													</td>
+												</tr>
+												<tr class="even">
+													<td>
+														<div><button class="btn_s" type="button"><img src="../resources/images/btn_s_cancel.png" alt="Cancel"></button></div>
+														<div><button class="btn_s" type="button"><img src="../resources/images/btn_s_modify.png" alt="Modify"></button></div>
+													</td>
+													<td>VND</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>Queued</td>
+													<td>
+														<div>Sell</div>
+														<div>000,00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<p>00:00:00 13/05/2016</p>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<div><button class="btn_s" type="button"><img src="../resources/images/btn_s_cancel.png" alt="Cancel"></button></div>
+														<div><button class="btn_s" type="button"><img src="../resources/images/btn_s_modify.png" alt="Modify"></button></div>
+													</td>
+													<td>VND</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>Queued</td>
+													<td>
+														<div>Sell</div>
+														<div>000,00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00:00:00 13/05/2016</div>
+													</td>
+												</tr>
+												<tr class="even">
+													<td>
+														<div><button class="btn_s" type="button"><img src="../resources/images/btn_s_cancel.png" alt="Cancel"></button></div>
+														<div><button class="btn_s" type="button"><img src="../resources/images/btn_s_modify.png" alt="Modify"></button></div>
+													</td>
+													<td>VND</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>Queued</td>
+													<td>
+														<div>Sell</div>
+														<div>000,00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<p>00:00:00 13/05/2016</p>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<div><button class="btn_s" type="button"><img src="../resources/images/btn_s_cancel.png" alt="Cancel"></button></div>
+														<div><button class="btn_s" type="button"><img src="../resources/images/btn_s_modify.png" alt="Modify"></button></div>
+													</td>
+													<td>VND</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>Queued</td>
+													<td>
+														<div>Sell</div>
+														<div>000,00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00:00:00 13/05/2016</div>
+													</td>
+												</tr>
+												<tr class="even">
+													<td>
+														<div><button class="btn_s" type="button"><img src="../resources/images/btn_s_cancel.png" alt="Cancel"></button></div>
+														<div><button class="btn_s" type="button"><img src="../resources/images/btn_s_modify.png" alt="Modify"></button></div>
+													</td>
+													<td>VND</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>Queued</td>
+													<td>
+														<div>Sell</div>
+														<div>000,00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<p>00:00:00 13/05/2016</p>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<div><button class="btn_s" type="button"><img src="../resources/images/btn_s_cancel.png" alt="Cancel"></button></div>
+														<div><button class="btn_s" type="button"><img src="../resources/images/btn_s_modify.png" alt="Modify"></button></div>
+													</td>
+													<td>VND</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>Queued</td>
+													<td>
+														<div>Sell</div>
+														<div>000,00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00:00:00 13/05/2016</div>
+													</td>
+												</tr>
+												<tr class="even">
+													<td>
+														<div><button class="btn_s" type="button"><img src="../resources/images/btn_s_cancel.png" alt="Cancel"></button></div>
+														<div><button class="btn_s" type="button"><img src="../resources/images/btn_s_modify.png" alt="Modify"></button></div>
+													</td>
+													<td>VND</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>Queued</td>
+													<td>
+														<div>Sell</div>
+														<div>000,00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<p>00:00:00 13/05/2016</p>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+
+								<div class="order_total">
+									Total (Free +Tax):<span>123,123</span>
+								</div>
+								<!-- //Order Journal -->
+							</div>
+
+							<div role="tabpanel" class="tab_pane" id="tab22">
+								<!-- Balance -->
+								<div class="c_table">
+									<h3>Cash</h3>
+									<div class="grid_area" style="height:318px;">
+										<div class="group_table">
+											<table class="table">
+												<colgroup>
+													<col width="190" />
+													<col />
+												</colgroup>
+												<tbody>
+													<tr>
+														<th scope="row">Buying power</th>
+														<td>00,000,000</td>
+													</tr>
+													<tr>
+														<th scope="row">Cash balance (withdrawable)</th>
+														<td>000</td>
+													</tr>
+													<tr>
+														<th scope="row">Withdrawable (include advance)</th>
+														<td>000</td>
+													</tr>
+													<tr>
+														<th scope="row">Available advance</th>
+														<td>00,000,000</td>
+													</tr>
+													<tr>
+														<th scope="row">Temporary hold cash</th>
+														<td>000</td>
+													</tr>
+													<tr>
+														<th scope="row">Hold for pending purchase</th>
+														<td>000</td>
+													</tr>
+													<tr>
+														<th scope="row">Hold for executed purchase</th>
+														<td><span class="row">00</span></td>
+													</tr>
+													<tr>
+														<th scope="row">Pending approval for withdrawal</th>
+														<td>000</td>
+													</tr>
+													<tr>
+														<th scope="row">Outstanding loan</th>
+														<td><span class="low">000</span></td>
+													</tr>
+													<tr>
+														<th scope="row">Margin call (By Options)</th>
+														<td>00,000,000</td>
+													</tr>
+													<tr>
+														<th scope="row">Cash Deposit</th>
+														<td><span class="low">000</span></td>
+													</tr>
+													<tr>
+														<th scope="row">Selling stock in margin portfolio</th>
+														<td><span class="row">00,000,000</span></td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+								<div class="s_table">
+									<h3>Stock</h3>
+									<div class="grid_area" style="height:318px;">
+										<div class="group_table type2">
+											<table class="table">
+												<colgroup>
+													<col width="15%" />
+													<col />
+													<col width="27%" />
+													<col width="27%" />
+												</colgroup>
+												<thead>
+													<tr>
+														<th scope="col" rowspan="2">Stock</th>
+														<th scope="col" rowspan="2">Volume</th>
+														<th scope="colgroup" colspan="2">Trade in day</th>
+													</tr>
+													<tr>
+														<th scope="col">Bouhgt</th>
+														<th scope="col">Sold</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td class="text_center">HAP</td>
+														<td></td>
+														<td></td>
+														<td></td>
+													</tr>
+													<tr class="even">
+														<td class="text_center">HAP</td>
+														<td></td>
+														<td></td>
+														<td></td>
+													</tr>
+													<tr>
+														<td class="text_center">HAP</td>
+														<td></td>
+														<td></td>
+														<td></td>
+													</tr>
+													<tr class="even">
+														<td class="text_center">HAP</td>
+														<td></td>
+														<td></td>
+														<td></td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+								<!-- //Balance -->
+							</div>
+
+							<div role="tabpanel" class="tab_pane" id="tab23">
+								<!-- Chart -->
+								<div class="chart_select">
+									<div class="button_set">
+										<input type="radio" id="datetime1" name="datetime" checked="checked"><label for="datetime1">Tick</label>
+										<input type="radio" id="datetime2" name="datetime"><label for="datetime2">Day</label>
+										<input type="radio" id="datetime3" name="datetime"><label for="datetime3">Weeks</label>
+										<input type="radio" id="datetime4" name="datetime"><label for="datetime4">Month</label>
+									</div>
+								</div>
+								<div class="grid_area" style="height:318px;">
+									<!-- chart data -->
+								</div>
+								<!-- //Chart -->
+							</div>
+
+							<div role="tabpanel" class="tab_pane" id="tab24">
+								<!-- Daily -->
+								<div class="grid_area" style="height:346px;">
+									<div class="group_table">
+										<table class="table">
+											<colgroup>
+												<col width="11%">
+												<col>
+												<col>
+												<col>
+												<col>
+												<col>
+												<col>
+												<col>
+												<col>
+											</colgroup>
+											<thead>
+												<tr>
+													<th>Daily</th>
+													<th>Prev Price</th>
+													<th>+/-</th>
+													<th>%Change</th>
+													<th>Volume</th>
+													<th>Open</th>
+													<th>High</th>
+													<th>Low</th>
+													<th>Ave. Price</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td class="text_center">11/05/2016</td>
+													<td>00,000,000</td>
+													<td class="low">-000</td>
+													<td class="low">-000</td>
+													<td>00,000,000</td>
+													<td>00.00</td>
+													<td>00.00</td>
+													<td>00.00</td>
+													<td>00,000,000</td>
+												</tr>
+
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<!-- Daily -->
+							</div>
+
+							<div role="tabpanel" class="tab_pane" id="tab25">
+								<!-- Timely -->
+								<div class="grid_area" style="height:346px;">
+									<div class="group_table">
+										<table class="table">
+											<colgroup>
+												<col width="11%">
+												<col>
+												<col>
+												<col>
+												<col>
+												<col>
+											</colgroup>
+											<thead>
+												<tr>
+													<th>Time</th>
+													<th>Current</th>
+													<th>+/-</th>
+													<th>%Change</th>
+													<th>Executed vol.</th>
+													<th>Volume</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td class="text_center">09:49:17</td>
+													<td>00,000,000</td>
+													<td class="arrow up">00,000,000</td>
+													<td class="low">-000</td>
+													<td>000</td>
+													<td>00,000,000</td>
+												</tr>
+												<tr>
+													<td class="text_center">09:49:17</td>
+													<td>00,000,000</td>
+													<td class="arrow up">00,000,000</td>
+													<td class="low">-000</td>
+													<td>000</td>
+													<td>00,000,000</td>
+												</tr>
+												<tr>
+													<td class="text_center">09:49:17</td>
+													<td>00,000,000</td>
+													<td class="arrow up">00,000,000</td>
+													<td class="low">-000</td>
+													<td>000</td>
+													<td>00,000,000</td>
+												</tr>
+												<tr>
+													<td class="text_center">09:49:17</td>
+													<td>00,000,000</td>
+													<td class="arrow up">00,000,000</td>
+													<td class="low">-000</td>
+													<td>000</td>
+													<td>00,000,000</td>
+												</tr>
+												<tr>
+													<td class="text_center">09:49:17</td>
+													<td>00,000,000</td>
+													<td class="arrow up">00,000,000</td>
+													<td class="low">-000</td>
+													<td>000</td>
+													<td>00,000,000</td>
+												</tr>
+												<tr>
+													<td class="text_center">09:49:17</td>
+													<td>00,000,000</td>
+													<td class="arrow up">00,000,000</td>
+													<td class="low">-000</td>
+													<td>000</td>
+													<td>00,000,000</td>
+												</tr>
+												<tr>
+													<td class="text_center">09:49:17</td>
+													<td>00,000,000</td>
+													<td class="arrow up">00,000,000</td>
+													<td class="low">-000</td>
+													<td>000</td>
+													<td>00,000,000</td>
+												</tr>
+												<tr>
+													<td class="text_center">09:49:17</td>
+													<td>00,000,000</td>
+													<td class="arrow up">00,000,000</td>
+													<td class="low">-000</td>
+													<td>000</td>
+													<td>00,000,000</td>
+												</tr>
+												<tr>
+													<td class="text_center">09:49:17</td>
+													<td>00,000,000</td>
+													<td class="arrow up">00,000,000</td>
+													<td class="low">-000</td>
+													<td>000</td>
+													<td>00,000,000</td>
+												</tr>
+												<tr>
+													<td class="text_center">09:49:17</td>
+													<td>00,000,000</td>
+													<td class="arrow up">00,000,000</td>
+													<td class="low">-000</td>
+													<td>000</td>
+													<td>00,000,000</td>
+												</tr>
+												<tr>
+													<td class="text_center">09:49:17</td>
+													<td>00,000,000</td>
+													<td class="arrow up">00,000,000</td>
+													<td class="low">-000</td>
+													<td>000</td>
+													<td>00,000,000</td>
+												</tr>
+												<tr>
+													<td class="text_center">09:49:17</td>
+													<td>00,000,000</td>
+													<td class="arrow up">00,000,000</td>
+													<td class="low">-000</td>
+													<td>000</td>
+													<td>00,000,000</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<!-- //Timely -->
+							</div>
+
+							<div role="tabpanel" class="tab_pane" id="tab26">
+								<!-- Stock news -->
+								<div class="search_area in total">
+									<div class="pull_left">
+										<div class="input_search">
+											<input id="SectorInp" type="text">
+											<button type="button" class="btn_recent"><span class="screen_out">최근조회 목록 보기</span></button>
+											<!-- layer_newest -->
+											<div class="layer_newest" style="display:;">
+												<ul>
+													<li>ASDF</li>
+													<li>ASDF</li>
+													<li>ASDF</li>
+													<li>ASDF</li>
+													<li>ASDF</li>
+												</ul>
+											</div>
+											<!-- //layer_newest -->
+											<button type="button">Search</button>
+										</div>
+										<input class="text" type="text" value="Stock Code">
+									</div>
+									<div class="pull_right">
+										<span class="stock_search">
+											<input class="text" type="text" placeholder="News Title search">
+										</span>
+										<button class="btn" type="button">Search</button>
+										<input type="text" class="datepicker" placeholder="13/05/2016">
+									</div>
+								</div>
+								<!-- e: style수정 -->
+								<div class="grid_area" style="height:318px;">
+
+									<div class="group_table center">
+										<table class="table">
+											<thead>
+												<tr>
+													<th>Date</th>
+													<th>Time</th>
+													<th>Title</th>
+													<th>Writer</th>
+													<th>Stock Code</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>11/05/2016</td>
+													<td>18:29:23</td>
+													<td class="text_subject">Title TitleTitle TitleTitle TitleTitle TitleTitle TitleTitle TitleTitle TitleTitle TitleTitle TitleTitle TitleTitle TitleTitle TitleTitle TitleTitle TitleTitle Title</td>
+													<td>000000000</td>
+													<td>000000000</td>
+												</tr>
+												<tr>
+													<td>11/05/2016</td>
+													<td>18:29:23</td>
+													<td class="text_subject">Title TitleTitle TitleTitle TitleTitle TitleTitle</td>
+													<td>000000000</td>
+													<td>000000000</td>
+												</tr>
+												<tr>
+													<td>11/05/2016</td>
+													<td>18:29:23</td>
+													<td class="text_subject">Title TitleTitle TitleTitle TitleTitle TitleTitle</td>
+													<td>000000000</td>
+													<td>000000000</td>
+												</tr>
+												<tr>
+													<td>11/05/2016</td>
+													<td>18:29:23</td>
+													<td class="text_subject">Title TitleTitle TitleTitle TitleTitle TitleTitle</td>
+													<td>000000000</td>
+													<td>000000000</td>
+												</tr>
+												<tr>
+													<td>11/05/2016</td>
+													<td>18:29:23</td>
+													<td class="text_subject">Title TitleTitle TitleTitle TitleTitle TitleTitle</td>
+													<td>000000000</td>
+													<td>000000000</td>
+												</tr>
+												<tr>
+													<td>11/05/2016</td>
+													<td>18:29:23</td>
+													<td class="text_subject">Title TitleTitle TitleTitle TitleTitle TitleTitle</td>
+													<td>000000000</td>
+													<td>000000000</td>
+												</tr>
+												<tr>
+													<td>11/05/2016</td>
+													<td>18:29:23</td>
+													<td class="text_subject">Title TitleTitle TitleTitle TitleTitle TitleTitle</td>
+													<td>000000000</td>
+													<td>000000000</td>
+												</tr>
+												<tr>
+													<td>11/05/2016</td>
+													<td>18:29:23</td>
+													<td class="text_subject">Title TitleTitle TitleTitle TitleTitle TitleTitle</td>
+													<td>000000000</td>
+													<td>000000000</td>
+												</tr>
+												<tr>
+													<td>11/05/2016</td>
+													<td>18:29:23</td>
+													<td class="text_subject">Title TitleTitle TitleTitle TitleTitle TitleTitle</td>
+													<td>000000000</td>
+													<td>000000000</td>
+												</tr>
+												<tr>
+													<td>11/05/2016</td>
+													<td>18:29:23</td>
+													<td class="text_subject">Title TitleTitle TitleTitle TitleTitle TitleTitle</td>
+													<td>000000000</td>
+													<td>000000000</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<!-- //Stock news -->
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<!-- //LEFT -->
+				<!-- RIGHT -->
+				<div class="wrap_right">
+
+					<!-- tabs -->
+					<div name="tabs">
+						<ul class="nav nav_tabs" role="tablist">
+							<li role="presentation" class="active"><a href="#tab31" aria-controls="tab31" role="tab" data-toggle="tab">BID</a></li>
+							<!-- <li role="presentation"><a href="#tab32" aria-controls="tab32" role="tab" data-toggle="tab">CUR</a></li> -->
+						</ul>
+						<div class="tab_content">
+							<div role="tabpanel" class="tab_pane" id="tab31">
+								<!-- BID -->
+								<div class="group_table bid_table">
+									<table class="table no_bbt">
+										<caption>
+											<span class="code">[ACC]</span>
+											<span class="name">CTCP BETONG BECAMX</span>
+										</caption>
+										<colgroup>
+											<col width="19.5%" />
+											<col width="19.5%" />
+											<col />
+											<col width="19.5%" />
+											<col width="19.5%" />
+										</colgroup>
+										<thead>
+											<tr>
+												<th scope="col">ASK</th>
+												<th scope="col">+/-</th>
+												<th scope="col">13:28:21</th>
+												<th scope="col">+/-</th>
+												<th scope="col">BID</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td class="no_bbt txt">CUR</td>
+												<td class="no_lbd no_bbt cur">
+													<span class="low">999,080</span>
+												</td>
+												<td class="bg01 text_center">
+													<span class="low">118,300</span>
+												</td>
+												<td class="bg01">
+													<span class="low">+100</span>
+												</td>
+												<td class="bg01">
+													<span class="upper">3,065</span>
+												</td>
+											</tr>
+											<tr>
+												<td class="no_bbt txt">+/-</td>
+												<td class="no_lbd no_bbt">
+													<span class="low">405</span>
+												</td>
+												<td class="bg01 text_center">
+													<span class="lower">18,300</span>
+												</td>
+												<td class="bg01"></td>
+												<td class="bg01">
+													<span class="up">3,065</span>
+												</td>
+											</tr>
+											<tr>
+												<td class="txt">%Change</td>
+												<td class="no_lbd">
+													<span class="low">-2.43</span>
+												</td>
+												<td class="bg01 text_center">
+													<span class="same">18,300</span>
+												</td>
+												<td class="bg01"></td>
+												<td class="bg01"></td>
+											</tr>
+											<tr>
+												<td class="bg02">
+													<span class="low">3.386</span>
+												</td>
+												<td class="bg02"></td>
+												<td class="bg02 text_center">
+													<span class="upper">18,050</span>
+												</td>
+												<td class="no_bbt txt">Open</td>
+												<td class="pr no_lbd no_bbt">
+													<span class="low">128,050</span>
+												</td>
+											</tr>
+											<tr>
+												<td class="bg02">
+													<span class="lower">18,050</span>
+												</td>
+												<td class="bg02">
+													<span class="low">-11</span>
+												</td>
+												<td class="bg02 text_center">
+													<span class="up">18,000</span>
+												</td>
+												<td class="no_bbt txt">High</td>
+												<td class="pr no_lbd no_bbt">
+													<span class="low">18,050</span>
+												</td>
+											</tr>
+											<tr>
+												<td class="bg02">
+													<span>18,050</span>
+												</td>
+												<td class="bg02"></td>
+												<td class="bg02 text_center">
+													<span class="up">17,050</span>
+												</td>
+												<td class="txt">Low</td>
+												<td class="pr no_lbd">
+													<span class="same">18,050</span>
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<span>78,137</span>
+												</td>
+												<td></td>
+												<td class="text_center"></td>
+												<td>
+													<span class="low">+100</span>
+												</td>
+												<td>
+													<span>18,050</span>
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<span>18,050</span>
+												</td>
+												<td>
+													<span>18,050</span>
+												</td>
+												<td class="sb_vol">
+													<span class="up">+43,453</span>
+												</td>
+												<td>
+													<span class="low">+100</span>
+												</td>
+												<td>
+													<span>18,050</span>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<!-- //BID -->
+							</div>
+							<div role="tabpanel" class="tab_pane" id="tab32" style="display:none;">
+								<!-- CUR -->
+								<ul class="summary_area">
+									<li>HNX</li>
+									<li>large-cap<br>(stock)</li>
+									<li>HNX300</li>
+									<li>Normal 30%<br>Credit</li>
+								</ul>
+								<div class="group_table type1">
+									<table class="table">
+										<colgroup>
+											<col width="23%">
+											<col width="30%">
+											<col width="23%">
+											<col>
+										</colgroup>
+										<tbody>
+											<tr>
+												<th>CUR</th>
+												<td>17,000</td>
+												<th>Cei</th>
+												<td>22,550</td>
+											</tr>
+											<tr>
+												<th>+/-</th>
+												<td class="up arrow">350</td>
+												<th>Flo</th>
+												<td>12,150</td>
+											</tr>
+											<tr>
+												<th>%Change</th>
+												<td>-2.02</td>
+												<th>Limt</th>
+												<td>5,200</td>
+											</tr>
+											<tr>
+												<th>Ask vol</th>
+												<td>17,000</td>
+												<th>BID Unit</th>
+												<td>50</td>
+											</tr>
+											<tr>
+												<th>Bid vol</th>
+												<td>16,950</td>
+												<th>Face val</th>
+												<td>5,000
+												(VND)</td>
+											</tr>
+											<tr>
+												<th>Open</th>
+												<td>17,200</td>
+												<th>Capital</th>
+												<td>5,714 VND</td>
+											</tr>
+											<tr>
+												<th>High</th>
+												<td>17,350</td>
+												<th>Issued</th>
+												<td>114,285,871</td>
+											</tr>
+											<tr>
+												<th>Low</th>
+												<td>16,950</td>
+												<th>FL. Room</th>
+												<td>114,285,871</td>
+											</tr>
+											<tr>
+												<th>Prev Close</th>
+												<td>17,350</td>
+												<th>T. Room</th>
+												<td>102,133,389</td>
+											</tr>
+											<tr>
+												<th>Last vol</th>
+												<td>732,702</td>
+												<th>For. Room</th>
+												<td>10.63</td>
+											</tr>
+											<tr>
+												<th>Volume</th>
+												<td>411,851</td>
+												<th>For.Buy</th>
+												<td>9,000</td>
+											</tr>
+											<tr>
+												<th>Total PRI</th>
+												<td>7,059M VMD</td>
+												<th>For. Sell</th>
+												<td>9,000</td>
+											</tr>
+											<tr>
+												<th>Mkt Cap</th>
+												<td>19,429 (BVMD)</td>
+												<th></th>
+												<td></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<!-- //CUR -->
+							</div>
+						</div>
+					</div>
+					<!-- tabs -->
+					<!-- e: 클래스 추가 -->
+					<div name="tabs" class="eo">
+						<ul class="nav nav_tabs" role="tablist">
+							<li role="presentation" class="active"><a href="#tab41" aria-controls="tab41" role="tab" data-toggle="tab">Enter Order</a></li>
+							<!-- <li role="presentation"><a href="#tab42" aria-controls="tab42" role="tab" data-toggle="tab">SELL</a></li>
+							<li role="presentation"><a href="#tab43" aria-controls="tab43" role="tab" data-toggle="tab">MODIFY</a></li>
+							<li role="presentation"><a href="#tab44" aria-controls="tab44" role="tab" data-toggle="tab">CANCEL</a></li> -->
+						</ul>
+						<div class="tab_content">
+							<div role="tabpanel" class="tab_pane" id="tab41">
+								<!-- BUY -->
+								<!-- e: 클래스 삭제 -->
+								<div class="group_table">
+									<!-- e: 테이블 전체 수정 -->
+									<table class="eo_table no_bbt">
+										<colgroup>
+											<col width="39%" />
+											<col />
+										</colgroup>
+										<tr>
+											<th>Buy/Sell</th>
+											<td>
+												<div class="radio_area">
+													<input type="radio" id="" name=""><label for="">Buy</label>
+													<input type="radio" id="" name=""><label for="">Sell</label>
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<th>Buy all / Sell all</th>
+											<td>
+												<div class="radio_area">
+													<input type="radio" id="" name=""><label for="">Buy</label>
+													<input type="radio" id="" name=""><label for="">Sell</label>
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<th>Stock / % Lending</th>
+											<td>
+												<div class="input_dropdown">
+													<span>
+														<input type="text" title="value" />
+														<button type="button">show</button>
+													</span>
+													<div>
+														<ul>
+															<li><a href="" tabindex="0"><span>aaa</span> - value1</a></li>
+															<li><a href="" tabindex="0">value2</a></li>
+															<li><a href="" tabindex="0">value3</a></li>
+															<li><a href="" tabindex="0">value4</a></li>
+															<li><a href="" tabindex="0">value5</a></li>
+															<li><a href="" tabindex="0">value6</a></li>
+															<li><a href="" tabindex="0">value7</a></li>
+															<li><a href="" tabindex="0">value8</a></li>
+															<li><a href="" tabindex="0">value9</a></li>
+															<li><a href="" tabindex="0">value10</a></li>
+														</ul>
+													</div>
+												</div>
+											 	/ 40 %
+											 </td>
+										</tr>
+										<tr>
+											<th>Max Margin Volume</th>
+											<td class="right">860,000</td>
+										</tr>
+										<tr>
+											<th>Expected</th>
+											<td class="right">860,000</td>
+										</tr>
+										<tr>
+											<th>Order Type</th>
+											<td>
+												<select id="" title="Order Type">
+													<option>LO</option>
+													<option>MP</option>
+													<option>ATO</option>
+													<option>ATC</option>
+												</select>
+											</td>
+										</tr>
+										<tr>
+											<th>Volume</th>
+											<td class="right"><input class="text won" type="text" value="0 VND"></td>
+										</tr>
+										<tr>
+											<th>Price</th>
+											<td class="right"><input class="text won" type="text" value="0 VND"></td>
+										</tr>
+										<tr>
+											<th>Value</th>
+											<td class="right">0 VND</td>
+										</tr>
+										<tr>
+											<th>Net fee</th>
+											<td class="right">0.00</td>
+										</tr>
+										<tr>
+											<th>Expiry date</th>
+											<td>
+												<input type="checkbox">
+												<input type="text" class="datepicker" placeholder="13/05/2016">
+											</td>
+										</tr>
+										<tr>
+											<th>Advanced</th>
+											<td>
+												<input type="checkbox">
+												<input type="text" class="datepicker" placeholder="13/05/2016">
+											</td>
+										</tr>
+									</table>
+									<!-- // e: 테이블 전체 수정 -->
+								</div>
+
+								<div class="mdi_bottom cb">
+									<!-- <strong class="share">
+										Available for purchase<br><em>0</em> shares
+									</strong> -->
+									<input class="color" type="submit" value="Submit">
+									<input type="reset" value="Clear">
+								</div>
+								<!-- //BUY -->
+							</div>
+
+							<div role="tabpanel" class="tab_pane" id="tab42" style="display:none;">
+								<!-- SELL -->
+								<div class="group_table type4">
+									<div class="search_area in total">
+										<div class="radio_area">
+											<input type="radio" id="" name=""><label for="">General</label>
+											<input type="radio" id="" name=""><label for="">Credit</label>
+										</div>
+									</div>
+									<table>
+										<caption></caption>
+										<colgroup>
+											<col width="100">
+											<col>
+										</colgroup>
+										<tr>
+											<th>Symbol</th>
+											<td>
+												<div class="search_area">
+													<label for="" class="screen_out">화면번호 검색</label>
+													<input type="text" id="" class="search_num" value="037620">
+													<button type="button" class="btn_recent"><span class="screen_out">최근조회 목록 보기</span></button>
+													<!-- layer_newest -->
+													<div class="layer_newest" style="display:none;">
+														<ul>
+															<li>
+																<strong>일이삼사오육칠팔구십</strong><em>000000</em>
+																<input type="button" value="삭제후닫기">
+															</li>
+															<li>
+																<strong>일이삼사오육칠팔구십</strong><em>000000</em>
+																<input type="button" value="삭제후닫기">
+															</li>
+															<li>
+																<strong>일이삼사오육</strong><em>000000</em>
+																<input type="button" value="삭제후닫기">
+															</li>
+															<li>
+																<strong>일이삼사오육칠팔구십</strong><em>000000</em>
+																<input type="button" value="삭제후닫기">
+															</li>
+														</ul>
+														<button type="button">전체삭제</button>
+													</div>
+													<!-- //layer_newest -->
+													<button type="button" class="btn_search" name="refcode_search"><span class="screen_out">검색하기</span></button>
+													<input class="search_input" type="text" value="Stock Code">
+												</div>
+												<!-- <button type="button">신용가능</button> -->
+											</td>
+										</tr>
+										<tr>
+											<th>Order Type</th>
+											<td>
+												<select id="" title="주문옵션구분선택">
+													<option>시간외</option>
+													<option>최유리</option>
+													<option>최우선</option>
+													<option>조건부</option>
+												</select>
+											</td>
+										</tr>
+										<tr>
+											<th><strong>Price</strong></th>
+											<td>
+												<input class="text won" type="text" value="0 VND">
+											</td>
+										</tr>
+										<tr>
+											<th><strong>Volume</strong></th>
+											<td>
+												<input class="text won" type="text" value="0 Shares">
+											</td>
+										</tr>
+									</table>
+
+									<div class="mdi_bottom cb">
+										<strong class="share">
+											Available for purchase<br><em>0</em> shares
+										</strong>
+										<button type="button">SELL</button>
+									</div>
+								</div>
+								<!-- //SELL -->
+							</div>
+
+							<div role="tabpanel" class="tab_pane" id="tab43" style="display:none;">
+								<!-- MODIFY -->
+								<div class="group_table type4">
+									<table>
+										<caption></caption>
+										<colgroup>
+											<col width="100">
+											<col>
+										</colgroup>
+										<tr>
+											<th>Symbol</th>
+											<td>
+												<div class="search_area">
+													<label for="" class="screen_out">화면번호 검색</label>
+													<input type="text" id="" class="search_num" value="037620">
+													<button type="button" class="btn_recent"><span class="screen_out">최근조회 목록 보기</span></button>
+													<!-- layer_newest -->
+													<div class="layer_newest" style="display:none;">
+														<ul>
+															<li>
+																<strong>일이삼사오육칠팔구십</strong><em>000000</em>
+																<input type="button" value="삭제후닫기">
+															</li>
+															<li>
+																<strong>일이삼사오육칠팔구십</strong><em>000000</em>
+																<input type="button" value="삭제후닫기">
+															</li>
+															<li>
+																<strong>일이삼사오육</strong><em>000000</em>
+																<input type="button" value="삭제후닫기">
+															</li>
+															<li>
+																<strong>일이삼사오육칠팔구십</strong><em>000000</em>
+																<input type="button" value="삭제후닫기">
+															</li>
+														</ul>
+														<button type="button">전체삭제</button>
+													</div>
+													<!-- //layer_newest -->
+													<button type="button" class="btn_search" name="refcode_search"><span class="screen_out">검색하기</span></button>
+													<input class="search_input" type="text" value="Stock Code">
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<th>Modify Type</th>
+											<td>
+												<div class="radio_area">
+													<input type="radio" id="" name=""><label for="">All modify</label>
+													<input type="radio" id="" name=""><label for="">Part modify</label>
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<th>Original Order</th>
+											<td>
+												<input class="text won" type="text" value="0">
+											</td>
+										</tr>
+										<tr>
+											<th><strong>Price</strong></th>
+											<td>
+												<input class="text won" type="text" value="0 VND">
+											</td>
+										</tr>
+										<tr>
+											<th><strong>Volume</strong></th>
+											<td>
+												<input class="text won" type="text" value="0 Shares">
+											</td>
+										</tr>
+									</table>
+
+									<div class="mdi_bottom cb">
+										<strong class="share">
+											<input class="text" type="text" placeholder="Order No.">
+										</strong>
+										<button type="button">MODIFY</button>
+									</div>
+								</div>
+								<!-- //MODIFY -->
+							</div>
+
+							<div role="tabpanel" class="tab_pane active" id="tab44" style="display:none;">
+								<!-- CANCEL -->
+								<div class="group_table type4">
+									<table>
+										<caption></caption>
+										<colgroup>
+											<col width="100">
+											<col>
+										</colgroup>
+										<tr>
+											<th>Symbol</th>
+											<td>
+												<div class="search_area">
+													<label for="" class="screen_out">화면번호 검색</label>
+													<input type="text" id="" class="search_num" value="037620">
+													<button type="button" class="btn_recent"><span class="screen_out">최근조회 목록 보기</span></button>
+													<!-- layer_newest -->
+													<div class="layer_newest" style="display:none;">
+														<ul>
+															<li>
+																<strong>일이삼사오육칠팔구십</strong><em>000000</em>
+																<input type="button" value="삭제후닫기">
+															</li>
+															<li>
+																<strong>일이삼사오육칠팔구십</strong><em>000000</em>
+																<input type="button" value="삭제후닫기">
+															</li>
+															<li>
+																<strong>일이삼사오육</strong><em>000000</em>
+																<input type="button" value="삭제후닫기">
+															</li>
+															<li>
+																<strong>일이삼사오육칠팔구십</strong><em>000000</em>
+																<input type="button" value="삭제후닫기">
+															</li>
+														</ul>
+														<button type="button">전체삭제</button>
+													</div>
+													<!-- //layer_newest -->
+													<button type="button" class="btn_search" name="refcode_search"><span class="screen_out">검색하기</span></button>
+													<input class="search_input" type="text" value="Stock Code">
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<th>Cancel Type</th>
+											<td>
+												<div class="radio_area">
+													<input type="radio" id="" name=""><label for="">All cancel</label>
+													<input type="radio" id="" name=""><label for="">Part cancel</label>
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<th>Original Order</th>
+											<td>
+												<input class="text won" type="text" value="0">
+											</td>
+										</tr>
+										<tr>
+											<th><strong>Volume</strong></th>
+											<td>
+												<input class="text won" type="text" value="0 Shares">
+											</td>
+										</tr>
+									</table>
+
+									<div class="mdi_bottom cb">
+										<strong class="share">
+											<input class="text" type="text" placeholder="Order No.">
+										</strong>
+										<button type="button">CANCEL</button>
+									</div>
+								</div>
+								<!-- //CANCEL -->
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<!-- //RIGHT -->
+			</div>
+		</div>
+		<!-- //템플릿 사용부분 -->
+
+		<div class="footer">
+			<!-- e: 추가, 헤더에서 이동함 -->
+			<!-- information -->
+			<div id="information">
+				<h2 class="screen_out">최근 조회 종목,주요지수,주요뉴스</h2>
+				<div class="wrap_ticker">
+					<div>
+						<h3 class="screen_out">주요지수 (국내/해외)</h3>
+						<div class="group_index">
+							<!-- KOSPI -->
+							<div class="index_area">
+								<div class="group_wrap">
+									<div class="group_item">
+										<h4>Dow Jones</h4>
+										<ul class="items">
+											<li class="item1"><span class="up">1,947.10</span></li>
+											<li class="item2"><span class="up arrow">2.46</span></li>
+											<li class="item3"><span class="up">+0.13</span></li>
+										</ul>
+									</div>
+								</div>
+								<div class="move_area">
+									<button type="button" class="btn_prev">prev</button>
+									<button type="button" class="btn_next">next</button>
+								</div>
+							</div>
+							<!-- //KOSPI -->
+							<!-- DOW -->
+							<div class="index_area">
+								<div class="group_wrap">
+									<div class="group_item">
+										<h4>DOW</h4>
+										<ul class="items">
+											<li class="item1"><span class="low">16,297.89</span></li>
+											<li class="item2"><span class="low arrow">50.58</span></li>
+											<li class="item3"><span class="low">-0.31</span></li>
+										</ul>
+									</div>
+								</div>
+								<div class="move_area">
+									<button type="button" class="btn_prev">prev</button>
+									<button type="button" class="btn_next">next</button>
+								</div>
+							</div>
+							<!-- //DOW -->
+						</div>
+						<!-- e: news삭제, 아래와 중복 -->
+						<!-- NEWS -->
+						<!--
+						<div class="group_news">
+							<h3 class="screen_out">주요뉴스</h3>
+							<ul class="items">
+								<li>VN NEWS , CSV - to Hold 2016 AGM on April 29... (11:00</li>
+							</ul>
+							<div class="move_area">
+								<button type="button" class="btn_prev">
+									<span class="screen_out">이전 뉴스</span>
+								</button>
+								<button type="button" class="btn_next">
+									<span class="screen_out">다음 뉴스</span>
+								</button>
+							</div>
+						</div>
+						-->
+						<!-- //NEWS -->
+						<!-- // e: news 삭제 -->
+					</div>
+				</div>
+			</div>
+			<!-- // information -->
+			<!-- // e: 추가, 헤더에서 이동함 -->
+			<div class="cb">
+				<div class="news">
+					<ul class="group_wrap">
+						<li class="group_item"><a href="">VN NEWS, CSV - to Hold 2016 AGM on Aprol 29... (11:00)</a></li>
+						<li class="group_item"><a href="">VN NEWS, CSV - to Hold 2016 AGM on Aprol 29... (11:00)</a></li>
+						<li class="group_item"><a href="">VN NEWS, CSV - to Hold 2016 AGM on Aprol 29... (11:00)</a></li>
+					</ul>
+					<div class="move_area">
+						<!-- e: 이미지를 텍스트로 교체 -->
+						<button type="button" class="btn_prev">prev</button>
+						<button type="button" class="btn_next">next</button>
+						<!-- // e: 이미지를 텍스트로 교체 -->
+					</div>
+				</div>
+				<!-- e: 카피라이트 기호 수정 -->
+				<div class="copy">copyright &copy; MIRAE ASSET Securities Vietnam.</div>
+				<!-- // e: 카피라이트 기호 수정 -->
+			</div>
+		</div>
+
+  	</div>
+
+  	<div class="modal_wrap loading_cover">
+		<div class="modal"></div>
+		<div class="loading">loading</div>
+	</div>
+<script src="/resources/js/jquery.min.js"></script>
+<script src="/resources/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/resources/js/jquery.blockUI.min.js"></script>
+<script>
+(function(){
+	function setInitEvt() {
+		$('.group_table').each(function() {
+			var table = $(this).find('table'),
+				tbody = table.find('tbody');
+
+			if(!tbody.find('th').length) {
+				tbody.find('tr:odd').addClass('even');
+			}
+
+			if(table.height() >= $(this).parent().height()) {
+				table.addClass('no_bbt');
+			}
+		});
+		$('div[name=tabs]').tabs();
+		$("#tabOrdGrp2").tabs("destroy");
+		$('.datepicker').datepicker({
+			showOn:"button",
+			changeYear:true,
+			changeMonth:true
+		});
+	}
+	window.showFullLoading = function() {
+		$('.loading_cover').show();
+	}
+	window.hideFullLoading = function() {
+		$('.loading_cover').hide();
+	}
+
+	setInitEvt();
+	$(document).ajaxComplete(function() {
+		setInitEvt();
+	});
+}())
+</script>
+  </body>
+</html>

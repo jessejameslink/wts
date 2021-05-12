@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.vn.app.webmain.oraweb.home.service.impl.InvestorDAO">
+
+	<select id="getAllInvestor" resultType="InvestorVO" parameterType="SearchVO">
+		SELECT id, created, title, docsize
+		FROM (SELECT A.id, A.created, A.title, A.docsize, ROW_NUMBER() OVER(ORDER BY A.created DESC) AS NUM
+			  FROM DATA_INVESTOR A
+			  WHERE SUBSTR (A.PATH,1,5) =  CASE #{lang} WHEN 'vi_VN' THEN 'vi-VN'
+                                            				  WHEN 'en_US' THEN 'en-US'
+                                            				  WHEN 'kr_KR' THEN 'kr-KR'
+                                            				  ELSE 'vi-VN' END
+              AND A.publishdate between TO_DATE (#{startDate}, 'yyyy/mm/dd') AND TO_DATE (#{endDate}, 'yyyy/mm/dd') + 1
+              AND A.type = #{nType}
+		)
+		WHERE NUM BETWEEN (( #{page} - 1 ) * 20 + 1) AND (( #{page} ) * 20 )
+	</select>
+	
+	<select id="getInvestorCnt" resultType="integer" parameterType="SearchVO">
+		SELECT COUNT(*) as CNT
+		FROM DATA_INVESTOR A
+		WHERE SUBSTR (A.PATH,1,5) =  CASE #{lang} WHEN 'vi_VN' THEN 'vi-VN'
+	                                          		    WHEN 'en_US' THEN 'en-US'
+	                                          			WHEN 'kr_KR' THEN 'kr-KR'
+	                                          			ELSE 'vi-VN' END
+	    AND A.publishdate between TO_DATE (#{startDate}, 'yyyy/mm/dd') AND TO_DATE (#{endDate}, 'yyyy/mm/dd') + 1
+        AND A.type = #{nType}
+	</select>
+	
+	<select id="getInvestorDetail" resultType="InvestorVO"  parameterType="string">
+		SELECT 
+		  id, data, title, created, filename
+		FROM DATA_INVESTOR
+		WHERE ID = UPPER(#{sid})
+	</select>
+</mapper>

@@ -1,0 +1,338 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%
+String langCd = (String) session.getAttribute("LanguageCookie");
+%>
+
+<%--
+<%@ include file = "<c:url value='/include/header.jsp'/>" %>
+ --%>
+<html>
+<head>
+<script>
+	$(document).ready(function() {
+		$("#popTitleBC").append (("<%= langCd %>" == "en_US" ? ("${buySell}" == "buy" ? "Buy" : "Sell") : ("${buySell}" == "buy" ? "Mua" : "Bán")) );
+		authConfirm();
+		verifyOrder();
+	});
+
+	function verifyOrder() {
+		$("#divOrdConf").block({message: "<span>LOADING...</span>"});
+		var param = {
+				mvBS             : $("#buySellBC").val(),
+				mvStockCode      : $("#stockBC").val(),
+				//mvMarketId       : $("#mvMarketId").val(),
+				mvMarketID       : $("#mvMarketIdBC").val(),
+				mvPrice          : $("#priceBC").val(),
+				mvQuantity       : $("#volumeBC").val(),
+				mvOrderTypeValue : $("#orderTypeBC").val(),
+				mvGrossAmt       : $("#valueBC").val(),
+				mvBankID         : $("#mvBankIDBC").val(),
+				mvBankACID       : $("#mvBankACIDBC").val(),
+				mvGoodTillDate   : $("#expiryDtBC").val()
+		};
+
+		//console.log("VERIFY ORDER CHECK");
+		//console.log(param);
+		
+		$.ajax({
+			dataType  : "json",
+			url       : "/trading/data/verifyOrder.do",
+			data      : param,
+			cache 	  : false,
+			success   : function(data) {
+				$("#divOrdConf").unblock();
+				if(data.jsonObj != null) {
+// 					authConfirm();
+				}
+			},
+			error     :function(e) {
+				console.log(e);
+				$("#divOrdConf").unblock();
+			}
+		});
+	}
+
+	function authConfirm(flag) {
+		$("#divOrdConf").block({message: "<span>LOADING...</span>"});
+		var param = {
+				wordMatrixKey01      : $("#mvWordMatrixKey01").text(),
+				wordMatrixKey02      : $("#mvWordMatrixKey02").text(),
+				wordMatrixValue01    : $("#wordMatrixValue01").val(),
+				wordMatrixValue02    : $("#wordMatrixValue02").val(),
+				serialnumber         : $("#serialnumber").val(),
+				mvSaveAuthenticate   : $("#saveAuthenticate").is(':checked')
+		};
+
+		$.ajax({
+			dataType  : "json",
+			url       : "/trading/data/authCardMatrix.do",
+			data      : param,
+			aync      : true,
+			success   : function(data) {
+				$("#divOrdConf").unblock();
+				
+				
+				//console.log("AUTH CART MATRIX=============");
+				//console.log(data.jsonObj);
+				//console.log(data.jsonObj.mvSuccess);
+				
+				
+				if(data.jsonObj != null) {
+					if(data.jsonObj.mvSuccess == "FAIL") {
+						$("#divAuth").css("display", "block");
+						var authCard = data.jsonObj.mvClientCardBean;
+						$("#mvWordMatrixKey01").html(authCard.mvWordMatrixKey01);
+						$("#mvWordMatrixKey02").html(authCard.mvWordMatrixKey02);
+						$("#serialnumber").val(authCard.serialnumber);
+						if(data.jsonObj.mvClientCardBean.mvErrorCode == "incorrect") {
+							alert("Not Correct CartNo.\n" + data.jsonObj.mvErrorResult);
+						}
+						
+					} else if(data.jsonObj.mvSuccess == "SUCCESS") {
+						if(flag == "SAVE") {
+							enterOrder();
+						}
+					}
+				}
+			},
+			error     :function(e) {
+				console.log(e);
+				$("#divOrdConf").unblock();
+			}
+		});
+	}
+
+	function orderConfirm() {
+		if($("#divAuth").css("display") == "none") {
+			enterOrder();
+		} else {
+			authConfirm("SAVE");
+		}
+	}
+
+	function enterOrder() {
+		$("#divOrdConf").block({message: "<span>LOADING...</span>"});
+		var param = {
+				mvBS                      : $("#buySellBC").val(),
+				mvStockCode               : $("#stockBC").val(),
+				mvLending                 : $("#lendingBC").val(),
+				mvAvailableMarginVol      : $("#maxMarginBC").val(),
+				mvBuyingPower             : $("#buyingPowerBC").val(),
+				mvOrderTypeValue          : $("#orderTypeBC").val(),
+				mvQuantity                : $("#volumeBC").val(),
+				mvPrice                   : numIntFormat(numDotComma($("#priceBC").val()) / 1000),
+				mvGrossAmt                : $("#valueBC").val(),
+				mvNetFee                  : $("#netFeeBC").val(),
+				mvMarketID                : $("#mvMarketIdBC").val(),				
+				refId                     : $("#refIdBC").val(),
+				mvWaitOrder               : $("#waitOrderBC").val(),
+				mvGoodTillDate            : $("#expiryDtBC").val(),
+				mvAfterServerVerification : $("#afterServerVerificationBC").val(),
+				extgen1372                : $("#mvTemporaryFeeBC").val(),
+				extgen1373                : $("#mvStockNameBC").val(),
+				extgen1374                : "",
+				extgen1375                : $("#waitOrderBC").val(),
+				extgen1376                : $("#expiryDtBC").val(),
+				mvBankID                  : $("#mvBankIDBC").val(),
+				mvBankACID                : $("#mvBankACIDBC").val()
+		};
+		//console.log("ORDER CONFIRM WINDOW===>");
+		//console.log(param);
+		$.ajax({
+			dataType  : "json",
+			url       : "/trading/data/enterOrder.do",
+			data      : param,
+			aync      : true,
+			cache : false,
+			success   : function(data) {
+				//console.log("ENTER ORDER CHECK");
+				//console.log(data);
+				$("#divOrdConf").unblock();
+				if(data.jsonObj != null) {
+					if(data.jsonObj.mvReturnCode == 30013) {
+						$("#divOrdConf").unblock();
+						if ("<%= langCd %>" == "en_US") {
+							alert("Can't place order on market in this time. Please try again.");
+						} else {
+							alert("Lúc này hệ thống không nhận lệnh mua/bán trên sàn. Vui lòng thử lại.");
+						}
+						cancel();
+					} else {
+						if(data.jsonObj.success) {
+							
+							if ("<%= langCd %>" == "en_US") {
+								//alert("Your order was successful.");
+								autoAlert("Your order was successful.", 2000);
+							} else {
+								//alert("Đơn hàng của bạn đã thành công.");
+								autoAlert("Đặt lệnh thành công.", 2000);
+							}
+							if($("#divIdOrderPop").val() == "divEnterOrderPop" || $("#divIdOrderPop").val() == "divEnterSellPop") {
+								$("#tabOrdGrp2").tabs({active : 0});
+								searchOrder();
+							}
+							try {
+								parent.clearData(1);			//	주문데이터 초기화
+								cancel();
+							} catch(e) {
+								console.log(e);
+								cancel();
+							}
+						} else {
+							enterOrderFail();
+						}
+					}
+				} else {
+					if ("<%= langCd %>" == "en_US") {
+						alert("There is a problem with your order processing. Please order again from the beginning.");	
+					} else {
+						alert("Có vấn đề với quá trình đặt lệnh của bạn. Vui lòng đặt lệnh lại từ đầu.");
+					}
+
+				}
+			},
+			error     :function(e) {
+				$("#divOrdConf").unblock();
+				//alert(e);
+				console.log(e);
+			}
+		});
+	}
+
+	function enterOrderFail() {
+		$("#divOrdConf").block({message: "<span>LOADING...</span>"});
+
+		$.ajax({
+			dataType  : "json",
+			url       : "/trading/data/enterorderfail.do",
+			aync      : true,
+			success   : function(data) {
+				$("#divOrdConf").unblock();
+				if(data.jsonObj != null) {
+					if(data.jsonObj.success) {
+						alert(data.jsonObj.mvFailBean.mvErrorMsg);
+						cancel();
+					}
+				}
+			},
+			error     :function(e) {
+				console.log(e);
+				$("#divOrdConf").unblock();
+			}
+		});
+	}
+
+	function cancel() {
+		$("#" + $("#divIdOrderPopBC").val()).fadeOut("normal", function() {
+	        $(this).remove();
+	    });
+	}
+	
+	function autoAlert(msg,duration){		
+	 	var el = document.createElement("div");
+	 	el.setAttribute("style","z-index:2000;position:fixed;top:0%;left:40%;background-color:grey;border-radius:3px;padding:20px 40px;font-size:16px;color:white;");
+	 	el.innerHTML = msg;
+	 	setTimeout(function(){
+	  		el.parentNode.removeChild(el);
+	 	},duration);
+	 	document.body.appendChild(el);
+	}
+</script>
+
+</head>
+<body>
+	<form autocomplete="Off">
+		<div id="divOrdConf" class="modal_layer ${buySell}">
+ 			<input type="hidden" id="mvInstrumentBC" name="mvInstrument" value="${formData.mvInstrument}">
+			<input type="hidden" id="mvMarketIdBC" name="mvMarketId" value="${formData.mvMarketId}">
+			<input type="hidden" id="mvMarketIdListBC" name="mvMarketIdList" value="${formData.mvMarketIdList}">
+			<input type="hidden" id="mvEnableGetStockInfoBC" name="mvEnableGetStockInfo" value="${formData.mvEnableGetStockInfo}">
+			<input type="hidden" id="mvActionBC" name="mvAction" value="${formData.mvAction}">
+			<input type="hidden" id="mvTemporaryFeeBC" name="mvTemporaryFee" value="${formData.mvTemporaryFee}">
+			<input type="hidden" id="maxMarginBC" name="maxMargin" value="${formData.maxMargin}">
+			<input type="hidden" id="lendingBC" name="lending" value="${formData.lending}">
+			<input type="hidden" id="valueBC" name="value" value="${formData.value}">
+			<input type="hidden" id="netFeeBC" name="netFee" value="${formData.netFee}">
+			<input type="hidden" id="buySellBC" name="buySell" value="${formData.buySell}">
+			<input type="hidden" id="buyingPowerBC" name="buyingPower" value="${formData.buyingPower}">
+			<input type="hidden" id="stockBC" name="stock" value="${formData.stock}">
+			<input type="hidden" id="mvBankIDBC" name="mvBankID" value="${formData.mvBankID}">
+			<input type="hidden" id="mvBankACIDBC" name="mvBankACID" value="${formData.mvBankACID}">
+			<input type="hidden" id="priceBC" name="price" value="${formData.price}">
+			<input type="hidden" id="volumeBC" name="volume" value="${formData.volume}">
+			<input type="hidden" id="orderTypeBC" name="orderType" value="${formData.orderType}">
+			<input type="hidden" id="orderTypeNmBC" name="orderTypeNm" value="${formData.orderTypeNm}">
+			<input type="hidden" id="expiryDtBC" name="expiryDt" value="${formData.expiryDate}">
+			<input type="hidden" id="advancedDtBC" name="advancedDt" value="${formData.advancedDate}">
+			<input type="hidden" id="refIdBC" name="refId" value="${formData.refId}">
+			<input type="hidden" id="waitOrderBC" name="waitOrder" value="${formData.chkExpiry}">
+			<input type="hidden" id="afterServerVerificationBC" name="afterServerVerification" value="Y"> <!-- Todo 항목확인 필요 -->
+			<input type="hidden" id="mvStockNameBC" name="mvStockName" value="${formData.mvStockName}">
+			<input type="hidden" id="divIdOrderPopBC" name="divIdOrderPop" value="${formData.divId}">
+			<input type="hidden" id="serialnumberBC" name="serialnumber" value=""> 		
+ 			<h2 id="popTitleBC"><%= (langCd.equals("en_US") ? "Confirm" : "Lệnh") %> : </h2>
+
+			<div class="cont">	
+				<table>
+					<colgroup>
+						<col width="100" />
+						<col />
+					</colgroup>
+					<tr>
+						<th><%= (langCd.equals("en_US") ? "Stock" : "Mã CK") %></th>
+						<td>${formData.stock}</td>
+					</tr>
+					<tr>
+						<th><%= (langCd.equals("en_US") ? "Stock Name" : "Tên Công ty") %></th>
+						<td>${formData.mvStockName}</td>
+					</tr>
+					<tr>
+						<th><%= (langCd.equals("en_US") ? "Price (VND)" : "Giá (VND)") %></th>
+						<td>${formData.price}</td>
+					</tr>
+					<tr>
+						<th><%= (langCd.equals("en_US") ? "Order volume" : "Khối lượng") %></th>
+						<td>${formData.volumeView}</td>
+					</tr>
+					<tr>
+						<th><%= (langCd.equals("en_US") ? "Order Type" : "Loại lệnh") %></th>
+						<td>${formData.orderTypeNm}</td>
+					</tr>
+					<tr>
+						<th><%= (langCd.equals("en_US") ? "Value (VND)" : "Giá trị (VND)") %></th>
+						<td>${formData.value}</td>
+					</tr>
+					<tr>
+						<th><%= (langCd.equals("en_US") ? "Net fee" : "Phí tạm tính") %></th>
+						<td>${formData.netFee}</td>
+					</tr>
+					<tr>
+						<th><%= (langCd.equals("en_US") ? "Effect To Date" : "Lệnh đến hạn") %></th>
+						<td>${formData.expiryDate}</td>
+					</tr>
+				</table>
+			</div>
+			<div id="divAuth" class="layer_add" style="display: none;">
+				<h3 class="layer_add_title"><%= (langCd.equals("en_US") ? "Authentication" : "Xác thực") %></h3>
+				<div class="form_area">
+					<ul class="security_check">
+						<li><strong id="mvWordMatrixKey01"></strong><input type="password" id="wordMatrixValue01" name="wordMatrixValue01" value="" maxlength="1"></li>
+						<li><strong id="mvWordMatrixKey02"></strong><input type="password" id="wordMatrixValue02" name="wordMatrixValue02" value="" maxlength="1"></li>
+					</ul>
+					<div>
+						<input type="checkbox" id="saveAuthenticate" name="saveAuthenticate" checked="checked">
+						<label for="saveA"><%= (langCd.equals("en_US") ? "Save Authentication?" : "Lưu xác thực?") %></label>
+					</div>
+				</div>
+			</div>
+			<div style="padding: 20px;">
+				<span style="color:blue !important;"><%= (langCd.equals("en_US") ? "*Warning: Saving authentication maybe potentially risk to your account if you lose your phone or password." : "*Cảnh báo: Việc lưu xác thực có thể dẫn đến rủi ro cho tài khoản giao dịch nếu bạn bị mất thiết bị hoặc mật khẩu.") %></span>
+			</div>
+			<div class="btn_wrap">
+				<button type="button" onclick="orderConfirm()" class="add"><%= (langCd.equals("en_US") ? "Confirm" : "Xác nhận") %></button>
+				<button type="button" onclick="cancel()"><%= (langCd.equals("en_US") ? "Cancel" : "Hủy") %></button>
+			</div>
+		</div>
+	</form>
+</body>
+</html>

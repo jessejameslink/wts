@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<transaction trcode="pibolgon" servicecode=""  type="row">
+	<value io="in"		name="rsl"		type="string"	length="1"		comment="Result connect to TTL"/>
+	<value io="in"		name="usid"		type="string"	length="12"		comment="User ID"/>
+	<value io="in"		name="info"		type="string"	length="256"	comment="Info"/>
+	<value io="in"		name="error"	type="string"	length="256"	comment="Error logon to TTL"/>	
+	
+	<value io="out"		name="rcod"		type="string"	length="1"	comment="1: OK, 0:Error"/>
+</transaction>

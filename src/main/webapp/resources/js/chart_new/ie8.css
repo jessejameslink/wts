@@ -1,0 +1,223 @@
+@charset "EUC-KR";
+
+/* 0100 주식종합 */
+#mdi0100 #tab1 div.grid_area{margin-top:-1px !important;}
+#mdi0100 #tab2 div.grid_area{}
+#mdi0100 #tab2 div.grid_area .group_table.type2 tbody td{padding-top:3.1px !important;}
+#mdi0100 #tab3 div.grid_area{}
+#mdi0100 #tab4 div.grid_area{margin-bottom:1px !important;}
+#mdi0100 #tab5 div.grid_area{margin-bottom:1px !important;}
+#mdi0100 #tab8 div.group_table.type2{height:200px !important;margin-bottom:-1px !important;}
+#mdi0100 #tab9 div.grid_area{}
+#mdi0100 #tab10 div.grid_area{}
+#mdi0100 #tab011 .group_table.type1 .table tbody th{padding-top:3px !important;}
+#mdi0100 #tab012 .group_table.type1 .table tbody th{padding-bottom:1px !important;}
+#mdi0100 #tab13 .chart_area{height:229px !important;}
+
+#mdi0100 #tab14 .grid_area{margin-top:0.2px !important;}
+#mdi0100 #tab17 .grid_area,
+#mdi0100 #tab18 .grid_area,
+#mdi0100 #tab19 .total_order_wrap,
+#mdi0100 #tab20 .total_order_wrap,
+#mdi0100 #tab21 .total_order_wrap,
+#mdi0100 #tab22 .total_order_wrap{margin-top:0.5px !important;}
+
+#mdi0100 #tab19 .pull_left{margin-top:-1px;}
+#mdi0100 #tab19 div.group_table.type4 td .ui-selectmenu-button .ui-selectmenu-text{}
+#mdi0100 #tab20 .pull_left .group_table.type1 .table tbody th{padding-top:3.5px !important;}
+#mdi0100 #tab21 .pull_left .grid_area, #mdi0100 #tab22 .pull_left .grid_area{height:229px !important;}
+#mdi0100 #tab22 .pull_left .group_table.type2 .table tbody td{padding-top:2.5px !important;}
+#mdi0100 #tab32 .group_table.type2 .table thead th{padding-top:2px !important;}
+#mdi0100 #tab32 .group_table.type2 .table tfoot td{padding-top:2.5px !important;}
+#mdi0100 #tab46 .group_table.type2{height:103px;}
+#mdi0100 #tab46 .group_table.type2 .table thead th{padding-top:2px !important;padding-bottom:1px !important;}
+
+/* 0101 현재가 */
+#mdi0101 .group_table.type2 tbody td.white{padding-left:4px !important;}
+#mdi0101 .group_table.type2 tbody td.white{padding-right:1px !important;}
+#mdi0101 .wrap_left .group_table.type2 .table tfoot td{padding-bottom:0.5px !important;}
+
+/* #mdi0101 .group_table.type2 td.sel_box > div{position:absolute; left:0; top:0; bottom:0; right:0; background:url(../../../jsp/trading/images/common/ie8_sel_box.png) no-repeat;}
+#mdi0101 .group_table.type2 td.sel_box.up > div{background-image:url(../../../jsp/trading/images/common/ie8_sel_box_up.png);}
+#mdi0101 .group_table.type2 td.sel_box.low > div{background-image:url(../../../jsp/trading/images/common/ie8_sel_box_low.png);}
+ */
+#mdi0101 #tab4 div.group_table .table tfoot th{padding-top:4px !important;}
+#mdi0101 #tab5 div.grid_area .pq-grid{height:146px !important;}
+#mdi0101 #tab6 div.group_table .table thead th{} /* padding-bottom:1px !important; */
+#mdi0101 #tab7 div.grid_area .pq-grid{}
+#mdi0101 #tab8 div.group_table.type2 .search_area{margin-top:-1px !important;}/*  */
+#mdi0101 #tab12 div.chart_area{}
+
+/* 0142 시간외단일가현재가 */
+#mdi0142 .wrap_left div.group_table.type2 .table tfoot td{padding-bottom:1.5px !important;}
+/* #mdi0142 .wrap_right #tab9 div.group_table.type2 .table tfoot td{padding-bottom:1.5px !important;}*/
+
+/* 0169 시가총액순위 */
+#mdi0169 .mdi_search .deal_data .absolute{padding-top:3px !important;}
+#dia01690 .group_table.type1 .table tbody td .absolute{top:33px !important;padding-top:3px !important;}
+
+/* 0170 주가등락률순위 */
+#mdi0170 .mdi_search .search_box .deal_data .absolute{padding-top:2px !important;}
+
+/* 0300 선물옵션종합 */
+/* 관심 */
+#mdi0300 #tab1 .grid_area{height:217px !important;}
+
+/* 선물옵션 */
+#mdi0300 #tab2 .grid_area{height:108px !important;}
+
+/* 선물 */
+#mdi0300 #tab3 .grid_area{height:218px !important;}
+
+/* 스프레드 */
+#mdi0300 #tab4 .grid_area{height:218px !important;}
+
+/* 전광판 */
+#mdi0300 #tab5 .grid_area{height:218px !important;}
+
+/* 주문체결 */
+#mdi0300 #tab6 .grid_area{height:181px !important;}
+
+/* 잔고 */
+#mdi0300 #tab7 .grid_area{height:136px !important;}
+
+/* 예수금 */
+#mdi0300 #tab8 .division_half{margin-bottom:-1px !important;}
+
+/* 일지 */
+#mdi0300 #tab9 .grid_area{height:128px !important;}
+
+
+
+/* 시간별 */
+#mdi0300 #tab11 .grid_area{margin-top:2px !important;}
+
+/* 일자별 */
+#mdi0300 #tab12 .grid_area{margin-top:2px !important;}
+
+/* 차트 */
+#mdi0300 #tab13 .chart_area{height:214px !important;}
+
+/* 미결제약정 */
+#mdi0300 #tab15 .grid_area{}
+
+/* 시장별 */
+#mdi0300 #tab17 .grid_area{}
+#mdi0300 #tab17 .grid_area .pq-grid{height:214px !important;}
+
+/* 투자자별 */
+#mdi0300 #tab18 .group_table.type2{margin-top:4px !important;}
+#mdi0300 #tab18 .group_table.type2 .table tbody th{padding-top:8.9px !important;padding-bottom:8.9px !important;}
+#mdi0300 #tab18 .group_table.type2 .table tbody td{padding-top:8.9px !important;padding-bottom:8.9px !important;}
+
+/* 시황 */
+#mdi0300 #tab19 .grid_area{}
+#mdi0300 #tab19 .grid_area .pg-grid{height:214px !important;}
+
+/* 매수 */
+#mdi0300 #tab20 .pull_left .grid_area, #mdi0300 #tab21 .pull_left .grid_area{height:162px !important;}
+#mdi0300 #tab20 .pull_right .group_table.type4, 
+#mdi0300 #tab21 .pull_right .group_table.type4, 
+#mdi0300 #tab22 .pull_right .group_table.type4, 
+#mdi0300 #tab23 .pull_right .group_table.type4{height:214px !important;}
+
+/* 정정 */
+#mdi0300 #tab22 .pull_left .grid_area{height:214px !important;}
+
+/* 취소 */
+#mdi0300 #tab23 .pull_left .grid_area{height:214px !important;}
+
+
+
+/* 호가 */
+#mdi0300 #tab31 .group_table.type2 .table thead th{padding-top:0 !important;}
+#mdi0300 #tab31 .group_table.type2 .table tfoot td{}
+
+/* 종목 */
+#mdi0300 #tab32 .group_table.type1 + div{margin-top:2px !important;}
+
+/* 호가 */
+#mdi0300 #tab42 .group_table.type2 .table tfoot td{padding-top:1px !important;}
+
+/* 프로 */
+#mdi0300 #tab43 .grid_area{margin-top:2px !important;}
+
+/* 0300 선물옵션종합, 0302, 0310, 0311 */
+#mdi0300 .search_area .num_input .search_num input,
+#mdi0302 .search_area .num_input .search_num input,
+#mdi0310 .search_area .num_input .search_num input,
+#mdi0311 .search_area .num_input .search_num input{padding-top:4px !important;}
+
+/* 0302 선물옵션현재가 */
+#mdi0302 div.group_table.type2 .table tfoot td{padding-bottom:1.5px !important;}
+
+/* 0401 선물/옵션 주문 */
+#mdi0401 .wrap_left  div.group_table.type2 .table tfoot td{padding-bottom:1.5px !important;}
+#mdi0401 .wrap_left .grid_area .pq-grid{height:146px !important;}
+#mdi0401 .wrap_left .grid_area .pq-grid-cont{height:128px !important;}
+#mdi0401 #tab1 .type4.group_table, #mdi0401 #tab2 .type4.group_table{height:177px !important;}
+
+/* 0441 선물옵션 기간별매매일지 */
+#mdi0441{height:445px !important;}
+
+/* 0450 예수금현황 */
+#mdi0450{height:402px !important;}
+
+/* 0453 증거금상세내역 */
+#mdi0453{height:635px !important;}
+
+/* 0503 증시종합 */
+#mdi0503 .wrap_right .type1.group_table .table tbody th{padding-bottom:1px;}
+
+/* 0611 주식주문 */
+#mdi0611 #tab1 .type1.group_table .table tbody th{padding-bottom:11.2px;}
+#mdi0611 #tab2 div.grid_area{height:110px !important;}
+#mdi0611 #tab2 .type1.group_table .table tbody th{padding-bottom:3.8px !important;}
+#mdi0611 #tab3 div.grid_area{height:183px !important;}
+#mdi0611 #tab3 .type2.group_table .table thead th{padding:4px 0 1px 0 !important;}
+#mdi0611 #tab4 div.grid_area{height:183px !important;}
+#mdi0611 #tab4 .type2.group_table .table thead th{padding:4px 0 1px 0 !important;}
+#mdi0611 #tab5 div.grid_area{height:292px !important;}
+#mdi0611 #tab5 .type2.group_table .table thead th{padding:3px 0 3px 0 !important;}
+
+/* 0623 체결기준잔고 */
+/*#mdi0623{height:544px !important;}*/
+
+/* 0625 시간외단일가 주문 */
+#mdi0625 #tab1 .type1.group_table .table tbody th{padding-bottom:8.5px;}
+#mdi0625 #tab1 .type1.group_table .table tbody td{padding-bottom:8.5px;}
+#mdi0625 #tab2 .grid_area{}
+#mdi0625 #tab3 div.grid_area{}
+#mdi0625 #tab3 .type2.group_table .table thead th{padding:4px 0 1px 0 !important;}
+#mdi0625 #tab4 div.grid_area{}
+#mdi0625 #tab4 .type2.group_table .table thead th{padding:4px 0 1px 0 !important;}
+#mdi0625 #tab5 div.grid_area .type2.group_table{height:274px !important;}
+#mdi0625 #tab5 div.grid_area .type2.group_table .pq-grid-cont{height:255px !important;}
+#mdi0625 #tab5 .type1.group_table .table tbody th{padding-top:2px !important;padding-bottom:2px !important;}
+#mdi0625 #tab5 .type2.group_table .table thead th{padding:4px 0 2px 0 !important;}
+
+/* 0630 예약주문 */
+#mdi0630 .only.order_tab1{padding-top:3px !important;margin-bottom:1px !important;}
+#mdi0630 .wrap_left .group_table.type1 .table tbody th, #mdi0630 .wrap_left .group_table.type1 .table tbody td{padding-top:4px !important;padding-bottom:3.5px !important;}
+#mdi0630 #tab1 order_tab1.only{} /* height:108px !important; */
+#mdi0630 #tab2 .grid_area{} /* height:108px !important; */
+#mdi0630 #tab3 .grid_area{} /* height:108px !important; */
+
+/* 0650 거래내역 */
+#mdi0650{height:482px !important;}
+
+/* 0101 현재가 종목검색 */
+#dia00000 .grid_area{margin-top:0;}
+#grid00000_sech{width:232px !important;}
+
+
+
+/*
+#sel_div1_0611-button{
+	opacity:0.35;
+	filter:alpha(opacity=40);
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(opacity=40)";,
+	filter:progid:DXImageTransform.Microsoft.Alpha(opacity=40);
+}
+*/
+

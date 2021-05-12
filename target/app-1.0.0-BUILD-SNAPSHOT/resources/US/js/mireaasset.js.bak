@@ -1,0 +1,115 @@
+$(document).ready(function(){
+/* GNB */
+	console.log('a');
+	$("#submenu1, #submenu2, #submenu3, #submenu4, #submenu5, #submenu6").hide();
+	$("#menu1").hover(function(){
+		$(".menuOff").removeClass("menuOff").addClass("menuOn");
+		$("#menu2, #menu3, #menu4, #menu5, #menu6").removeClass("menuOn").addClass("menuOff");
+		$("#submenu1").slideDown(0);
+		$("#submenu2, #submenu3, #submenu4, #submenu5, #submenu6").slideUp(0);
+	});
+	$("#menu2").hover(function(){
+		$(".menuOff").removeClass("menuOff").addClass("menuOn");
+		$("#menu1, #menu3, #menu4, #menu5, #menu6").removeClass("menuOn").addClass("menuOff");
+		$("#submenu2").slideDown(0);
+		$("#submenu1, #submenu3, #submenu4, #submenu5, #submenu6").slideUp(0);
+	});
+	$("#menu3").hover(function(){
+		$(".menuOff").removeClass("menuOff").addClass("menuOn");
+		$("#menu1, #menu2, #menu4, #menu5, #menu6").removeClass("menuOn").addClass("menuOff");
+		$("#submenu3").slideDown(0);
+		$("#submenu1, #submenu2, #submenu4, #submenu5, #submenu6").slideUp(0);
+	});
+	$("#menu4").hover(function(){
+		$(".menuOff").removeClass("menuOff").addClass("menuOn");
+		$("#menu1, #menu2, #menu3, #menu5, #menu6").removeClass("menuOn").addClass("menuOff");
+		$("#submenu4").slideDown(0);
+		$("#submenu1, #submenu2, #submenu3, #submenu5, #submenu6").slideUp(0);
+	});
+	$("#menu5").hover(function(){
+		$(".menuOff").removeClass("menuOff").addClass("menuOn");
+		$("#menu1, #menu2, #menu3, #menu4, #menu6").removeClass("menuOn").addClass("menuOff");
+		$("#submenu5").slideDown(0);
+		$("#submenu1, #submenu2, #submenu3, #submenu4, #submenu6").slideUp(0);
+	});
+
+	$("#menu6").hover(function(){
+		$(".menuOff").removeClass("menuOff").addClass("menuOn");
+		$("#menu1, #menu2, #menu3, #menu4, #menu5").removeClass("menuOn").addClass("menuOff");
+		$("#submenu6").slideDown(0);
+		$("#submenu1, #submenu2, #submenu3, #submenu4, #submenu5").slideUp(0);
+	});
+
+	$(".submenuBg").hide();
+	$("#gnb a").hover(function(){
+		$(".submenuBg").slideDown("fast");
+	});
+
+/* 05 레이어팝업 63p
+	$(".popupBg, .popUp01").hide();
+	$("#container").click(function(){
+		$(".popupBg").fadeIn(50);
+		$(".popUp01").fadeIn(150);
+	});
+	$("#popUpClose, #pClose").click(function(){
+		$(".popupBg").fadeOut(50);
+		$(".popUp01").fadeOut(150);
+	});
+*/
+ 
+/* LEFTMENU 
+	$(".menu2Depth li").click(function(){
+		$(".mOff").removeClass("mOff").addClass("mOn");
+		$("m").removeClass("menuOn").addClass("menuOff");
+	});
+*/
+
+
+/* 02 탭 */
+  $('.tab_but1').click(function(){
+    $('.tab_but').removeClass('tab_active');
+    $('.tab_but1').addClass('tab_active');
+    $('.tab_content').fadeOut(0);
+    $('.tab_content1').fadeIn(0);  
+  });
+  $('.tab_but2').click(function(){
+    $('.tab_but').removeClass('tab_active');
+    $('.tab_but2').addClass('tab_active');
+    $('.tab_content').fadeOut(0);
+    $('.tab_content2').fadeIn(0);
+  }); 
+  $('.tab_but3').click(function(){
+    $('.tab_but').removeClass('tab_active');
+    $('.tab_but3').addClass('tab_active');
+    $('.tab_content').fadeOut(0);
+    $('.tab_content3').fadeIn(0);
+  }); 
+   $('.tab_but4').click(function(){
+    $('.tab_but').removeClass('tab_active');
+    $('.tab_but4').addClass('tab_active');
+    $('.tab_content').fadeOut(0);
+    $('.tab_content4').fadeIn(0);
+  });
+   $('.tab_but5').click(function(){
+    $('.tab_but').removeClass('tab_active');
+    $('.tab_but5').addClass('tab_active');
+    $('.tab_content').fadeOut(0);
+    $('.tab_content5').fadeIn(0);
+  });
+   $('.tab_but6').click(function(){
+    $('.tab_but').removeClass('tab_active');
+    $('.tab_but6').addClass('tab_active');
+    $('.tab_content').fadeOut(0);
+    $('.tab_content6').fadeIn(0);
+  });
+
+/* 13 증적관리-다운로드 */
+	$("#down").hide();
+	$("#download").click(function(){
+		$("#down").slideToggle(100);
+	});
+
+
+});
+
+

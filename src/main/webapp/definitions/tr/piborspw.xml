@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<transaction trcode="piborspw" servicecode=""  type="row">
+	<value io="in"		name="acid"		type="string"	length="16"		comment="Account ID"/>
+	<value io="in"		name="chan"		type="string"	length="10"		comment="Channel"/>
+	<value io="in"		name="stus"		type="string"	length="10"		comment="Status"/>
+	<value io="in"		name="dvid"		type="string"	length="128"	comment="Device ID"/>
+	<value io="in"		name="bver"		type="string"	length="128"	comment="Browser Version"/>
+	
+	<value io="out"		name="rcod"		type="string"	length="1"	comment="1: OK, 0:Error"/>
+</transaction>

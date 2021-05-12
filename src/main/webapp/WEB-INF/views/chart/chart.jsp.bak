@@ -1,0 +1,377 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%
+	String langCd = (String) session.getAttribute("LanguageCookie");
+%>
+
+<html>
+<head>
+		<title>webSocket</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR" />
+		<meta http-equiv="Content-Style-Type" content="text/css"/>
+		<meta http-equiv="Cache-Control" content="no-cache" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="-1" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+		<link href="/resources/js/chart_new/base.css" rel="stylesheet">
+		<link href="/resources/js/chart_new/jquery-ui.min.css" rel="stylesheet">
+		<link href="/resources/js/chart_new/jquery-ui.theme.css" rel="stylesheet">
+		<link href="/resources/js/chart_new/jquery.treeview.css" rel="stylesheet">
+		<link href="/resources/js/chart_new/base.css" rel="stylesheet">
+		<link href="/resources/js/chart_new/common.css" rel="stylesheet">
+		<link href="/resources/js/chart_new/nexMdi.css" rel="stylesheet">
+		<script language="javascript" src="/resources/js/chart_new/jquery-1.10.2.min.js"></script>
+		<script language="javascript" src="/resources/js/chart_new/jquery-ui.min.js"></script>
+		<script language="javascript" src="/resources/js/chart_new/socket.io.js"></script>
+		<script language="javascript" src="/resources/js/chart_new/nexClient_test.js"></script>
+		<script language="javascript" src="/resources/js/chart_new/treeData1.js"></script>
+		<script language="javascript" src="/resources/js/chart_new/jquery.treeview.js"></script>
+		<script language="javascript" src="/resources/js/chart_new/highstock.src.js"></script>
+		<script language="javascript" src="/resources/js/chart_new/highcharts-more.src.js"></script>
+		<script language="javascript" src="/resources/js/chart_new/nexChart.js"></script>
+		<script language="javascript" src="/resources/js/chart_new/nexChartUtils.js"></script>
+		<script language="javascript" src="/resources/js/chart_new/nexUtils.js"></script>
+		<script language="javascript" src="/resources/js/chart_new/chartJS.js"></script>
+		<script language="javascript" src="/resources/js/chart_new/pqgrid.dev.inlab.js"></script>
+		
+		
+		<script language="javascript" src="/resources/js/chart_new/nexAjax.js"></script>
+
+<script>
+	
+	// CHART INPUT DATA
+	this.Gubn 		= 'D';
+	this.Count		= "300"; 		// 조회기간
+	//this.Date		= nexUtils.getDate();	// 일자
+	this.Unit		= "1";			// 1:종목, 2:업종, 3:선물 ...등등
+	this.DataIndex	= "1";			// 1:일봉, 2:주봉, 3:월봉, 4:분봉, 5:틱
+	this.Gap		= "1";	
+	this.DataKind	= " "; 			// 1:당일	
+	
+	var self	=	this;
+	
+	initChart = function() {
+		var url = '/trading/data/pibochart1.do';
+		var param = {
+			rcod		:	"HAH"
+			, count		:	'000040'
+			, date		:	'20161013'
+			, unit		:	'1'
+			, dataIndex	:	'1'
+			, dataKind	:	' '
+			, dataKey	:	' '
+		};
+
+		nexAjax.send({
+			url 		: url,
+			param 	: param,
+			dataType: 'json',
+			callback: function(data){
+				if(data.trResult === undefined || data.trResult > 0  || data.trResult == "error"){
+					var message = data.message || "데이터 로드 실패";
+					nexDialog.alert(message);
+					self.SearchCheck = false;
+					return;
+				}
+				//console.log("===============CONSOLE LOG=======================");
+				//console.log(data);
+				//console.log("=================================================");
+				data	=	data.list;
+			}
+		});
+	};
+	
+	
+	
+	
+	
+	
+</script>
+
+<script>
+$(document).ready(function(){
+	//initTree();
+	initChart();
+});
+</script>
+
+
+<script>
+			var MasterCode=null;
+			var chart=null; 
+			$(document).ready(function () {				
+				
+				//소캣연결
+				nexClient.webSocketConnect();
+				
+				//주식연결
+				$("#Connect").click(function(){
+					rtsConnect();
+				});
+				
+				
+				//연결중지
+				$("#disconect").click(function(){
+					nexClient.pushViewOff('1111','MAS');
+				});
+
+
+				var $mdi_selector=$('#mdi0560');
+				$mdi_selector.find('[name^=tabs]').tabs();
+				$mdi_selector.find( "select" ).selectmenu();
+
+				$mdi_selector.find('.datepicker').datepicker({
+					showOn: "button",
+					buttonText: "Select date",
+					changeMonth: true,
+					changeYear: true,
+					dateFormat: "yy/mm/dd",
+					showMonthAfterYear: true,
+					dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+					monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
+				});
+
+
+				chart = new Controller();
+				chart.init();
+				
+			});
+			
+			
+			function rtsConnect(){
+				var gubuns = ['B'];
+				var vals = [];
+				
+
+				vals.push($("#stockCode").val());
+				//vals.push('021880');
+
+				nexClient.rtsReg({
+					pName	: '1111',	//실시간데이터받을 타겟팅ID (미래에셋증권 WTS에서는 화면번호로 적용중 )						
+					GUBUNS: gubuns,		//심볼 카테고리 (정의된 연결 키  A, B Q ...)
+					VALUES: vals		//요청 key value (주식코드,지수 등등..)
+				});
+				
+				var symbols = ['002023', //현재가
+							   '002311', //상한가
+							   '002024', //전일대비
+							   '002312', //하한가
+							   '002033', //등락률
+							   '002521', //제한폭				               
+							   '002027', //거래량				              
+							   ];
+				nexClient.pushStokOn({
+					pName	: '1111',		//실시간데이터받을 타겟팅ID (상기 동일)
+					key		: '001301',		//심볼 카테고리 필드
+					value	: $("#stockCode").val(),		//요청 key value
+					symbols	: symbols		//요청 심볼 필드
+				});			
+
+			}
+			
+			
+			function realData_B(data){
+				console.log(data);
+				$("#curr").val(data.value['023']);
+				$("#diff").val(data.value['027']);
+				
+				$("#diff1").val(data.value['030']);
+				$("#diff2").val(data.value['031']);
+				chart.realData_B(data);
+			}
+
+		</script>
+
+</head>
+<body class="mdi">
+	<div class="wrapper" id="mdi0560">
+		<!-- header -->
+		<!-- //header -->
+
+		<!-- ííë¦¿ ì¬ì©ë¶ë¶ -->
+		<div class="mdi_container">
+			<div class="chart">
+				<div class="chart_search">
+					<div class="input_search">
+						<input id="SectorInp" type="text">
+						<button type="button" class="btn_recent"><span class="screen_out">recent search</span></button>
+						<!-- layer_newest -->
+						<div class="layer_newest" style="display:none;">
+							<ol>
+								<li>value1</li>
+								<li>value2</li>
+								<li>value3</li>
+							</ol>
+						</div>
+						<!-- //layer_newest -->
+						<button type="button">Search</button>
+					</div>
+
+					<div class="button_set">
+						<input type="radio" id="datetime1" name="datetime" checked="checked"><label for="datetime1"><%= (langCd.equals("en_US") ? "Daily" : "Theo ngày") %></label>
+						<input type="radio" id="datetime2" name="datetime"><label for="datetime2"><%= (langCd.equals("en_US") ? "Weekly" : "Theo tuần") %></label>
+						<input type="radio" id="datetime3" name="datetime"><label for="datetime3"><%= (langCd.equals("en_US") ? "Monthly" : "Theo tháng") %></label>
+						<input type="radio" id="datetime4" name="datetime"><label for="datetime4"><%= (langCd.equals("en_US") ? "Tick" : "Tick") %></label>
+					</div>
+
+					<select>
+						<option>select</option>
+					</select>
+
+					<input type="text" class="datepicker" placeholder="13/05/2016">
+
+					<span class="radio_area">
+						<input type="checkbox" id="today" name="today" checked="checked"><label for="today"><%= (langCd.equals("en_US") ? "Today" : "Hôm nay") %></label>
+					</span>
+					<a href="" class="btn_rescan"><%= (langCd.equals("en_US") ? "Rescan" : "Rescan") %></a>
+				</div>
+				<!-- LEFT -->
+				<div class="wrap_left">
+					<!-- tree_menu -->
+					<div class="tree_menu">
+						<ul class="tree_list">
+							<li>
+								<button type="button"><%= (langCd.equals("en_US") ? "All stock" : "Tất cả") %></button>
+								<ul>
+									<li>
+										<button type="button">Watch list</button>
+										<ul>
+											<li>
+												<button type="button">Watch list group</button>
+												<ul>
+													<li>
+														<button type="button">Group Item</button>
+														<ul>
+															<li><a href="#" class="on">HNXIndex</a></li>
+															<li><a href="#"> HNX30</a></li>
+														</ul>
+													</li>
+													<li>
+														<button type="button">Group Item</button>
+														<ul>
+															<li><a href="#" class="on">HNXIndex</a></li>
+															<li><a href="#"> HNX30</a></li>
+														</ul>
+													</li>
+												</ul>
+											</li>
+											<li>
+												<button type="button">Watch list group</button>
+												<ul>
+													<li>
+														<button type="button">Group Item</button>
+														<ul>
+															<li><a href="#" class="on">HNXIndex</a></li>
+															<li><a href="#"> HNX30</a></li>
+														</ul>
+													</li>
+												</ul>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<a href="#">My stock</a>
+									</li>
+									<li>
+										<a href="#">Stock exchange</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
+						<!-- Sector -->
+					<div class="sector">
+						<h2><%= (langCd.equals("en_US") ? "Sector" : "Danh sách Công ty") %></h2>
+						<ul>
+						 	<li><span>AAA</span> Anphat Plastic</li>
+						 	<li><span>AAA</span> Anphat Plastic</li>
+						 	<li><span>AAA</span> Anphat Plastic</li>
+						 	<li><span>AAA</span> Anphat Plastic</li>
+						 	<li><span>AAA</span> Anphat Plastic</li>
+						</ul>
+					</div>
+					<!-- //Sector -->
+					</div>
+					<!-- //tree_menu -->
+				</div>
+				<!-- //LEFT -->
+				<!-- RIGHT -->
+				<div class="wrap_right">
+					<div class="summary">
+						<p class="price">49,000</p>
+						<p class="state">
+							<span class="arrow low">1,400</span>
+						</p>
+						<p class="val">
+							<span class="up">+0.37%</span>
+						</p>
+						<p class="vol">
+							<span class="label">Volume</span>
+							411,851
+						</p>
+						<p class="detail">
+							<span class="low">
+								<span class="label">Open</span>
+								22,950
+							</span>
+							<span class="up">
+								<span class="label">High</span>
+								23,445
+							</span>
+							<span class="low">
+								<span class="label">Low</span>
+								22,500
+							</span>
+						</p>
+					</div>
+					<div class="chart">
+						<div style="height:100%; background:#a9a9a9; line-height:700px; font-size:20px; color:#fff; text-align:center; font-weight:700;">chart</div>
+					</div>
+
+				</div>
+				<!-- //RIGHT -->
+			</div>
+		</div>
+		<!-- //ííë¦¿ ì¬ì©ë¶ë¶ -->
+	</div>
+
+<script src="/resources/js/jquery.min.js"></script>
+<script src="/resources/js/jquery-ui.min.js"></script>
+<script>
+(function(){
+	function setInitEvt() {
+		$('.group_table').each(function() {
+			var table = $(this).find('table'),
+				tbody = table.find('tbody');
+
+			if(!tbody.find('th').length) {
+				tbody.find('tr:odd').addClass('even');
+			}
+
+			if(table.height() >= $(this).parent().height()) {
+				table.addClass('no_bbt');
+			}
+		});
+		$('div[name=tabs]').tabs();
+		$('.datepicker').datepicker({
+			showOn:"button",
+			changeYear:true,
+			changeMonth:true
+		});
+	}
+	window.showFullLoading = function() {
+		$('.loading_cover').show();
+	}
+	window.hideFullLoading = function() {
+		$('.loading_cover').hide();
+	}
+
+	setInitEvt();
+	$(document).ajaxComplete(function() {
+		setInitEvt();
+	});
+}());
+
+//$(".depth2").treeview();
+
+</script>
+  </body>
+</html>

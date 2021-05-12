@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.vn.app.webmain.mssqlweb.home.service.impl.InfoDAO">
+	<select id="getInfo" resultType="InfoVO" parameterType="SearchVO">
+	SELECT 
+    StockCode AS symb, 
+	StockName AS name, 
+	s.CatID AS marketId, 
+	c.FullNameEn AS nameEN,
+    KLCPLH as shareoutstanding, 
+    KLCPNY as lstshare,
+    CASE WHEN KLCPLH > 0 THEN KLCPLH*st.LastPrice
+     ELSE KLCPNY*st.LastPrice END mktcap,
+    Min52W as low52w,
+    Max52W as high52w,
+    Vol52W as avg52w,
+    CASE WHEN (f.OwnedRatio IS NULL or f.OwnedRatio=0) THEN 0
+    ELSE ROUND(f.OwnedRatio, 2) END AS fowned,
+    Dividend as dividend,
+    Dividend/NULLIF(st.LastPrice, 0) AS dividendyield,
+    Beta as beta,
+    EPS as eps,
+    st.LastPrice/NULLIF(EPS, 0) AS pe,
+    st.LastPrice/NULLIF(FEPS, 0) AS fpe,
+    BVPS as bvps,
+    st.LastPrice/NULLIF(BVPS, 0) AS pb,
+    f.BuyVol AS fbuy
+  FROM TrStock st WITH (NOLOCK)
+    INNER JOIN Stock s WITH (NOLOCK) ON st.StockID = s.StockID
+	INNER JOIN Company c ON s.StockCode = c.CompanyCode
+    LEFT JOIN TrForeign f WITH (NOLOCK) ON st.TrID =  f.TrID AND f.StockID = st.StockID
+  WHERE st.TrID = (SELECT TOP(1) TRid
+					 FROM dbo.Tr
+					 ORDER BY TrID DESC) 
+  AND st.StockID = (SELECT StockID
+					 FROM Stock WITH (NOLOCK)
+					 WHERE  StockCode = #{schItem})
+	</select>
+</mapper>

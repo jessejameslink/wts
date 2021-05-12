@@ -1,0 +1,48 @@
+m.web.common package는 WebInterface를 위한 package이다.
+WebInterface는 request/response를 Wrapping한 class이다.
+그냥 사용해도 될 request/response를 wrapping해서 사용하는 것은 몇가지 이유가 있다. 
+첫번째는 개발자의 실수를 줄이기 위함이다.
+두번째는 request 유형에 따른 대응방법을 통일하기 위해서이다.
+세번째는 두번째와 마찬가지인데, 유연하게 만들기 위해서이다.
+네번째에는 좀 더 편리하게 만들기 위해서이다.   
+
+개발자들은 실수를 많이 한다.
+request.getParmater("pname").trim() 혹은 request.getParameter("pname").substring(0,10)이라던가, 혹은 if((request.getParameter("pname").equals("1"))과 같이 
+null check 없이, 혹은 length check 없이 사용하는 경우가 비일비재하다. 
+이런 경우 NullPointerException이나 ArrayIndexOutOfBoundException이 발생한다.
+이런 Exception들은 Java VM에 damage를 누적시킨다. damage가 누적된 VM은 어느 순간 작동을 하지 않을 수 있다. 
+물론 작은 시스템에서는 크게 문제가 되지 않을 수 있지만 큰 시스템에서는 문제가 된다.
+그리고, 이런 Exception이 발생시, 서버 정보가 사용자게에 노출될 수가 있다.
+물론 서버 설정상의 문제일 수도 있겠지만, 그런 정보가 노출된다는 것은 우리가 어떤 서버 프로그램을 사용하고 있고, 어떤 플랫폼을 사용하는지를 알려주는 것이기 때문에, 해커가 이를 악용할 수도 있는 것이다.
+이런 것들을 막기 위해 request/response에서 개발자의 실수를 최소한으로 줄이기 위해 wrapping한 WebInterface를 사용한다. 
+ 
+request는 하나의 유형만 있는것은 아니다.
+주로 사용하는 것은 parameter를 전송하고, 수신받는 유형이지만, MultipartRequest를 사용할 경우, paramter로 데이터를 수신하지 못한다. 
+또한 xml 형태로 데이터가 전송될 때에는 getParameter 함수를 통해서 데이터를 수신하지 못할 뿐더러, request 객체를 직접 사용하지도 못한다. 
+이런 문제를 해결하기 위해 WebInterface를 사용하게 된다. 
+WebInterface는 한 종류만 선언된 것이 아니다.
+WebInterface는 처음에는 이름 그대로 interface로 만들려고 했다가, 그러면 request/response와 동일한 형태가 되므로, abstract class로 방향을 선회했다.
+interface와 abstract class의 차이는 interface는 함수정의부만 있다는 것이고, abstract class는 구현된 함수와 구현된 변수, 구현되지 못하고 정의만 된 함수도 있다는 것이다.
+정의만 된 함수는 이 abstract class를 extends받은 class에서 반드시 구현해야 한다. 
+WebInterface를 extends받은 class는 WebParam, XmlParam, MultiParam, CommParam, TrasnParam 등이 있다.
+우리가 흔히 사용하는 parameter 방식이 WebParam이고, multipart 방식이 MultiParam, xml 방식이 XmlParam이다. 
+CommParam은 현재 사용되지 않고 있으나, DB 처리를 WAS에서 직접 하지 않고 시스템 분리를 할 경우를 가정해서 만들어 놓은 방식으로, WebParam과 방식은 동일하다.
+TransParam 역시 CommParam과 마찬가지인데, CommParam이 Client쪽이라면, TransParam은 DB 처리를 담당하는 Server쪽의 처리를 담당하는 WebInterface이다. 
+
+위에서 설명한 바와 같이 여러가지 유형의 request에 대해, 개발자가 WebInterface를 사용해서 개발한 경우, 엔진 담당자는 새로운 request 유형이 생기는 경우에는 
+새로운 유형의 WebInterface의 sub class만 개발해서 추가하면 된다. 이것은 향후 추가될 어떤 request에 대해서도 표준 함수를 통해서 우리가 데이터를 가져올 수 있게 만들어준다.
+결국, 변화에 대해 유연하게 대처할 수 있도록 만들어준다는 것이다.
+
+request에서 getParameter로 가져온 데이터를 null check를 한 다음에 null이면 다른 값으로 바꿔주거나, String이 아닌 다른 type으로 parameter로 받는 것은 제공되지 않는다.
+그러다보니, jsp나 그 뒷단에서 직접 이를 처리해야 하는데, 이렇게 되면 소스가 복잡해지고 지저분해진다. 즉, 차후라도 소스를 보고 무슨 내용인지 파악하기가 어려워진다는 것이다.
+그것을 막기 위해 각종 util성 method를 제공한다.
+예를 들면 req.getParameter(key, defaultValue) 이렇게 하면 null이면 defaultValue를 return한다.
+또한, req.getString(key, defaultValue) 이런 형태로도 사용할 수 있고, getInt(key, defaultValue) 이런 형태, getInt(key), getLong(key, defaultValue), getLong(key) 등등..
+편리하게 사용할 수 있는 많은 기능을 제공한다. 
+key의 parameter가 null인지 여부를 check하고 싶다면 req.isNull(key) 이렇게 간단하게 체크를 할 수도 있다. 
+이런 함수들이 제공되지 않는다면 if(request.getParameter(key)==null||request.getParameter(key).trim().length()==0) 이런 식으로 체크를 해야 할 것이다.
+
+사용자가 직접 세션에 접근하는 것을 막을 수도 있다.
+세션에서 id 정보를 가져와야 하는 경우가 많이 있다.
+이런 경우, 세션에 있는 아이디 세팅을 한 key값을 알아야 한다. 그런데 그 값은 컨텐츠 개발자들이 알면 좋을게 없다. 나중에 혹시라도 그 값을 변경할 수도 있는데, 변경하기 위해서는 모든 소스를 다 수정해야 하는 것이다.
+하지만 req.getID() 이런 함수를 제공하고, 모든 jsp나 class에서 이 함수를 사용했다면, 간단히 이 함수 내부에서 수정을 해 버리면 된다. class 하나만 수정하면 되는 것이다. 

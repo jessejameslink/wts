@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.vn.app.webmain.oraweb.home.service.impl.MarginListDAO">
+	<select id="getMarginList" resultType="MarginListVO"  parameterType="SearchVO">
+		SELECT
+		  id, created, data, name, title
+		FROM (
+		SELECT dm.id, dm.created, dm.name, dm.data, dm.title, ROW_NUMBER() OVER(ORDER BY dm.created DESC) AS NUM
+		FROM DATA_MARGIN dm
+		) B
+		WHERE NUM BETWEEN (( #{page} - 1 ) * 4 + 1) AND (( #{page} ) * 4 )
+	</select>
+
+	<select id="getMarginListCnt" resultType="integer"  parameterType="SearchVO">
+		SELECT COUNT(*) as CNT
+		FROM DATA_MARGIN dm		
+	</select>
+
+	<select id="getMarginListData" resultType="MarginListVO"  parameterType="string">
+		SELECT dm.id, dm.data, dm.name
+		FROM DATA_MARGIN dm
+		WHERE ID = UPPER(#{ids})
+	</select>
+</mapper>

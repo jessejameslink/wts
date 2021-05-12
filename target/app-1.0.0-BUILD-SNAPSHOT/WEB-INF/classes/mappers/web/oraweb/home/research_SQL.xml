@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.vn.app.webmain.oraweb.home.service.impl.ResearchDAO">
+	<select id="getResearchList" resultType="ResearchVO"  parameterType="SearchVO">
+		SELECT
+		  id, created, modified, code, name
+		FROM (
+		SELECT dd.id, dd.created, dd.modified, dd.title as code, dd.name as name, dd.PUBLISHDATE, ROW_NUMBER() OVER(ORDER BY dd.PUBLISHDATE DESC) AS NUM
+		FROM DATA_RESEARCH dd		
+		WHERE SUBSTR(dd.path,1,5) = CASE #{lang} WHEN  'vi_VN' THEN 'vi-VN'
+                                            WHEN 'en_US' THEN 'en-EN'
+                                            ELSE 'vi-VN' END
+		AND dd.publishdate between TO_DATE (#{startDate}, 'yyyy/mm/dd') AND TO_DATE (#{endDate}, 'yyyy/mm/dd') + 1
+		AND upper(dd.title) LIKE '%' || upper(#{searchKey}) || '%'
+		AND dd.type = #{nType}
+		) B
+		WHERE NUM BETWEEN (( #{page} - 1 ) * 20 + 1) AND (( #{page} ) * 20 )
+	</select>
+	
+	<select id="getResearchTopList" resultType="ResearchVO" parameterType="SearchVO">
+		SELECT id, created, modified, code, name
+	    FROM (
+	    SELECT 
+			  dd.id, dd.created, dd.modified, dd.title as code, dd.name as name, dd.PUBLISHDATE, ROW_NUMBER() OVER(ORDER BY dd.PUBLISHDATE DESC) AS NUM
+			FROM DATA_RESEARCH dd
+			WHERE SUBSTR(dd.path,1,5) = CASE #{lang} WHEN  'vi_VN' THEN 'vi-VN'
+                                            WHEN 'en_US' THEN 'en-EN'
+                                            ELSE 'vi-VN' END
+			<choose>
+				<when test='nType == "0"'>
+					AND (dd.type = 1 OR dd.type = 2 OR dd.type = 3) 
+				</when>
+				<otherwise>
+					AND dd.type = #{nType}
+				</otherwise>
+			</choose>
+	    )
+	    WHERE NUM &lt;= 3 
+	</select>
+
+	<select id="getResearchCnt" resultType="integer"  parameterType="SearchVO">
+		SELECT 
+		  COUNT(*) as CNT
+		FROM DATA_RESEARCH dd
+		WHERE SUBSTR(dd.path,1,5) = CASE #{lang} WHEN  'vi_VN' THEN 'vi-VN'
+                                            WHEN 'en_US' THEN 'en-EN'
+                                            ELSE 'vi-VN' END
+		AND dd.publishdate between TO_DATE (#{startDate}, 'yyyy/mm/dd') AND TO_DATE (#{endDate}, 'yyyy/mm/dd') + 1
+		AND upper(dd.title) LIKE '%' || upper(#{searchKey}) || '%'
+		AND dd.type = #{nType}
+	</select>
+
+	<select id="getResearchData" resultType="ResearchVO"  parameterType="string">
+		SELECT 
+		  dd.id, dd.data, dd.title as code, dd.name
+		FROM DATA_RESEARCH dd
+		WHERE ID = UPPER(#{ids})
+	</select>
+</mapper>

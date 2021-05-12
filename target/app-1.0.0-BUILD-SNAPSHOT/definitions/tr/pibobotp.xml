@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<transaction trcode="pibobotp" servicecode=""  type="row">
+	<value io="in"		name="uszMSG_Lengt"			type="string"	length="4"		comment=""/>
+	<value io="in"		name="uszTR_Name"			type="string"	length="4"		comment=""/>
+	<value io="in"		name="uszTR_CODE"			type="string"	length="3"		comment=""/>
+	<value io="in"		name="uszSR_TYPE"			type="string"	length="1"		comment=""/>
+	<value io="in"		name="uszTR_DATE"			type="string"	length="8"		comment=""/>
+	<value io="in"		name="uszTR_TIME"			type="string"	length="6"		comment=""/>
+	
+	<value io="in"		name="uszCustomerNo"		type="string"	length="32"		comment=""/>
+	<value io="in"		name="uszOTP"				type="string"	length="8"		comment=""/>
+	<value io="in"		name="uszProductType"		type="string"	length="3"		comment=""/>
+	<value io="in"		name="uszAuthLogType"		type="string"	length="5"		comment=""/>
+	<value io="in"		name="uszMultiLogin"		type="string"	length="1"		comment=""/>
+	<value io="in"		name="uszProductAuthType"	type="string"	length="1"		comment=""/>
+	<value io="in"		name="uszAuthData"			type="string"	length="64"		comment=""/>
+	<value io="in"		name="uszNewAuthData"		type="string"	length="64"		comment=""/>
+	<value io="in"		name="uszDeviceId"			type="string"	length="64"		comment=""/>
+	<value io="in"		name="uszDeviceType"		type="string"	length="2"		comment=""/>
+	
+	<value io="out"		name="uszCustomerNo"		type="string"	length="32"		comment=""/>
+	<value io="out"		name="uszReternCode"		type="string"	length="4"		comment=""/>
+	<value io="out"		name="uszPinFailCnt"		type="string"	length="2"		comment=""/>
+	<value io="out"		name="uszProductType"		type="string"	length="3"		comment=""/>
+	<value io="out"		name="uszMultiLogin"		type="string"	length="1"		comment=""/>
+	<value io="out"		name="uszUserStatus"		type="string"	length="1"		comment=""/>
+	<value io="out"		name="uszHwFailCnt"			type="string"	length="2"		comment=""/>
+	<value io="out"		name="uszSwFailCnt"			type="string"	length="2"		comment=""/>
+	<value io="out"		name="uszIssueCode"			type="string"	length="5"		comment=""/>
+	<value io="out"		name="uszIssueCodeExpired"	type="string"	length="20"		comment=""/>
+	
+</transaction>

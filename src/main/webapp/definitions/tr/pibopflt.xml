@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!--   거래량 순위  -->
+<transaction trcode="pibopflt" servicecode=""  type="row">
+	
+	<value io="in"		name="symb"		type="string"		length="12"	comment="Search key "/>
+	
+	<value io="out"		name="listingDate"			type="string"		length="12"	comment="Listing date"/>
+	<value io="out"		name="firstTradePrice"		type="string"		length="12"	comment="First trading price"/>
+	<value io="out"		name="firstListingVol"		type="string"		length="12"	comment="First listing volume"/>
+	<value io="out"		name="listedShare"			type="string"		length="12"	comment="Listed share"/>
+	<value io="out"		name="outStanding"			type="string"		length="12"	comment="Share outstanding"/>	
+	
+</transaction>

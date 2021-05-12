@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- default directory 설정 -->
+<decorators defaultdir="/WEB-INF/views/decorators">
+	<!-- sample -->
+	<decorator name="sampleLayout" page="sampleLayout.jsp">
+		<pattern>/sample/wts/*</pattern>
+	</decorator>
+	
+	<decorator name="homeLayout" page="homeLayout.jsp">
+		<pattern>/home/*</pattern>
+	</decorator>
+	
+	<decorator name="wtsLayout" page="wtsLayout.jsp">
+		<pattern>/wts/*</pattern>
+	</decorator>
+	<!-- decorators를 적용시키지 않을 url 패턴 -->
+	<excludes>
+		<pattern>/excludes/*</pattern>
+		<pattern>/home/homeJisu.do</pattern>
+		<pattern>/market/data/getMarketNewsTop3List.do</pattern>
+		
+		<pattern>/ttl/*.*</pattern>
+		
+		
+		
+	</excludes>
+	
+	<!-- Layout Item -->
+	<decorator name="_wtsHeader"	page="include/header.jsp"/>
+	<decorator name="_wtsNav"		page=""/>
+	<decorator name="_wtsAside"		page=""/>
+	<decorator name="_wtsFooter"	page="include/footer.jsp"/>
+	
+	<decorator name="_header"		page=""/>
+	<decorator name="_nav"			page=""/>
+	<decorator name="_aside"		page=""/>
+	<decorator name="_footer"		page=""/>
+</decorators>

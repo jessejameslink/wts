@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!--  관심종목 그룹 순서, 이름변경 : PIHO1003	-->
+
+<transaction trcode="piho1003" servicecode=""  type="row">
+	<value io="in"		name="usid"			type="string"	length="16"	comment="USER ID"/>
+	<value io="out"		name="rcod"			type="string"	length="1"	comment="'1': OK      '0': ERROR "/>
+
+	<table name="list1" count="GridCount1">
+		<value io="in"	name="grpn"		type="string"	length="2"	comment="Group Number (1~10)"/>
+		<value io="in"	name="dscr"		type="string"	length="15"	comment="Group Name"/>
+	</table>
+</transaction>

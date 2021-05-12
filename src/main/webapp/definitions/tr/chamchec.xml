@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!--   계좌리스트  -->
+<transaction trcode="chamchec" servicecode=""  type="row">
+	
+	<value io="in"		name="clientid"		type="string"		length="16"	comment="User ID"/>
+	
+	<value io="out"		name="st"			type="string"		length="20"	comment="return N can register, return Y can't register*"/>
+	<value io="out"		name="conten"		type="string"		length="30"	comment="# content"/>
+</transaction>

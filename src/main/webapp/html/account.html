@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>ACCOUNT MANAGEMENT</title>
+
+<link href="/resources/css/common.css" rel="stylesheet">
+
+</head>
+  <body class="mdi">
+
+  	<div class="wrapper">
+		<!-- header -->
+		<!-- //header -->
+
+		<!-- 템플릿 사용부분 -->
+		<div class="mdi_container">
+			<!-- tabs -->
+			<div name="tabs">
+				<ul class="nav nav_tabs " role="tablist">
+					<li role="presentation" class="active"><a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">Account Information</a></li>
+					<li role="presentation"><a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">Order History</a></li>
+					<li role="presentation"><a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">Asset/Margin Information</a></li>
+					<li role="presentation"><a href="#tab4" aria-controls="tab4" role="tab" data-toggle="tab">Cash Transaction History</a></li>
+					<li role="presentation"><a href="#tab5" aria-controls="tab5" role="tab" data-toggle="tab">Cash Statements</a></li>
+					<li role="presentation"><a href="#tab6" aria-controls="tab6" role="tab" data-toggle="tab">Stock Statements</a></li>
+					<li role="presentation"><a href="#tab7" aria-controls="tab7" role="tab" data-toggle="tab">Margin Loan Statements</a></li>
+				</ul>
+				<div class="tab_content account">
+					<!-- Account Information -->
+					<div role="tabpanel" class="tab_pane" id="tab1">
+						<div class="group_table">
+							<table class="table no_bbt">
+								<caption>Account Information</caption>
+								<colgroup>
+									<col width="15%" />
+									<col width="19%" />
+									<col width="15%" />
+									<col />
+								</colgroup>
+								<tbody>
+									<tr>
+										<th scope="row">
+											<label for="hn">Holder Name</label>
+										</th>
+										<td>
+											<input type="text" id="hn" />
+										</td>
+										<th scope="row">
+											<label for="pi">Personal ID</label>
+										</th>
+										<td>
+											<input type="text" id="pi" />
+										</td>
+									</tr>
+									<tr>
+										<th scope="row">
+											<label for="a1">Account No. 1</label>
+										</th>
+										<td>
+											<input type="text" id="a1" />
+										</td>
+										<th scope="row">
+											<label for="email">E-mail</label>
+										</th>
+										<td>
+											<input type="text" id="email" />
+										</td>
+									</tr>
+									<tr>
+										<th scope="row">
+											<label for="a2">Account No. 2</label>
+										</th>
+										<td>
+											<input type="text" id="a2" />
+										</td>
+										<th scope="row">
+											<label for="phone">Telephone</label>
+										</th>
+										<td>
+											<input type="text" id="phone" />
+										</td>
+									</tr>
+									<tr>
+										<th scope="row">
+											<label for="a3">Account No. 3</label>
+										</th>
+										<td>
+											<input type="text" id="a3" />
+										</td>
+										<th scope="row">
+											<label for="addr">Address</label>
+										</th>
+										<td>
+											<input type="text" id="addr" />
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+						<div class="group_table">
+							<table class="table no_bbt">
+								<caption>Authorized Person Information</caption>
+								<colgroup>
+									<col width="15%" />
+									<col width="19%" />
+									<col width="15%" />
+									<col/ >
+								</colgroup>
+								<tbody>
+									<tr>
+										<th scope="row">
+											<label for="an">Authorized Name</label>
+										</th>
+										<td>
+											<input type="text" id="an" />
+										</td>
+										<th scope="row">
+											<label for="phone2">Telephone</label>
+										</th>
+										<td>
+											<input type="text" id="phone2" />
+										</td>
+									</tr>
+									<tr>
+										<th scope="row">
+											<label for="idn">ID No</label>
+										</th>
+										<td>
+											<input type="text" id="idn" />
+										</td>
+										<th scope="row">
+											<label for="auth">Authorization</label>
+										</th>
+										<td>
+											<input type="text" id="auth" />
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+						<div class="group_table">
+							<table class="table no_bbt">
+								<caption>Change Password</caption>
+								<colgroup>
+									<col width="15%" />
+									<col width="19%" />
+									<col width="15%" />
+									<col width="19%" />
+									<col width="15%" />
+									<col />
+								</colgroup>
+								<tbody>
+									<tr>
+										<th scope="row">
+											<label for="cpw">Current Password</label>
+										</th>
+										<td>
+											<input type="text" id="cpw" />
+										</td>
+										<th scope="row">
+											<label for="npw">New Password</label>
+										</th>
+										<td>
+											<input type="text" id="npw" />
+										</td>
+										<th scope="row">
+											<label for="rpw">Retype new Password</label>
+										</th>
+										<td>
+											<input type="text" id="rpw" />
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+						<div class="mdi_bottom center">
+							<input class="color" type="submit" value="Save">
+						</div>
+
+						<div class="desc">
+							<p class="title">Warning</p>
+							<p>Your password will be efficient in 90 days after the last time you change it.</p>
+							<p>After 90 days, you will receive a notice for changing your password</p>
+						</div>
+
+					</div>
+					<!-- // Account Information -->
+
+					<!-- Order History -->
+					<div role="tabpanel" class="tab_pane" id="tab2">
+						<div class="search_area in">
+							<label for="type">Type</label>
+							<span>
+								<select name="" id="type">
+									<option value="">All</option>
+									<option value="">Sell</option>
+									<option value="">Buy</option>
+								</select>
+							</span>
+
+							<span>
+								<select name="" id="">
+									<option value="">All</option>
+									<option value="">Executed</option>
+									<option value="">Pending Order</option>
+								</select>
+							</span>
+
+							<label for="fromSearch1">From</label>
+							<input id="fromSearch1" type="text" class="datepicker" placeholder="13/05/2016" />
+
+							<label for="toSearch1">To</label>
+							<input id="toSearch1" type="text" class="datepicker" placeholder="13/05/2016">
+
+							<button class="btn" type="button">Search</button>
+						</div>
+
+						<div class="group_table oh_table01">
+							<table class="table no_bbt">
+								<caption class="hidden">Order History table</caption>
+								<colgroup>
+									<col width="100" />
+									<col />
+									<col />
+									<col />
+									<col />
+								</colgroup>
+								<thead>
+									<tr>
+										<th scope="col">Type</th>
+										<th scope="col">Total order volume</th>
+										<th scope="col">Total order amount</th>
+										<th scope="col">Total match volume</th>
+										<th scope="col">Total match amount</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<th scope="row">
+											<span>SELL</span>
+										</th>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+									</tr>
+									<tr>
+										<th scope="row">
+											<span class="up">BUY</span>
+										</th>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+						<div class="search_area in">
+							<label for="fromSearch2">From</label>
+							<input id="fromSearch2" type="text" class="datepicker" placeholder="13/05/2016" />
+
+							<label for="toSearch2">To</label>
+							<input id="toSearch2" type="text" class="datepicker" placeholder="13/05/2016">
+
+							<button class="btn" type="button">Search</button>
+							<button type="button" class="btn_down" title="Download">download</button>
+						</div>
+
+						<div class="group_table double oh_table02">
+							<table class="table no_bbt">
+								<caption class="hidden">Order History table</caption>
+								<thead>
+									<tr>
+										<th scope="col" rowspan="2">Time</th>
+										<th scope="col" rowspan="2">Stock</th>
+										<th scope="col" rowspan="2">Sell/Buy</th>
+										<th scope="col" rowspan="2">Order type</th>
+										<th scope="col">Order volume</th>
+										<th scope="col">Executed volume</th>
+										<th scope="col">Executed amount</th>
+										<th scope="col" rowspan="2">Modify/ Cancel</th>
+										<th scope="col" rowspan="2">Status</th>
+										<th scope="col">Order No.</th>
+										<th scope="col" rowspan="2">Channel Type</th>
+									</tr>
+									<tr>
+										<th scope="col">Order Price</th>
+										<th scope="col">Executed Price</th>
+										<th scope="col">Pending volume</th>
+										<th scope="col">Org. Order No.</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>0</td>
+										<td>0</td>
+										<td>0</td>
+										<td>0</td>
+										<td>
+											<div>0</div>
+											<div>0</div>
+										</td>
+										<td>
+											<div>0</div>
+											<div>0</div>
+										</td>
+										<td>
+											<div>0</div>
+											<div>0</div>
+										</td>
+										<td>0</td>
+										<td>0</td>
+										<td>
+											<div>0</div>
+											<div>0</div>
+										</td>
+										<td>0</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+						<div class="pagination">
+							<a href="" class="prev">prev</a>
+							<a href="" class="current">1</a>
+							<a href="">2</a>
+							<a href="">3</a>
+							<a href="">4</a>
+							<a href="">5</a>
+							<a href="" class="next">next</a>
+						</div>
+					</div>
+					<!-- // Order History -->
+
+					<!-- Asset/Margin Information -->
+					<div role="tabpanel" class="tab_pane" id="tab3">
+						<div class="group_table">
+							<table class="table no_bbt">
+								<caption class="hidden">Asset Margin Infomation table</caption>
+								<colgroup>
+									<col width="14.5%">
+									<col width="12%">
+									<col width="19%">
+									<col width="12%">
+									<col width="14.5%">
+									<col width="12%">
+									<col>
+								</colgroup>
+								<thead>
+									<tr>
+										<th scope="colgroup" colspan="2">Asset Information</th>
+										<th scope="colgroup" colspan="5">Margin Informaion</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<th scope="row" class="strong">Net Asset</th>
+										<td></td>
+										<th scope="row" class="strong">Stock amount on margin</th>
+										<td></td>
+										<th scope="colgroup" colspan="2" class="strong text_center">OVERDUE DEBT</th>
+										<th scope="col" class="strong text_center">UPCOMING DEBT</th>
+									</tr>
+									<tr>
+										<th scope="row" class="strong">Total Asset</th>
+										<td>0</td>
+										<th scope="row">- Available stock volume</th>
+										<td>0</td>
+										<th scope="row" class="inner_th">Overdue Debt</td>
+										<td>2,873,607</td>
+										<td rowspan="8" class="uc_debt">
+											<ul class="uc_debt_list">
+												<li>
+													<span class="date">24/05/2016</span>
+													<span class="value">0</span>
+												</li>
+												<li>
+													<span class="date">24/05/2016</span>
+													<span class="value">0</span>
+												</li>
+											</ul>
+										</td>
+									</tr>
+									<tr>
+										<th scope="row">- Total Cash</th>
+										<td>0</td>
+										<th scope="row">- Wait volume for buying settlement</th>
+										<td>0</td>
+										<th scope="row" class="inner_th">Processing Debt</td>
+										<td>0</td>
+									</tr>
+									<tr>
+										<th scope="row">-Unavailable Cash</th>
+										<td>0</td>
+										<th scope="row" class="strong">Evaluation amount</th>
+										<td>0</td>
+										<th scope="row" class="inner_th">Cash Advance Request</td>
+										<td>0</td>
+									</tr>
+									<tr>
+										<th scope="row">-Dividend</th>
+										<td>0</td>
+										<th scope="row">-Available stock volume</th>
+										<td>0</td>
+										<th scope="row" class="inner_th">Cash Supplement Request</td>
+										<td>0</td>
+									</tr>
+									<tr>
+										<th scope="row" class="strong">Stock Amount</th>
+										<td>0</td>
+										<th scope="row">-Wait quantity for buying settlement</th>
+										<td>0</td>
+										<th scope="row" class="inner_th">Sell Stock Request</td>
+										<td>0</td>
+									</tr>
+									<tr>
+										<th scope="row">-Available stock amount</th>
+										<td>0</td>
+										<th scope="row"></th>
+										<td>0</td>
+										<th scope="row" class="inner_th">Force Sell</td>
+										<td>2,931,079</td>
+									</tr>
+									<tr>
+										<th scope="row">-Unavailable stock amount</th>
+										<td>0</td>
+										<th scope="row"></th>
+										<td>0</td>
+										<th scope="row" class="inner_th">Force Sell days</td>
+										<td>0</td>
+									</tr>
+									<tr>
+										<th scope="row">-Buying wait amount</th>
+										<td>0</td>
+										<th scope="row"></th>
+										<td>0</td>
+										<th scope="row" class="inner_th"></td>
+										<td>0</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<!-- // Asset/Margin Information -->
+
+					<!-- Cash Transaction History -->
+					<div role="tabpanel" class="tab_pane" id="tab4">
+						<div class="search_area in">
+							<label for="type">Trans type</label>
+							<span>
+								<select name="" id="type">
+									<option value="">ALL</option>
+									<option value="">Exercise Subscription</option>
+									<option value="">Dividend</option>
+									<option value="">Cash Withdrawal</option>
+									<option value="">Cash Deposit</option>
+									<option value="">Sold Contract Settlement</option>
+									<option value="">Bought Contract Settlemenet</option>
+									<option value="">Interest Posting</option>
+									<option value="">Ex_Repos Deposit</option>
+									<option value="">Odd lot allotment</option>
+									<option value="">Ex_Repos Withdraw</option>
+									<option value="">Ex_Repos Interest Withdraw</option>
+									<option value="">Advance Payment Deposit</option>
+									<option value="">Advance Payment Withdraw</option>
+									<option value="">Custodian Fee Posting</option>
+									<option value="">SMS Fee Posting</option>
+								</select>
+							</span>
+
+							<label for="fromSearch2">From</label>
+							<input id="fromSearch2" type="text" class="datepicker" placeholder="13/05/2016" />
+
+							<label for="toSearch2">To</label>
+							<input id="toSearch2" type="text" class="datepicker" placeholder="13/05/2016">
+
+							<button class="btn" type="button">Search</button>
+							<button type="button" class="btn_down" title="Download">download</button>
+						</div>
+
+						<div class="group_table">
+							<table class="table no_bbt">
+								<caption class="hidden">Cash Transaction History table</caption>
+								<colgroup>
+									<col width="10%" />
+									<col width="10%" />
+									<col width="10%" />
+									<col />
+									<col width="10%" />
+									<col />
+									<col width="10%" />
+								</colgroup>
+								<thead>
+									<tr>
+										<th scope="col">Trans. ID</th>
+										<th scope="col">Trans. date</th>
+										<th scope="col">Trans. type</th>
+										<th scope="col">Amount (VND)</th>
+										<th scope="col">Status</th>
+										<th scope="col">Notes</th>
+										<th scope="col">Last update</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td class="text_center">id</td>
+										<td class="text_center">date</td>
+										<td class="text_center">type</td>
+										<td>0</td>
+										<td class="text_center">status</td>
+										<td class="text_left">notes</td>
+										<td class="text_center">01/01/1111</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+						<div class="pagination">
+							<a href="" class="prev">prev</a>
+							<a href="" class="current">1</a>
+							<a href="">2</a>
+							<a href="">3</a>
+							<a href="">4</a>
+							<a href="">5</a>
+							<a href="" class="next">next</a>
+						</div>
+					</div>
+					<!-- // Cash Transaction History -->
+
+					<!-- Cash Statements -->
+					<div role="tabpanel" class="tab_pane" id="tab5">
+						<div class="search_area in">
+							<label for="fromSearch3">From</label>
+							<input id="fromSearch3" type="text" class="datepicker" placeholder="13/05/2016" />
+
+							<label for="toSearch3">To</label>
+							<input id="toSearch3" type="text" class="datepicker" placeholder="13/05/2016">
+
+							<button class="btn" type="button">Search</button>
+							<button type="button" class="btn_down" title="Download">download</button>
+						</div>
+
+						<div class="group_table">
+							<table class="table no_bbt">
+								<caption class="hidden">Cash Statements table</caption>
+								<colgroup>
+									<col width="10%" />
+									<col width="10%" />
+									<col />
+									<col />
+									<col />
+									<col />
+									<col />
+								</colgroup>
+								<thead>
+									<tr>
+										<th scope="col">Order No.</th>
+										<th scope="col">Date</th>
+										<th scope="col">Description</th>
+										<th scope="col">Beginning</th>
+										<th scope="col">Credit</th>
+										<th scope="col">Debit amount</th>
+										<th scope="col">Ending balance</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td class="text_center">9999</td>
+										<td class="text_center">01/01/1111</td>
+										<td class="text_left">description</td>
+										<td>999,999</td>
+										<td>99</td>
+										<td>99</td>
+										<td>999,999</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+						<div class="pagination">
+							<a href="" class="prev">prev</a>
+							<a href="" class="current">1</a>
+							<a href="">2</a>
+							<a href="">3</a>
+							<a href="">4</a>
+							<a href="">5</a>
+							<a href="" class="next">next</a>
+						</div>
+					</div>
+					<!-- // Cash Statements -->
+
+					<!-- Stock Statements -->
+					<div role="tabpanel" class="tab_pane" id="tab6">
+						<div class="search_area in">
+							<label for="fromSearch4">From</label>
+							<input id="fromSearch4" type="text" class="datepicker" placeholder="13/05/2016" />
+
+							<label for="toSearch4">To</label>
+							<input id="toSearch4" type="text" class="datepicker" placeholder="13/05/2016">
+
+							<button class="btn" type="button">Search</button>
+							<button type="button" class="btn_down" title="Download">download</button>
+						</div>
+
+						<div class="group_table">
+							<table class="table no_bbt">
+								<caption class="hidden">Stock Statements table</caption>
+								<thead>
+									<tr>
+										<th scope="col" rowspan="2">Order No.</th>
+										<th scope="col" rowspan="2">Trans date</th>
+										<th scope="col" rowspan="2">Stock</th>
+										<th scope="col" rowspan="2">Action</th>
+										<th scope="colgroup" colspan="3">Credit</th>
+										<th scope="colgroup" colspan="3">Debit</th>
+										<th scope="colgroup" colspan="2">Fee + Tax</th>
+										<th scope="col" rowspan="2">Description</th>
+									</tr>
+									<tr>
+										<th scope="col">Quantity</th>
+										<th scope="col">Avg price</th>
+										<th scope="col">Amt</th>
+										<th scope="col">Quantity</th>
+										<th scope="col">Avg price</th>
+										<th scope="col">Amt</th>
+										<th scope="col">Value</th>
+										<th scope="col">(%)</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td class="text_center">1</td>
+										<td class="text_center">10/05/2016</td>
+										<td class="text_center">FLC</td>
+										<td class="text_center">Buy Contract</td>
+										<td>10</td>
+										<td>6,400</td>
+										<td>64,096</td>
+										<td>0</td>
+										<td>0</td>
+										<td>0</td>
+										<td>96</td>
+										<td>0.15</td>
+										<td class="text_left">Stock buy at 2016-05-10</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+						<div class="pagination">
+							<a href="" class="prev">prev</a>
+							<a href="" class="current">1</a>
+							<a href="">2</a>
+							<a href="">3</a>
+							<a href="">4</a>
+							<a href="">5</a>
+							<a href="" class="next">next</a>
+						</div>
+					</div>
+					<!-- // StockStatements -->
+
+					<!-- Margin Loan Statements -->
+					<div role="tabpanel" class="tab_pane" id="tab7">
+						<div class="search_area in">
+							<label for="fromSearch5">From</label>
+							<input id="fromSearch5" type="text" class="datepicker" placeholder="13/05/2016" />
+
+							<label for="toSearch5">To</label>
+							<input id="toSearch5" type="text" class="datepicker" placeholder="13/05/2016">
+
+							<button class="btn" type="button">Search</button>
+							<button type="button" class="btn_down" title="Download">download</button>
+						</div>
+
+						<div class="group_table">
+							<table class="table no_bbt">
+								<caption class="hidden">Margin Loan Statements table</caption>
+								<colgroup>
+									<col width="50" />
+									<col width="100" />
+									<col />
+									<col />
+									<col />
+									<col />
+									<col />
+									<col />
+								</colgroup>
+								<thead>
+									<tr>
+										<th scope="col" rowspan="2">No.</th>
+										<th scope="col" rowspan="2">Date</th>
+										<th scope="col" rowspan="2">Description</th>
+										<th scope="colgroup" colspan="3">Margin Usage</th>
+										<th scope="col" rowspan="2">Margin call</th>
+										<th scope="col" rowspan="2">Force sell</th>
+									</tr>
+									<tr>
+										<th scope="col">Debt</th>
+										<th scope="col">Payment</th>
+										<th scope="col">Final debt</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td class="text_center">1</td>
+										<td class="text_center">10/05/2016</td>
+										<td class="text_left">Increasing margin loan</td>
+										<td>6,173,504.00</td>
+										<td>0</td>
+										<td>36.647.750.000</td>
+										<td>0</td>
+										<td>0</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+						<div class="pagination">
+							<a href="" class="prev">prev</a>
+							<a href="" class="current">1</a>
+							<a href="">2</a>
+							<a href="">3</a>
+							<a href="">4</a>
+							<a href="">5</a>
+							<a href="" class="next">next</a>
+						</div>
+					</div>
+					<!-- // Margin Loan Statements -->
+				</div>
+			</div>
+		</div>
+		<!-- //템플릿 사용부분 -->
+
+
+  	</div>
+
+<script src="/resources/js/jquery.min.js"></script>
+<script src="/resources/js/jquery-ui.min.js"></script>
+<script>
+(function(){
+	function setInitEvt() {
+		$('.group_table').each(function() {
+			var table = $(this).find('table'),
+				tbody = table.find('tbody');
+
+			if(!tbody.find('th').length) {
+				tbody.find('tr:odd').addClass('even');
+			}
+
+			if(table.height() >= $(this).parent().height()) {
+				table.addClass('no_bbt');
+			}
+		});
+		$('div[name=tabs]').tabs();
+		$('.datepicker').datepicker({
+			showOn:"button",
+			changeYear:true,
+			changeMonth:true
+		});
+	}
+	window.showFullLoading = function() {
+		$('.loading_cover').show();
+	}
+	window.hideFullLoading = function() {
+		$('.loading_cover').hide();
+	}
+
+	setInitEvt();
+	$(document).ajaxComplete(function() {
+		setInitEvt();
+	});
+}())
+</script>
+  </body>
+</html>

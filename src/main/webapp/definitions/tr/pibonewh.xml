@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!--   신고가/저가  -->
+<transaction trcode="pibonewh" servicecode=""  type="row">
+	
+	<value io="in"		name="mark"		type="string"		length="1"	comment="'0':ALL   '1':UPCOM  '2':HNX   '3':HOSE "/>
+	<value io="in"		name="high"		type="string"		length="1"	comment="'0':High  '1':Low"/>
+	<value io="in"		name="days"		type="string"		length="1"	comment="'0':5days '1':20days"/>
+	<value io="in"		name="skey"		type="string"		length="12"	comment="Search key"/>
+	
+	<value io="out"		name="nrec"		type="string"		length="4"	comment="# of record"/>
+	<value io="out"		name="next"		type="string"		length="1"	comment="Next Data ? (Y/N)"/>
+	<value io="out"		name="skey"		type="string"		length="12"	comment="Search Key"/>
+	
+	<table name="list1" count="nrec">
+		<value io="out"	name="rcod"		type="string"	length="12"	comment="RTS Symbol"/>
+		<value io="out"	name="symb"		type="string"	length="12"	comment="Security Symbol"/>
+		<value io="out"	name="curr"		type="string"	length="9"	comment="Current Price"/>
+		<value io="out"	name="diff"		type="string"	length="7"	comment="Change"/>
+		<value io="out"	name="rate"		type="string"	length="7"	comment="% Change"/>
+		<value io="out"	name="avol"		type="string"	length="9"	comment="Accumulate Volume"/>
+		
+		<value io="out"	name="high"		type="string"	length="9"	comment="High Price"/>
+		<value io="out"	name="date"		type="string"	length="10"	comment="Date 'DD/MM/YYYY'"/>
+	</table>
+	
+</transaction>

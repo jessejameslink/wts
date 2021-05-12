@@ -1,0 +1,613 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%
+	String langCd = (String) session.getAttribute("LanguageCookie");
+%>
+
+
+<html>
+<head>
+
+<script>
+	var receiveData  = null;
+	var cancelModify = null;
+ 	var genmodifyOrderStatus = {}; // 확인요
+
+	$(document).ready(function() {
+		receiveData  = JSON.parse('<%=request.getParameter("dataList")%>');
+		cancelModify = '<%=request.getParameter("cancelModify")%>';
+		initDataSetting();
+		authConfirm();
+	});
+
+	function initDataSetting(){
+		// Title + Headline
+		<%-- 
+		$("#cancelModifyTitle").html("<span class=\"type\">" + <%= (langCd.equals("en_US") ? "cancelModify" : "(cancelModify==\"cancel\" ? \"Hủy\":\"Sửa\")") %> + "</span> : " + receiveData.mvStockID + "<span class=\"name\">(" + receiveData.mvStockName + ")</span>");
+ 		--%>
+ 		
+ 		$("#cancelModifyTitle").html("<span class=\"type\"> " + <%= (langCd.equals("en_US") ? "(cancelModify==\"cancel\" ? \"Confirm Cancel\":\"Confirm Modify\")" : "(cancelModify==\"cancel\" ? \"Xác nhận hủy lệnh\":\"Xác nhận sửa lệnh\")") %> + "</span> ");
+ 		
+		$("#mvStockID").html(receiveData.mvStockID);
+		$("#mvStockName").html(receiveData.mvStockName);
+		$("#mvOrderType").html(receiveData.mvOrderType);
+
+		if(cancelModify == "modify"){
+			genmodifyOrder();
+		} else if (cancelModify == "cancel") {
+
+			$("#mvPrice").html(numDotCommaFormat(receiveData.mvPrice.replace(/[,]/g, "")));
+			//$("#mvQty").html(receiveData.mvQty);
+			$("#mvQty").html(receiveData.mvOSQty);
+			$("#cccl0").css("visibility", "hidden");
+			$("#fffl0").css("visibility", "hidden");
+		}
+
+		$("#mvGrossAmt").html(numDotCommaFormat(receiveData.mvGrossAmt));
+		$("#netFee").html(numDotCommaFormat(receiveData.mvBSValue == "B" ? receiveData.mvNetAmtValue - receiveData.mvGrossAmt : receiveData.mvGrossAmt - receiveData.mvNetAmtValue));
+	}
+
+	// Key Event
+	function keyDownEvent(id, e){
+		if($("#" + id).val() == "0"){
+			if(e.keyCode == "190"){
+				$("#" + id).val("0");	
+			}else{
+				$("#" + id).val("");				
+			}
+		}
+	}
+
+	function volumeModiChange() {
+		var modiVolumeView = $("#mvVolumeModal").val().replace(/[,.]/g,'');
+		if(modiVolumeView.indexOf('.') != -1) {
+			var modiVolSpl = modiPriceView.split(".");
+			if(modiVolSpl[1].length > 1) {
+				modiVolumeView = modiVolSpl[0] + "." + modiVolSpl[1].substring(0, 2);
+			}
+		} else {
+			if(modiVolumeView.length > 9) {
+				modiVolumeView = modiVolumeView.substring(0, 9);
+			}
+		}
+		
+		
+		$("#volumeModal").val(modiVolumeView);
+		$("#mvVolumeModal").val(numIntFormat(modiVolumeView));
+
+		volModiPriceSum();
+	}
+
+	function priceModiChange() {
+		// 4자리.2자리
+		var modiPriceView  = $("#mvPriceModal").val().replace(/,/g,'');
+		if(modiPriceView.indexOf('.') != -1) {
+			var modiPriceSpl = modiPriceView.split(".");
+			if(modiPriceSpl[1].length > 1) {
+				modiPriceView = modiPriceSpl[0] + "." + modiPriceSpl[1].substring(0, 2);
+			}
+		} else {
+			if(modiPriceView.length > 9) {
+				modiPriceView = modiPriceView.substring(0, 9);
+			}
+		}
+
+		$("#priceModal").val(modiPriceView);
+		$("#mvPriceModal").val(numIntFormat(modiPriceView));
+		volModiPriceSum();
+	}
+
+	function volModiPriceSum() {
+		var volume  = $("#volumeModal").val();
+		var price   = $("#priceModal").val();
+		// var tmpFee  = $("#mvTemporaryFee").val();
+		var valSum  = 0;
+		var netFee  = 0;
+
+		valSum = price  * volume;
+		//netFee = valSum * tmpFee;
+		//netFee = Math.round(netFee / 1000, 1) * 10;
+		//$("#mvGrossAmt").val(valSum);
+		$("#mvGrossAmt").html(numIntFormat(valSum));
+		//$("#netFee").val(netFee);
+		//$("#netFee").html(numIntFormat(netFee));
+	}
+
+	function authConfirm(confirm) {
+		$("#divCanModConf").block({message: "<span>LOADING...</span>"});
+		var param = {
+				wordMatrixKey01      : $("#mvWordMatrixKey01").text(),
+				wordMatrixKey02      : $("#mvWordMatrixKey02").text(),
+				wordMatrixValue01    : $("#wordMatrixValue01").val(),
+				wordMatrixValue02    : $("#wordMatrixValue02").val(),
+				serialnumber         : $("#serialnumber").val(),
+				mvSaveAuthenticate   : $("#saveAuthenticate").is(':checked')
+		};
+
+		$.ajax({
+			dataType  : "json",
+			url       : "/trading/data/authCardMatrix.do",
+			data      : param,
+			aync      : true,
+			success   : function(data) {
+				$("#divCanModConf").unblock();
+				
+				
+				//console.log("####DATA CHECK####");
+				//console.log(data);
+				//console.log("###########################");
+				
+				
+				if(data != null) {
+					if(data.jsonObj.mvSuccess == "FAIL") {
+						var authCard = data.jsonObj.mvClientCardBean;
+						$("#mvWordMatrixKey01").html(authCard.mvWordMatrixKey01);
+						$("#mvWordMatrixKey02").html(authCard.mvWordMatrixKey02);
+						$("#serialnumber").val(authCard.serialnumber);
+						$("#divAuth").css("display","block");
+						if(data.jsonObj.mvClientCardBean.mvErrorCode != "CARD006"){ // not New Card
+							//alert(data.mvErrorResult);
+							alert(data.jsonObj.mvErrorResult);
+							$("#wordMatrixValue01").val("");
+							$("#wordMatrixValue02").val("");
+						}
+						if(data.jsonObj.mvClientCardBean.mvErrorCode == "SERVER_ERROR"){
+							$("#divAuth").css("display","none");
+							$("#btnCanModConfirm").css("display","none");
+						}
+					} else if(data.jsonObj.mvSuccess == "SUCCESS") {
+						$("#divAuth").css("display","none");
+						if(confirm && confirm =="confirm"){
+							if(cancelModify == "cancel"){
+								cancelConfirm();
+							} else if(cancelModify == "modify"){
+								modifyConfirm();
+							}
+						}
+					}
+				}
+			},
+			error     :function(e) {
+				console.log(e);
+				$("#divCanModConf").unblock();
+			}
+
+		});
+	}
+	
+	function checkInputChange() {
+		var priceCurr = receiveData.mvPrice.replace(/[,]/g, "").replace(/[.]/g, "");
+		var volumeCurr = receiveData.mvOSQty.replace(/[,]/g, "");
+		var priceView = ($("#priceModal").val().replace(/[,]/g, ""));
+		var volumeView = ($("#mvVolumeModal").val().replace(/[,]/g, ""));
+		if (priceCurr == priceView && volumeCurr == volumeView) {
+			if ("<%= langCd %>" == "en_US") {
+				alert("Please change price or volume.");	
+			} else {
+				alert("Vui lòng thay đổi giá hoặc khối lượng.");
+			}
+			$("#priceView").focus();
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	function modifyConfirm() {
+		
+		$("#mvMarketId").val(genmodifyOrderStatus.mvMarketId);
+		var priceView = ($("#priceModal").val().replace(/[,]/g, ""));
+		if (!checkInputChange()) {
+			return;
+		}
+		if(priceView > 0) {
+			if($("#mvMarketId").val() == "HO") {
+				if(priceView <= 10000) {
+					if(priceView % 10 != 0) {
+						$("#priceView").focus();
+						if ("<%= langCd %>" == "en_US") {
+						alert("Invalid Price for lot size 10.");
+						} else {
+							alert("Giá không hợp lệ, không chia hết cho 10.")
+						}
+						return;
+					}
+				} else if(priceView > 10000 && priceView <= 49500) {
+					if(priceView % 50 != 0) {
+						$("#priceView").focus();
+						if ("<%= langCd %>" == "en_US") {
+						alert("Invalid Price for lot size 50.");
+						} else {
+							alert("Giá không hợp lệ, không chia hết cho 50.");
+						}
+						return;
+					}
+				} else if(priceView >= 50000) {
+					if(priceView % 100 != 0) {
+						$("#priceView").focus();
+						if ("<%= langCd %>" == "en_US") {
+							alert("Invalid Price for lot size 100.");
+							} else {
+								alert("Giá không hợp lệ, không chia hết cho 100.");
+							}
+						return;
+					}
+				}
+			} else if($("#mvMarketId").val() == "HA") {
+				if(priceView % 10 != 0) {
+					$("#priceView").focus();
+					if ("<%= langCd %>" == "en_US") {
+						alert("Invalid Price for lot size 10.");
+						} else {
+							alert("Giá không hợp lệ, không chia hết cho 10.");
+						}
+					return;
+				}
+			} else if($("#mvMarketId").val() == "OTC") {
+				if(priceView % 10 != 0) {
+					$("#priceView").focus();
+					if ("<%= langCd %>" == "en_US") {
+						alert("Invalid Price for lot size 10.");
+						} else {
+							alert("Giá không hợp lệ, không chia hết cho 10.");
+						}
+					return;
+				}
+			}
+		}
+		
+		$("#divCanModConf").block({message: "<span>LOADING...</span>"});
+
+		var param = {
+				mvCurrencyId			:genmodifyOrderStatus.mvCurrencyId,
+				mvMaxLotPerOrder		:genmodifyOrderStatus.mvMaxLotPerOrder,
+				mvOrigPrice				:genmodifyOrderStatus.mvPrice,
+				//mvOrigQty				:genmodifyOrderStatus.mvNewQty,mvOrigQtyValue
+				mvOrigQty				:genmodifyOrderStatus.mvOrigQtyValue,
+				mvOrigStopPrice			:"",
+				mvStopPrice				:"",
+				mvOrigPriceValue		:genmodifyOrderStatus.mvOrigPriceValue,
+				mvOrigQtyValue			:genmodifyOrderStatus.mvOrigQtyValue,
+				mvCancelQtyValue		:genmodifyOrderStatus.mvCancelQtyValue,
+				mvAveragePrice			:genmodifyOrderStatus.mvAveragePrice,
+				mvAllOrNothing			:genmodifyOrderStatus.mvAllOrNothing,
+				mvStopOrderType			:"N",										// 불확실
+				mvValidityDate			:genmodifyOrderStatus.mvValidityDate,
+				mvActivationDate		:genmodifyOrderStatus.mvActivationDate,
+				mvAllowOddLot			:genmodifyOrderStatus.mvAllowOddLot,
+				mvRemark				:genmodifyOrderStatus.mvRemark,
+				mvContactPhone			:genmodifyOrderStatus.mvContactPhone,
+				mvGrossAmtValue			:genmodifyOrderStatus.mvGrossAmtValue,
+				mvNetAmtValue			:genmodifyOrderStatus.mvNetAmtValue,
+				mvSCRIP					:genmodifyOrderStatus.mvSCRIP,
+				mvIsPasswordSaved		:genmodifyOrderStatus.mvIsPasswordSaved,
+				mvStopTypeValue			:genmodifyOrderStatus.mvStopTypeValue,
+				mvPasswordConfirmation	:genmodifyOrderStatus.mvPasswordConfirmation,
+				mvOrderId				:genmodifyOrderStatus.mvOrderIdValue,
+				mvGoodTillDate			:genmodifyOrderStatus.mvGoodTillDateValue,
+				mvBS					:genmodifyOrderStatus.mvBSValue,
+				mvOrderGroupId			:genmodifyOrderStatus.mvOrderGroupId,
+				mvOrderType				:genmodifyOrderStatus.mvOrderTypeValue,
+				mvFormIndexpage			:"Y",
+				mvStopValue				:genmodifyOrderStatus.mvStopPriceValue,
+				mvFilledQty				:genmodifyOrderStatus.mvFilledQty,
+				mvLotSizeValue			:genmodifyOrderStatus.mvLotSizeValue,
+				mvStopOrderExpiryDate	:genmodifyOrderStatus.mvStopOrderExpiryDate,
+				OrderId					:genmodifyOrderStatus.mvOrderId,
+				mvMarketId				:genmodifyOrderStatus.mvMarketId,
+				mvStockId				:genmodifyOrderStatus.mvStockId,
+				mvStockName				:genmodifyOrderStatus.mvInstrumentName,
+				mvPrice					:genmodifyOrderStatus.mvCurrencyId,
+				mvNewPrice				:($("#priceModal").val().replace(/,/g, '')) / 1000,
+				mvQty					:genmodifyOrderStatus.mvNewQty,
+				mvNewQty				:$("#volumeModal").val(),
+				OrderType				:(genmodifyOrderStatus.mvOrderType == "Giới hạn" ? "Limit" : "Giới hạn"),
+				GoodTillDate			:genmodifyOrderStatus.mvGoodTillDate,
+				mvGrossAmt				:genmodifyOrderStatus.mvCurrencyId + " $0.00",
+// 				Password				:"",
+// 				mvSecurityCode			:"",
+				mvStatus				:genmodifyOrderStatus.mvStatus
+// 				mvSeriNo				:"",
+// 				mvAnswer				:"",
+// 				mvSaveAuthenticate		:"false"
+		};
+		//console.log("===PARAM===");
+		//console.log(param);
+		 $.ajax({
+			dataType  : "json",
+			url       : "/trading/data/hksModifyOrder.do",
+			data      : param,
+			success   : function(data) {
+				//console.log("MOIDFY===>");
+				//console.log(data);
+				
+		    	if(data != null){
+		    		if(data.jsonObj.returnCode > 0 || data.jsonObj.success != true){
+			    		alertMsg("modify error ReturnCode : "+data.jsonObj.returnCode+" Msg : "+data.jsonObj.mvResult);
+			    	} else if (data.jsonObj.mvReturnResult == "ModifyOrderFail") {
+			    		//alert(data.jsonObj.mvReturnResult);
+		    			if ("<%= langCd %>" == "en_US") {
+		    				autoAlert("Modify Failed.", 2000);
+			    		} else {
+			    			autoAlert("Sửa lệnh thất bại.", 2000);
+			    		}
+			    	} else {
+		    			//alert(data.jsonObj.mvReturnResult);
+		    			if ("<%= langCd %>" == "en_US") {
+		    				autoAlert("Modify Success.", 2000);
+			    		} else {
+			    			autoAlert("Sửa lệnh thành công.", 2000);
+			    		}
+		    			cancel();
+			    		//ttlcometRegisterOrderList();
+			    	}
+		    		$("#tabOrdGrp2").tabs({active : 0});
+		    		searchOrder(); // 리스트 refresh
+		    	}
+
+		    	$("#divCanModConf").unblock();
+		    },
+		    error:function(e){
+		    	console.log(e)
+		    	$("#divCanModConf").unblock();
+		    }
+		});
+	}
+
+	function cancelConfirm() {
+		$("#divCanModConf").block({message: "<span>LOADING...</span>"});
+		//hksCancelOrder
+		var param = {
+				AfterServerVerification	: "Y",
+				BuySell					: "B",
+				ORDERID					: receiveData.mvOrderID,
+				ORDERGROUPID			: receiveData.mvOrderGroupID,
+				StockCode				: receiveData.mvStockID,
+				MarketID				: receiveData.mvMarketID,
+				Quantity				: receiveData.mvQtyValue,
+				Price					: receiveData.mvAvgPriceValue,
+				OSQty					: receiveData.mvQtyValue,
+				FILLEDQTY				: receiveData.mvFilledQty,
+				OrderTypeValue			: receiveData.mvOrderTypeValue,
+				GOODTILLDATE			: receiveData.mvGoodTillDate,
+				StopTypeValue			: receiveData.mvStopTypeValue,
+				StopPrice				: receiveData.mvStopPriceValue,
+				SavePass				: "N",
+				PasswordConfirmation	: "",
+				mvAllorNothing			: receiveData.mvAllorNothing,
+				mvOrderId				: receiveData.mvOrderID,
+				mvMarketId				: receiveData.mvMarketID,
+				mvStockId				: receiveData.mvStockID,
+				mvInstrumentName		: "",
+				mvPrice					: receiveData.mvAvgPriceValue,
+				mvQutityFormat			: receiveData.mvQtyValue,
+				mvFilledQty				: receiveData.mvFilledQty,
+				mvOSQty					: receiveData.mvQtyValue,
+				mvOrderType				: receiveData.mvOrderTypeValue,
+				password				: "",
+				mvSecurityCode			: "",
+				mvSeriNo				: "",
+				mvAnswer				: "",
+				mvSaveAuthenticate		: "true",
+				mvInputTime				: receiveData.mvInputTime,
+				mvStatus				: receiveData.mvStatus,
+				mvGoodTillDate			: ""
+		};
+
+		$.ajax({
+			dataType  : "json",
+			url       : "/trading/data/hksCancelOrder.do",
+			data      : param,
+			success   : function(data) {
+				//console.log("CANCEL===>");
+				//console.log(data);
+				
+				
+		    	$("#divCanModConf").unblock();
+		    	if(data.jsonObj.mvReturnResult == "CancelOrderFail"){
+		    		if ("<%= langCd %>" == "en_US") {
+		    			alert("Cancel Fail");	
+		    		} else {
+		    			alert("Hủy thất bại");
+		    		}
+		    		//loadingHide();
+		    	}else{
+		    		if ("<%= langCd %>" == "en_US") {
+		    			//alert("Cancel Success");
+		    			autoAlert("Cancel Success", 2000);
+		    		} else {
+		    			//alert("Hủy thành công");
+		    			autoAlert("Hủy lệnh thành công", 2000);
+		    		}
+		    		cancel();
+		    		//orderlistRegister();
+		    	}
+		    	$("#tabOrdGrp2").tabs({active : 0});
+		    	searchOrder(); // 리스트 refresh
+		    },
+		    error:function(e){
+		    	console.log(e);
+		    	$("#divCanModConf").unblock();
+		    }
+		});
+	}
+
+	function genmodifyOrder(){
+		$("#divCanModConf").block({message: "<span>LOADING...</span>"});
+
+		var param = {
+				mvOrderId				:	receiveData.mvOrderID,
+				mvBSValue				:	receiveData.mvBSValue,
+				mvStockId				:	receiveData.mvStockID,
+				mvMarketId				:	receiveData.mvMarketID,
+				mvPriceValue			:	receiveData.mvPrice,
+				mvQtyValue				:	receiveData.mvOSQty.replace(/,/g, ''),
+				mvCancelQtyValue		:	receiveData.mvCancelQtyValue,
+				mvInputTime				:	receiveData.mvInputTime,
+				mvStopTypeValue			:	receiveData.mvStopTypeValue,
+				mvStopPriceValue		:	receiveData.mvStopPriceValue,
+				mvStopOrderExpiryDate	:	receiveData.mvStopOrderExpiryDate,
+				mvOrderTypeValue		:	receiveData.mvOrderTypeValue,
+				mvAllOrNothing			:	receiveData.mvAllorNothing,
+				mvValidityDate			:	receiveData.mvValidityDate,
+				mvActivationDate		:	receiveData.mvActivationDate,
+				mvGoodTillDate			:	receiveData.mvGoodTillDate,
+				mvRemark				:	receiveData.mvRemark,
+				mvContactPhone			:	receiveData.mvContactPhone,
+				mvGrossAmt				:	receiveData.mvGrossAmt,
+				mvNetAmtValue			:	receiveData.mvNetAmtValue,
+				mvSCRIP					:	receiveData.mvSCRIP,
+				mvlotSize				:	receiveData.mvLotSize,
+				mvOrderGroupId			:	receiveData.mvOrderGroupID,
+				mvBaseNetAmtValue		:	receiveData.mvGrossAmt,
+				mvAvgPriceValue			:	receiveData.mvAvgPriceValue,
+				mvFilledQty				:	receiveData.mvFilledQty,
+				mvStatus				:	receiveData.mvStatus
+		};
+		//console.log("===/trading/data/genmodifyorder.do PARAM===");
+		//console.log(param);
+		$.ajax({
+			dataType  : "json",
+			url       : "/trading/data/genmodifyorder.do",
+			data      : param,
+			success   : function(data) {
+				
+				//console.log("/trading/data/genmodifyorder.do");
+				//console.log(data);
+			
+		    	$("#divCanModConf").unblock();
+		    	var dList = data.jsonObj.mvGenModifyOrderBean;
+
+		    	$("#mvstockModal").text(dList.mvStockId);
+		    	/*	@TODO : Modify 2016/10/27	이건민 작업소스 오류로 인해 수정함
+		    				Desc : NewPrice, NewQty 적용시 이전값이 적용되어 오류
+		    	$("#mvPriceModal").val(numDotCommaFormat(dList.mvNewPrice.replace(/[,]/g, "")));
+		    	$("#mvVolumeModal").val(dList.mvNewQty);
+				*/
+				$("#mvPriceModal").val(numDotCommaFormat(dList.mvPrice.replace(/[,]/g, "")));
+		    	
+				//@TODO : 일부 체결시 오류
+				//$("#mvVolumeModal").val(dList.mvOrigQtyValue);
+				$("#mvVolumeModal").val(receiveData.mvOSQty);
+		    	
+		    	volumeModiChange();
+		    	priceModiChange();
+				
+		    	//alert("CHECK-==>" + dList.floor + ", celing==>" + dList.ceiling);
+		    	$("#fffl").text(upDownNumList(String(Math.round(Number(dList.floor)*1000))));
+		    	$("#cccl").text(upDownNumList(String(Math.round(Number(dList.ceiling)*1000))));
+		    	//$("#modalPop").show();
+
+		    	genmodifyOrderStatus = dList;
+		    	//console.log(genmodifyOrderStatus);
+		    },
+		    error:function(e){
+		    	console.log(e);
+		    	$("#divCanModConf").unblock();
+		    }
+		});
+	}
+
+	function cancel() {
+		//window.close();
+		var tagId = '<%=request.getParameter("divIdCM")%>';
+		$("#" + tagId).fadeOut();
+	}
+	
+	function autoAlert(msg,duration){		
+	 	var el = document.createElement("div");
+	 	el.setAttribute("style","z-index:2000;position:fixed;top:0%;left:40%;background-color:grey;border-radius:3px;padding:20px 40px;font-size:16px;color:white;");
+	 	el.innerHTML = msg;
+	 	setTimeout(function(){
+	  		el.parentNode.removeChild(el);
+	 	},duration);
+	 	document.body.appendChild(el);
+	}
+
+</script>
+
+</head>
+<body class="mdi">
+	<input type="hidden" id="mvMarketId" name="mvMarketId" value="">
+	<form action="" autocomplete="Off">
+		<div class="modal_layer <%=request.getParameter("cancelModify")%>">
+			<h2 id="cancelModifyTitle"><%=request.getParameter("cancelModify")%> : AAA (Stock name)</h2>
+			<div class="cont" id="divCanModConf">
+				<table>
+					<colgroup>
+						<col width="100" />
+						<col />
+					</colgroup>
+					<tr>
+						<th><%= (langCd.equals("en_US") ? "Stock" : "Mã CK") %></th>
+						<td id="mvStockID"></td>
+					</tr>
+					<tr>
+						<th><%= (langCd.equals("en_US") ? "Stock Name" : "Tên Công ty") %></th>
+						<td id="mvStockName"></td>
+					</tr>
+					<tr>
+						<th><%= (langCd.equals("en_US") ? "Price (VND)" : "Giá(VND)") %></th>
+						<td id="mvPrice">
+							<input type="hidden" id="priceModal" name="priceModal" value="">
+							<input id="mvPriceModal" class="text won" type="text" value="VND" onkeydown="keyDownEvent(this.id, event)" onkeyup="priceModiChange()" maxlength="9" >
+						</td>
+					</tr>
+					<tr>
+						<th><%= (langCd.equals("en_US") ? "Order volume" : "Khối lượng") %></th>
+						<td id="mvQty">
+							<input type="hidden" id="volumeModal" name="volumeModal" value="">
+							<input id="mvVolumeModal" class="text won" type="text" value="0" onkeydown="keyDownEvent(this.id, event)" onkeyup="volumeModiChange()" maxlength="8" >
+						</td>
+					</tr>
+					<tr>
+						<th><%= (langCd.equals("en_US") ? "Order Type" : "Loại lệnh") %></th>
+						<td id="mvOrderType"></td>
+					</tr>
+					<tr>
+						<th><%= (langCd.equals("en_US") ? "Value (VND)" : "Giá trị (VND)") %></th>
+						<td id="mvGrossAmt"></td>
+					</tr>
+					<tr>
+						<th><%= (langCd.equals("en_US") ? "Net fee" : "Phí tạm tính") %></th>
+						<td id="netFee"></td>
+					</tr>
+					
+					
+					<tr>
+						<th id="cccl0"><%= (langCd.equals("en_US") ? "CE" : "Trần") %></th>
+						<td id="cccl"></td>
+					</tr>
+					<tr>
+						<th id="fffl0"><%= (langCd.equals("en_US") ? "FL" : "Sàn") %></th>
+						<td id="fffl"></td>
+					</tr>
+					
+				</table>
+
+				<div id="divAuth" class="layer_add" style="display:none;">
+					<h3 class="layer_add_title"><%= (langCd.equals("en_US") ? "Authentication" : "Xác thực") %></h3>
+					<div class="form_area">
+						<ul class="security_check">
+							<li><strong id="mvWordMatrixKey01"></strong><input type="password" id="wordMatrixValue01" name="wordMatrixValue01"  value="" maxlength="1"  /></li>
+							<li><strong id="mvWordMatrixKey02"></strong><input type="password" id="wordMatrixValue02" name="wordMatrixValue02" value="" maxlength="1"  /></li>
+						</ul>
+						<div>
+							<input type="checkbox" id="saveAuthenticate" name="saveAuthenticate" checked="checked">
+							<label for="saveA"><%= (langCd.equals("en_US") ? "Save Authentication?" : "Lưu xác thực?") %></label>
+						</div>
+					</div>
+					<div style="padding: 20px;">
+						<span style="color:blue !important;"><%= (langCd.equals("en_US") ? "*Warning: Saving authentication maybe potentially risk to your account if you lose your phone or password." : "*Cảnh báo: Việc lưu xác thực có thể dẫn đến rủi ro cho tài khoản giao dịch nếu bạn bị mất thiết bị hoặc mật khẩu.") %></span>
+					</div>
+				</div>
+				
+				<div class="btn_wrap">
+					<button id="btnCanModConfirm" type="button" onclick="authConfirm('confirm')" class="add"><%= (langCd.equals("en_US") ? "Confirm" : "Xác nhận") %></button>
+					<button type="button" onclick="cancel()"><%= (langCd.equals("en_US") ? "Cancel" : "Hủy") %></button>
+				</div>
+			</div>
+		</div>
+	</form>
+</body>
+
+</html>

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<transaction trcode="pibodvdt" servicecode=""  type="row">
+	<value io="in"		name="symb"		type="string"	length="12"	comment="종목코드"/>
+	
+	<value io="out"		name="result"	type="string"	length="1"	comment="1:Divident 0: Not"/>	
+</transaction>

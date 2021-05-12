@@ -1,0 +1,8 @@
+<transaction trcode="pibonmos" servicecode=""  type="row">
+	
+	<value io="in"		name="clientId"		type="string"		length="16"	comment="User ID"/>
+	<value io="in"		name="data"		type="string"		length="256"	comment="Content matching"/>
+	
+	<value io="out"		name="rcod"			type="string"		length="1"	comment="1':OK, '0':Error"/>
+	<value io="out"		name="msg"			type="string"		length="80"	comment="Message "/>
+</transaction>

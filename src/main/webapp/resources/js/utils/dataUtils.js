@@ -1,0 +1,7 @@
+var dataUtils={	fidSelector:{},	bind:function(val) {//dataUtils.fidSelector[val.pbName+'_'+key]=		for(var key in val.data) {			var value=val.data[key];			var selector = val.scope.info.fids[val.pbName+'_'+key];
+			if(selector!=undefined) {				var selector2 = val.scope.info.fids[val.pbName+'_'+key].selector;				var fmt=selector2.attr('fmt');
+				if(typeof fmt!='undefined') {					if(fmt=='time') {						value = value.substring(0, 2) + ':' + value.substring(2, 4) + ':' + value.substring(4, 6);					} else if(fmt=='number') {						value=String(value).commify();					} else if(fmt=='signNumber') {						var gbn=value.substring(0,1);						selector2.removeClass('up');						selector2.removeClass('low');
+						if(gbn=='+') {							value=value.trim().substring(1);							value='+'+value.commify();							selector2.addClass('up');						} else if(gbn=='-') {							value=value.trim().substring(1);							value='-'+value.commify();							selector2.addClass('low');						} 					} else if(fmt=='percent') {						value+='%';					}				}				selector2.text(value);			}		}
+		if(typeof val.time !='undefined'){			var d = new Date();			var time=d.getTime()-val.time;
+			if(Number($("#aa").text())<time)				$("#aa").text(time);
+			if(Number($("#cc").text())<time)				$("#cc").text(time);		}	}};

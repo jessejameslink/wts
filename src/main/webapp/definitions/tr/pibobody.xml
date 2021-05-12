@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!--   Market News Text  -->
+<!-- 	mid->skey에 pibonews의 mod->sqen값 넣음 -->
+<transaction trcode="pibobody" servicecode=""  type="row">
+	<value io="in"		name="skey"		type="string"		length="12"	comment="Search Key"/>
+	<value io="in"		name="lang"		type="string"		length="1"	comment="Language  0:VN  1:EN"/>
+	
+	<value io="out"		name="titl"		type="string"		length="256"	comment="News Title"/>
+	<value io="out"		name="date"		type="string"		length="10"	comment="Date"/>
+	<value io="out"		name="time"		type="string"		length="8"	comment="Time"/>
+	<value io="out"		name="txtl"		type="string"		length="5"	comment="News Text Length"/>
+	<value io="out"		name="text"		type="string"		length="16384"	comment="News Text"/>
+	
+	
+</transaction>

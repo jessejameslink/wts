@@ -1,0 +1,2042 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>MIRAE ASSET WTS</title>
+
+<link href="/resources/css/common.css" rel="stylesheet">
+
+</head>
+  <body class="mdi L_VI">
+
+	<!-- e: 클래스 추가 -->
+  	<div class="wrapper">
+  	<!-- // e: 클래스 추가 -->
+		<!-- header -->
+		<header>
+			<div class="container">
+				<h1><img src="/resources/images/logo.png" alt="MIRAE ASSET WTS"></h1>
+				<div class="right">
+					<div class="side">
+						<div class="buttons">
+							<button type="button" onclick="window.open('login2.jsp')">Logout</button>
+							<span class="language">
+								<button type="button" class="on"><img src="/resources/images/icon_lang_en.gif" alt="English"></button>
+								<button type="button" onclick="window.open('layer.jsp')"><img src="/resources/images/icon_lang_vi.gif" alt="vietnamese"></button>
+							</span>
+						</div>
+						<div class="text">
+							<strong>077C080123</strong>
+							<em>Nnnnnn nnnn nnn</em>
+							<!-- e: 추가 -->
+							<span class="em">GD Ký quỹ</span>
+							<!-- // e: 추가 -->
+							<span>Ngày GD 21/05/2016 18:18:18</span>
+						</div>
+					</div>
+
+					<!-- e: information 삭제, 푸터로 이동 -->
+					<!-- information -->
+					<!--
+					<div id="information">
+						...
+					</div>
+					-->
+					<!-- // information -->
+
+				</div>
+			</div>
+
+			<!-- gnb -->
+			<div class="gnb">
+				<ul class="wts_menu">
+					<li class="on">
+						<button type="button">GIAO DỊCH</button>
+					</li>
+					<!-- <li class="wide">
+						<button type="button">CURRENT STATUS</button>
+					</li> -->
+					<li>
+						<button type="button" onclick="window.open('portfolio.html')">DANH MỤC ĐẦU TƯ</button>
+					</li>
+					<li class="wide">
+						<button type="button" onclick="window.open('online.html')">DỊCH VỤ TRỰC TUYẾN</button>
+					</li>
+					<li>
+						<button type="button" onclick="window.open('chart.html')">BIỂU ĐỒ</button>
+					</li>
+					<li>
+						<button type="button" onclick="window.open('banking.html')">CHUYỂN TIỀN</button>
+					</li>
+					<li class="wide">
+						<button type="button" onclick="window.open('market.html')">THÔNG TIN THỊ TRƯỜNG</button>
+					</li>
+					<li class="wide">
+						<button type="button" onclick="window.open('margin.html')">DANH MỤC CK KÝ QUỸ</button>
+					</li>
+					<li class="wide">
+						<button type="button" onclick="window.open('account.html')">QUẢN LÝ TÀI KHOẢN</button>
+					</li>
+				</ul>
+			</div>
+			<!-- //gnb -->
+		</header>
+		<!-- //header -->
+
+
+		<!-- 템플릿 사용부분 -->
+		<div class="mdi_container">
+			<div class="mdi_content">
+				<!-- LEFT -->
+				<div class="wrap_left">
+					<!-- tabs -->
+					<div name="tabs">
+						<ul class="nav nav_tabs " role="tablist">
+							<li role="presentation" class="active"><a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">Danh mục quan tâm</a></li>
+							<li role="presentation"><a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">Nhóm chỉ số</a></li>
+							<li role="presentation"><a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">Top Tăng/Giảm</a></li>
+						</ul>
+						<div class="tab_content">
+
+							<div role="tabpanel" class="tab_pane" id="tab1">
+								<!-- My Stocks -->
+								<!-- <div class="btn_group">
+									<div>
+										<ul>
+											<li><button class="on" type="button">Group 1</button></li>
+											<li><button type="button">Group</button></li>
+											<li><button type="button">Group</button></li>
+											<li><button type="button">Group</button></li>
+										</ul>
+									</div>
+									<div class="btn_paging">
+										<button class="prev" type="button">prev</button>
+										<button class="next" type="button">next</button>
+									</div>
+									<button class="btn_write" type="button">+ Add</button>
+								</div> -->
+
+								<div class="table_right">
+									<select>
+										<option>Group1</option>
+										<option>Group1</option>
+										<option>Group1</option>
+									</select>
+									<button class="btn" type="button">+ Thêm</button>
+									<button class="btn" type="button">+ Thêm</button>
+								</div>
+								<!-- e: height 수정 -->
+								<div class="grid_area" style="height:251px;">
+									<!-- e: style 삭제 -->
+									<div class="group_table">
+										<!-- e: 클래스추가 -->
+										<table class="table scrollable">
+											<!-- e: 너비 삭제 -->
+											<colgroup>
+												<col /> <!-- Name : Stock -->
+												<col /> <!-- Name : Market -->
+												<col /> <!-- Reference : CE -->
+												<col /> <!-- Reference : FL -->
+												<col /> <!-- Reference : Ref -->
+												<col /> <!-- Best Bid : Pri.1 -->
+												<col /> <!-- Best Bid : Vol.1 -->
+												<col /> <!-- Matching : Price -->
+												<col /> <!-- Matching : Vol -->
+												<col /> <!-- Matching : +/- -->
+												<col /> <!-- Matching : % -->
+												<col /> <!-- Matching : Total Vol. -->
+												<col /> <!-- Best Ask : Pri.1	 -->
+												<col /> <!-- Best Ask : Vol.1 -->
+												<col /> <!-- Price history : Open -->
+												<col /> <!-- Price history : High -->
+												<col /> <!-- Price history : Low -->
+												<col /> <!-- Foreign Investment : F.Buy -->
+												<col /> <!-- Foreign Investment : F.Sell -->
+												<col /> <!-- Foreign Investment : Room -->
+											</colgroup>
+											<!-- // e: 너비 삭제 -->
+											<thead>
+												<tr>
+													<th class="bd_bt2" colspan="2">Tên CK</th>
+													<th class="bd_bt2" colspan="3">Tham chiếu</th>
+													<th class="bd_bt2" colspan="2">Dư mua</th>
+													<th class="bd_bt2" colspan="5">Khớp lệnh</th>
+													<th class="bd_bt2" colspan="2">Dư bán</th>
+													<th class="bd_bt2" colspan="3">Lịch sử giá</th>
+													<th class="bd_bt2" colspan="3">Giao dịch NN</th>
+												</tr>
+												<tr>
+													<th scope="col">Mã CK</th>
+													<th scope="col">Sàn</th>
+													<th scope="col">Trần</th>
+													<th scope="col">Sàn</th>
+													<th scope="col">TC</th>
+													<th scope="col">Giá 1</th>
+													<th scope="col">KL 1</th>
+													<th scope="col">Giá</th>
+													<th scope="col">KL</th>
+													<th scope="col">+/-</th>
+													<th scope="col">%</th>
+													<th scope="col">Tổng KL</th>
+													<th scope="col">Giá 1</th>
+													<th scope="col">KL1</th>
+													<th scope="col">Mở</th>
+													<th scope="col">Cao</th>
+													<th scope="col">Thấp</th>
+													<th scope="col">NN Mua</th>
+													<th scope="col">NN bán</th>
+													<th scope="col">Room</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td class="text_left c_code">ABV</td>
+													<td class="text_left c_code dotted">HNX</td>
+													<td>000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td>000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>00,000,000</td>
+													<td class="dotted">00,000,000</td>
+													<td class="dotted">00,000,000</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV</td>
+													<td class="text_left c_code dotted">HNX</td>
+													<td>000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td>000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>00,000,000</td>
+													<td class="dotted">00,000,000</td>
+													<td class="dotted">00,000,000</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV</td>
+													<td class="text_left c_code dotted">HNX</td>
+													<td>000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td>000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>00,000,000</td>
+													<td class="dotted">00,000,000</td>
+													<td class="dotted">00,000,000</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV</td>
+													<td class="text_left c_code dotted">HNX</td>
+													<td>000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td>000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>00,000,000</td>
+													<td class="dotted">00,000,000</td>
+													<td class="dotted">00,000,000</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV</td>
+													<td class="text_left c_code dotted">HNX</td>
+													<td>000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td>000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>00,000,000</td>
+													<td class="dotted">00,000,000</td>
+													<td class="dotted">00,000,000</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV</td>
+													<td class="text_left c_code dotted">HNX</td>
+													<td>000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td>000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>00,000,000</td>
+													<td class="dotted">00,000,000</td>
+													<td class="dotted">00,000,000</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV</td>
+													<td class="text_left c_code dotted">HNX</td>
+													<td>000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td>000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>00,000,000</td>
+													<td class="dotted">00,000,000</td>
+													<td class="dotted">00,000,000</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV</td>
+													<td class="text_left c_code dotted">HNX</td>
+													<td>000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td>000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>00,000,000</td>
+													<td class="dotted">00,000,000</td>
+													<td class="dotted">00,000,000</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV</td>
+													<td class="text_left c_code dotted">HNX</td>
+													<td>000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>000,000</td>
+													<td class="dotted">000.000</td>
+													<td>000.000</td>
+													<td class="dotted">000.000</td>
+													<td class="dotted">000.000</td>
+													<td>00,000,000</td>
+													<td class="dotted">00,000,000</td>
+													<td class="dotted">00,000,000</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<!-- //My Stocks -->
+							</div>
+
+							<div role="tabpanel" class="tab_pane" id="tab2">
+								<!-- Sector -->
+								<div class="table_right">
+									<select id="mark">
+										<option value="0">All</option>
+										<option value="4">VN</option>
+										<option value="5">VN30</option>
+										<option value="2">HNX</option>
+										<option value="3">HOSE</option>
+										<option value="1">UPCOM</option>
+									</select>
+									<button class="btn btn_search" type="button" onclick="searchSectorList()">Search</button>
+								</div>
+								<!-- e: style수정 -->
+								<div class="grid_area" style="height:251px;">
+									<div class="group_table">
+										<table class="table">
+											<colgroup>
+												<col>
+												<col width="112">
+												<col width="112">
+												<col width="112">
+												<col width="112">
+												<col width="112">
+												<col width="112">
+												<col width="112">
+											</colgroup>
+											<thead>
+											<!-- e: tr삭제 -->
+												<tr>
+													<th scope="col">Mã CK | Sàn</th>
+													<th scope="col">Giá hiện tại</th>
+													<th scope="col">+/-</th>
+													<th scope="col">%Thay đổi</th>
+													<th scope="col">Khối lượng</th>
+													<th scope="col">Giá mở cửa</th>
+													<th scope="col">Giá cao nhất</th>
+													<th scope="col">Giá cao nhất</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td class="text_left c_code">ABV (HNX)</td>
+													<td class="text_left">AAAAAA</td>
+													<td class="arrow up">000000000</td>
+													<td class="up">+15.00%</td>
+													<td>000000000</td>
+													<td>00.00</td>
+													<td>00.00</td>
+													<td>00.00</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV (HNX)</td>
+													<td class="text_left">AAAAAA</td>
+													<td class="arrow up">000000000</td>
+													<td class="upper">+15.00%</td>
+													<td>000000000</td>
+													<td>00.00</td>
+													<td>00.00</td>
+													<td>00.00</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV (HNX)</td>
+													<td class="text_left">AAAAAA</td>
+													<td class="arrow low">000000000</td>
+													<td class="low">+15.00%</td>
+													<td>000000000</td>
+													<td>00.00</td>
+													<td>00.00</td>
+													<td>00.00</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV (HNX)</td>
+													<td class="text_left">AAAAAA</td>
+													<td class="arrow low">000000000</td>
+													<td class="lower">+15.00%</td>
+													<td>000000000</td>
+													<td>00.00</td>
+													<td>00.00</td>
+													<td>00.00</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV (HNX)</td>
+													<td class="text_left">AAAAAA</td>
+													<td class="">000000000</td>
+													<td class="">+15.00%</td>
+													<td>000000000</td>
+													<td>00.00</td>
+													<td>00.00</td>
+													<td>00.00</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV (HNX)</td>
+													<td class="text_left">AAAAAA</td>
+													<td class="">000000000</td>
+													<td class="">+15.00%</td>
+													<td>000000000</td>
+													<td>00.00</td>
+													<td>00.00</td>
+													<td>00.00</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV (HNX)</td>
+													<td class="text_left">AAAAAA</td>
+													<td class="">000000000</td>
+													<td class="">+15.00%</td>
+													<td>000000000</td>
+													<td>00.00</td>
+													<td>00.00</td>
+													<td>00.00</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV (HNX)</td>
+													<td class="text_left">AAAAAA</td>
+													<td class="">000000000</td>
+													<td class="">+15.00%</td>
+													<td>000000000</td>
+													<td>00.00</td>
+													<td>00.00</td>
+													<td>00.00</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV (HNX)</td>
+													<td class="text_left">AAAAAA</td>
+													<td class="">000000000</td>
+													<td class="">+15.00%</td>
+													<td>000000000</td>
+													<td>00.00</td>
+													<td>00.00</td>
+													<td>00.00</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV (HNX)</td>
+													<td class="text_left">AAAAAA</td>
+													<td class="">000000000</td>
+													<td class="">+15.00%</td>
+													<td>000000000</td>
+													<td>00.00</td>
+													<td>00.00</td>
+													<td>00.00</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV (HNX)</td>
+													<td class="text_left">AAAAAA</td>
+													<td class="">000000000</td>
+													<td class="">+15.00%</td>
+													<td>000000000</td>
+													<td>00.00</td>
+													<td>00.00</td>
+													<td>00.00</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<!-- //Sector -->
+							</div>
+
+							<div role="tabpanel" class="tab_pane" id="tab3">
+								<!-- Ranking -->
+								<div class="table_right">
+									<select id="mark">
+										<option value="0">All</option>
+										<option value="">VN</option>
+										<option value="">VN30</option>
+										<option value="2">HNX</option>
+										<option value="">HSX</option>
+										<option value="3">UPCOM</option>
+									</select>
+									<select id="updn">
+										<option value="0">UP</option>
+										<option value="1">Down</option>
+									</select>
+									<label for="fromSearch">From</label>
+									<input id="fromSearch" type="text" class="datepicker" name="fromDate">
+									<label for="toSearch">To</label>
+									<input id="toSearch" type="text" class="datepicker" name="toDate">
+									<button class="btn btn_search" type="button" onclick="searchRankingList()">Search</button>
+								</div>
+								<!-- e: style수정 -->
+								<div class="grid_area" style="height:251px;">
+									<div class="group_table">
+										<table class="table">
+											<colgroup>
+												<col>
+												<col width="100">
+												<col width="100">
+												<col width="100">
+												<col width="100">
+												<col width="100">
+												<col width="100">
+												<col width="100">
+												<col width="100">
+											</colgroup>
+											<thead>
+												<tr>
+													<th>Mã CK | Sàn</th>
+													<th>Giá hiện tại</th>
+													<th>+/-</th>
+													<th scope="col">%Thay đổi</th>
+													<th scope="col">Khối lượng</th>
+													<th scope="col">Tỷ lệ tăng</th>
+													<th scope="col">Giá trị tăng</th>
+													<th scope="col">Giá đóng cửa ( Ngày bắt đầu )</th>
+													<th scope="col">Giá đóng cửa ( Ngày kết thúc)</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td class="text_left c_code">ABV (HNX)</td>
+													<td class="text_left">AAAAAA</td>
+													<td class="arrow up">000000000</td>
+													<td class="up">+15.00%</td>
+													<td>000000000</td>
+													<td>000000000</td>
+													<td>000000000</td>
+													<td class="text_center">13/05/2016</td>
+													<td class="text_center">13/05/2016</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV (HNX)</td>
+													<td class="text_left">AAAAAA</td>
+													<td class="arrow up">000000000</td>
+													<td class="up">+15.00%</td>
+													<td>000000000</td>
+													<td>000000000</td>
+													<td>000000000</td>
+													<td class="text_center">13/05/2016</td>
+													<td class="text_center">13/05/2016</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV (HNX)</td>
+													<td class="text_left">AAAAAA</td>
+													<td class="arrow up">000000000</td>
+													<td class="up">+15.00%</td>
+													<td>000000000</td>
+													<td>000000000</td>
+													<td>000000000</td>
+													<td class="text_center">13/05/2016</td>
+													<td class="text_center">13/05/2016</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV (HNX)</td>
+													<td class="text_left">AAAAAA</td>
+													<td class="arrow up">000000000</td>
+													<td class="up">+15.00%</td>
+													<td>000000000</td>
+													<td>000000000</td>
+													<td>000000000</td>
+													<td class="text_center">13/05/2016</td>
+													<td class="text_center">13/05/2016</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV (HNX)</td>
+													<td class="text_left">AAAAAA</td>
+													<td class="arrow up">000000000</td>
+													<td class="up">+15.00%</td>
+													<td>000000000</td>
+													<td>000000000</td>
+													<td>000000000</td>
+													<td class="text_center">13/05/2016</td>
+													<td class="text_center">13/05/2016</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV (HNX)</td>
+													<td class="text_left">AAAAAA</td>
+													<td class="arrow up">000000000</td>
+													<td class="up">+15.00%</td>
+													<td>000000000</td>
+													<td>000000000</td>
+													<td>000000000</td>
+													<td class="text_center">13/05/2016</td>
+													<td class="text_center">13/05/2016</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV (HNX)</td>
+													<td class="text_left">AAAAAA</td>
+													<td class="arrow up">000000000</td>
+													<td class="up">+15.00%</td>
+													<td>000000000</td>
+													<td>000000000</td>
+													<td>000000000</td>
+													<td class="text_center">13/05/2016</td>
+													<td class="text_center">13/05/2016</td>
+												</tr>
+												<tr>
+													<td class="text_left c_code">ABV (HNX)</td>
+													<td class="text_left">AAAAAA</td>
+													<td class="arrow up">000000000</td>
+													<td class="up">+15.00%</td>
+													<td>000000000</td>
+													<td>000000000</td>
+													<td>000000000</td>
+													<td class="text_center">13/05/2016</td>
+													<td class="text_center">13/05/2016</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<!-- //Ranking -->
+							</div>
+						</div>
+					</div>
+					<!-- tabs -->
+					<div name="tabs">
+						<ul class="nav nav_tabs " role="tablist">
+							<li role="presentation" class="active"><a href="#tab21" aria-controls="tab21" role="tab" data-toggle="tab">Tra cứu lệnh giao dịch</a></li>
+							<li role="presentation"><a href="#tab22" aria-controls="tab22" role="tab" data-toggle="tab">Số dư</a></li>
+							<li role="presentation"><a href="#tab23" aria-controls="tab23" role="tab" data-toggle="tab">Biểu đồ</a></li>
+							<li role="presentation"><a href="#tab24" aria-controls="tab24" role="tab" data-toggle="tab">Theo ngày</a></li>
+							<li role="presentation"><a href="#tab25" aria-controls="tab25" role="tab" data-toggle="tab">Theo thời gian</a></li>
+							<li role="presentation"><a href="#tab26" aria-controls="tab26" role="tab" data-toggle="tab">Tin tức</a></li>
+							<!-- <li role="presentation"><a href="#tab26" aria-controls="tab26" role="tab" data-toggle="tab">Pending order</a></li>
+							<li role="presentation"><a href="#tab27" aria-controls="tab27" role="tab" data-toggle="tab">Executed history</a></li> -->
+						</ul>
+						<div class="tab_content">
+							<div role="tabpanel" class="tab_pane" id="tab21">
+								<!-- Order Journal -->
+								<div class="search_area in total">
+									<div class="pull_left">
+										<label for="ojSel1">Trạng thái</label>
+										<select id="ojSel1">
+											<option>All</option>
+										</select>
+										<label for="ojSel2">Loại lệnh</label>
+										<select id="ojSel2">
+											<option>All</option>
+										</select>
+										<label for="ojSel3">Mua/Bán</label>
+										<select id="ojSel3">
+											<option>All</option>
+										</select>
+									</div>
+									<div class="pull_right">
+										<label for="stockInp">Mã CK</label>
+										<div class="input_search">
+											<input id="stockInp" type="text" style="width:100px;">
+											<button type="button">Tra cứu</button>
+										</div>
+										<!-- e: 삭제 -->
+										<!--
+										<span class="total">Total(Fee + Tax) : 0</span>
+										-->
+										<!-- // e: 삭제 -->
+									</div>
+								</div>
+								<!-- e: height 수정 -->
+								<div class="grid_area oj_grid" style="height:293px;">
+									<div class="group_table center double">
+										<table class="table">
+											<!-- e: 너비 삭제 -->
+											<colgroup>
+												<col />
+												<col />
+												<col />
+												<col />
+												<col />
+												<col />
+												<col />
+												<col />
+											</colgroup>
+											<!-- // e: 너비 삭제 -->
+											<!-- e: thead 수정 -->
+											<thead>
+												<tr>
+													<th>Hủy</th>
+													<th rowspan="2">Mã CK</th>
+													<th class="bd_bt2">Mua/Bán</th>
+													<th class="bd_bt2">Số lượng </th>
+													<th class="bd_bt2">Số lượng khớp</th>
+													<th rowspan="2">Trạng thái</th>
+													<th class="bd_bt2">Loại lệnh</th>
+													<th class="bd_bt2">Lý do từ chối</th>
+												</tr>
+												<tr>
+													<th>Sửa</th>
+													<th>Giá (VND)</th>
+													<th>Số lượng chờ khớp</th>
+													<th>Gía TB</th>
+													<th>Phí+Thuế</th>
+													<th>Ngày</th>
+												</tr>
+											</thead>
+											<!-- // e: thead 수정 -->
+											<tbody>
+												<tr>
+													<td>
+														<div><button class="btn_s" type="button"><img src="/resources/images/btn_s_cancel.png" alt="Cancel"></button></div>
+														<div><button class="btn_s" type="button"><img src="/resources/images/btn_s_modify.png" alt="Modify"></button></div>
+													</td>
+													<td>VND</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>Queued</td>
+													<td>
+														<div>Sell</div>
+														<div>000,00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00:00:00 13/05/2016</div>
+													</td>
+												</tr>
+												<tr class="even">
+													<td>
+														<div><button class="btn_s" type="button"><img src="/resources/images/btn_s_cancel.png" alt="Cancel"></button></div>
+														<div><button class="btn_s" type="button"><img src="/resources/images/btn_s_modify.png" alt="Modify"></button></div>
+													</td>
+													<td>VND</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>Queued</td>
+													<td>
+														<div>Sell</div>
+														<div>000,00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<p>00:00:00 13/05/2016</p>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<div><button class="btn_s" type="button"><img src="/resources/images/btn_s_cancel.png" alt="Cancel"></button></div>
+														<div><button class="btn_s" type="button"><img src="/resources/images/btn_s_modify.png" alt="Modify"></button></div>
+													</td>
+													<td>VND</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>Queued</td>
+													<td>
+														<div>Sell</div>
+														<div>000,00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00:00:00 13/05/2016</div>
+													</td>
+												</tr>
+												<tr class="even">
+													<td>
+														<div><button class="btn_s" type="button"><img src="/resources/images/btn_s_cancel.png" alt="Cancel"></button></div>
+														<div><button class="btn_s" type="button"><img src="/resources/images/btn_s_modify.png" alt="Modify"></button></div>
+													</td>
+													<td>VND</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>Queued</td>
+													<td>
+														<div>Sell</div>
+														<div>000,00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<p>00:00:00 13/05/2016</p>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<div><button class="btn_s" type="button"><img src="/resources/images/btn_s_cancel.png" alt="Cancel"></button></div>
+														<div><button class="btn_s" type="button"><img src="/resources/images/btn_s_modify.png" alt="Modify"></button></div>
+													</td>
+													<td>VND</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>Queued</td>
+													<td>
+														<div>Sell</div>
+														<div>000,00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00:00:00 13/05/2016</div>
+													</td>
+												</tr>
+												<tr class="even">
+													<td>
+														<div><button class="btn_s" type="button"><img src="/resources/images/btn_s_cancel.png" alt="Cancel"></button></div>
+														<div><button class="btn_s" type="button"><img src="/resources/images/btn_s_modify.png" alt="Modify"></button></div>
+													</td>
+													<td>VND</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>Queued</td>
+													<td>
+														<div>Sell</div>
+														<div>000,00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<p>00:00:00 13/05/2016</p>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<div><button class="btn_s" type="button"><img src="/resources/images/btn_s_cancel.png" alt="Cancel"></button></div>
+														<div><button class="btn_s" type="button"><img src="/resources/images/btn_s_modify.png" alt="Modify"></button></div>
+													</td>
+													<td>VND</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>Queued</td>
+													<td>
+														<div>Sell</div>
+														<div>000,00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00:00:00 13/05/2016</div>
+													</td>
+												</tr>
+												<tr class="even">
+													<td>
+														<div><button class="btn_s" type="button"><img src="/resources/images/btn_s_cancel.png" alt="Cancel"></button></div>
+														<div><button class="btn_s" type="button"><img src="/resources/images/btn_s_modify.png" alt="Modify"></button></div>
+													</td>
+													<td>VND</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>Queued</td>
+													<td>
+														<div>Sell</div>
+														<div>000,00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<p>00:00:00 13/05/2016</p>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<div><button class="btn_s" type="button"><img src="/resources/images/btn_s_cancel.png" alt="Cancel"></button></div>
+														<div><button class="btn_s" type="button"><img src="/resources/images/btn_s_modify.png" alt="Modify"></button></div>
+													</td>
+													<td>VND</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>Queued</td>
+													<td>
+														<div>Sell</div>
+														<div>000,00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00:00:00 13/05/2016</div>
+													</td>
+												</tr>
+												<tr class="even">
+													<td>
+														<div><button class="btn_s" type="button"><img src="/resources/images/btn_s_cancel.png" alt="Cancel"></button></div>
+														<div><button class="btn_s" type="button"><img src="/resources/images/btn_s_modify.png" alt="Modify"></button></div>
+													</td>
+													<td>VND</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<div>00.00</div>
+													</td>
+													<td>Queued</td>
+													<td>
+														<div>Sell</div>
+														<div>000,00</div>
+													</td>
+													<td>
+														<div>Sell</div>
+														<p>00:00:00 13/05/2016</p>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+
+								<div class="order_total">
+									Tổng (Phí+Thuê) :<span>123,123</span>
+								</div>
+								<!-- //Order Journal -->
+							</div>
+
+							<div role="tabpanel" class="tab_pane" id="tab22">
+								<!-- Balance -->
+								<div class="pull_left">
+									<h3>Tiền</h3>
+									<div class="grid_area c_table_grid" style="height:318px;">
+										<div class="group_table">
+											<table class="table">
+												<colgroup>
+													<col width="190" />
+													<col />
+												</colgroup>
+												<tbody>
+													<tr>
+														<th scope="row">Sức mua tối đa</th>
+														<td>00,000,000</td>
+													</tr>
+													<tr>
+														<th scope="row">Số dư tiền mặt<br />(được rút)</th>
+														<td>000</td>
+													</tr>
+													<tr>
+														<th scope="row">Số dư được rút<br />(bao gồm ứng trước)</th>
+														<td>000</td>
+													</tr>
+													<tr>
+														<th scope="row">Khả năng ứng trước</th>
+														<td>00,000,000</td>
+													</tr>
+													<tr>
+														<th scope="row">Tiền tạm giữ </th>
+														<td>000</td>
+													</tr>
+													<tr>
+														<th scope="row">Tiền mua CK chờ khớp</th>
+														<td>000</td>
+													</tr>
+													<tr>
+														<th scope="row">Tiền mua CK đã khớp</th>
+														<td><span class="row">00</span></td>
+													</tr>
+													<tr>
+														<th scope="row">Tiền (rút, chuyển khoản) chờ duyệt</th>
+														<td>000</td>
+													</tr>
+													<tr>
+														<th scope="row">Dư nợ ký quỹ</th>
+														<td><span class="low">000</span></td>
+													</tr>
+													<tr>
+														<th scope="row">Gọi bổ sung ký quỹ (Tùy chọn)</th>
+														<td>00,000,000</td>
+													</tr>
+													<tr>
+														<th scope="row">Nộp tiền mặt</th>
+														<td><span class="low">000</span></td>
+													</tr>
+													<tr>
+														<th scope="row">Bán CK trong danh mục ký quỹ</th>
+														<td><span class="row">00,000,000</span></td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+								<div class="pull_left">
+									<h3>Tài khoản</h3>
+									<div class="grid_area s_table_grid" style="height:318px;">
+										<div class="group_table type2">
+											<table class="table">
+												<colgroup>
+													<col width="50" />
+													<col />
+													<col width="90" />
+													<col width="90" />
+												</colgroup>
+												<thead>
+													<tr>
+														<th scope="col" rowspan="2">Mã CK</th>
+														<th scope="col" rowspan="2">Số dư GD</th>
+														<th scope="colgroup" colspan="2">Giao dịch trong ngày</th>
+													</tr>
+													<tr>
+														<th scope="col">Đã mua</th>
+														<th scope="col">Đã bán</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td class="text_center">HAP</td>
+														<td></td>
+														<td></td>
+														<td></td>
+													</tr>
+													<tr class="even">
+														<td class="text_center">HAP</td>
+														<td></td>
+														<td></td>
+														<td></td>
+													</tr>
+													<tr>
+														<td class="text_center">HAP</td>
+														<td></td>
+														<td></td>
+														<td></td>
+													</tr>
+													<tr class="even">
+														<td class="text_center">HAP</td>
+														<td></td>
+														<td></td>
+														<td></td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+								<!-- //Balance -->
+							</div>
+
+							<div role="tabpanel" class="tab_pane" id="tab23">
+								<!-- Chart -->
+								<div class="chart_select">
+									<div class="button_set">
+										<input type="radio" id="datetime1" name="datetime" checked="checked"><label for="datetime1">Tick</label>
+										<input type="radio" id="datetime2" name="datetime"><label for="datetime2">Ngày</label>
+										<input type="radio" id="datetime3" name="datetime"><label for="datetime3">Tuần</label>
+										<input type="radio" id="datetime4" name="datetime"><label for="datetime4">Tháng</label>
+									</div>
+								</div>
+								<div class="grid_area" style="height:318px;">
+									<!-- chart data -->
+								</div>
+								<!-- //Chart -->
+							</div>
+
+							<div role="tabpanel" class="tab_pane" id="tab24">
+								<!-- Daily -->
+								<div class="grid_area" style="height:346px;">
+									<div class="group_table">
+										<table class="table">
+											<colgroup>
+												<col>
+												<col width="90">
+												<col width="80">
+												<col width="80">
+												<col width="90">
+												<col width="80">
+												<col width="80">
+												<col width="80">
+												<col width="90">
+											</colgroup>
+											<thead>
+												<tr>
+													<th scope="col">Ngày</th>
+													<th scope="col">Giá đóng cửa</th>
+													<th scope="col">+/-</th>
+													<th scope="col">%Thay đổi</th>
+													<th scope="col">Khối lượng</th>
+													<th scope="col">Giá mở cửa</th>
+													<th scope="col">Giá cao nhất</th>
+													<th scope="col">Giá thấp nhất</th>
+													<th scope="col">Giá bình quân</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td class="text_center">11/05/2016</td>
+													<td>00,000,000</td>
+													<td class="low">-000</td>
+													<td class="low">-000</td>
+													<td>00,000,000</td>
+													<td>00.00</td>
+													<td>00.00</td>
+													<td>00.00</td>
+													<td>00,000,000</td>
+												</tr>
+
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<!-- Daily -->
+							</div>
+
+							<div role="tabpanel" class="tab_pane" id="tab25">
+								<!-- Timely -->
+								<div class="grid_area" style="height:346px;">
+									<div class="group_table">
+										<table class="table">
+											<colgroup>
+												<col>
+												<col width="120">
+												<col width="120">
+												<col width="120">
+												<col width="120">
+												<col width="120">
+											</colgroup>
+											<thead>
+												<tr>
+													<th scope="col">Thời gian</th>
+													<th scope="col">Giá hiện tại</th>
+													<th scope="col">+/-</th>
+													<th scope="col">%Thay đổi</th>
+													<th scope="col">Số lượng khớp</th>
+													<th scope="col">Khối lượng</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td class="text_center">09:49:17</td>
+													<td>00,000,000</td>
+													<td class="arrow up">00,000,000</td>
+													<td class="low">-000</td>
+													<td>000</td>
+													<td>00,000,000</td>
+												</tr>
+												<tr>
+													<td class="text_center">09:49:17</td>
+													<td>00,000,000</td>
+													<td class="arrow up">00,000,000</td>
+													<td class="low">-000</td>
+													<td>000</td>
+													<td>00,000,000</td>
+												</tr>
+												<tr>
+													<td class="text_center">09:49:17</td>
+													<td>00,000,000</td>
+													<td class="arrow up">00,000,000</td>
+													<td class="low">-000</td>
+													<td>000</td>
+													<td>00,000,000</td>
+												</tr>
+												<tr>
+													<td class="text_center">09:49:17</td>
+													<td>00,000,000</td>
+													<td class="arrow up">00,000,000</td>
+													<td class="low">-000</td>
+													<td>000</td>
+													<td>00,000,000</td>
+												</tr>
+												<tr>
+													<td class="text_center">09:49:17</td>
+													<td>00,000,000</td>
+													<td class="arrow up">00,000,000</td>
+													<td class="low">-000</td>
+													<td>000</td>
+													<td>00,000,000</td>
+												</tr>
+												<tr>
+													<td class="text_center">09:49:17</td>
+													<td>00,000,000</td>
+													<td class="arrow up">00,000,000</td>
+													<td class="low">-000</td>
+													<td>000</td>
+													<td>00,000,000</td>
+												</tr>
+												<tr>
+													<td class="text_center">09:49:17</td>
+													<td>00,000,000</td>
+													<td class="arrow up">00,000,000</td>
+													<td class="low">-000</td>
+													<td>000</td>
+													<td>00,000,000</td>
+												</tr>
+												<tr>
+													<td class="text_center">09:49:17</td>
+													<td>00,000,000</td>
+													<td class="arrow up">00,000,000</td>
+													<td class="low">-000</td>
+													<td>000</td>
+													<td>00,000,000</td>
+												</tr>
+												<tr>
+													<td class="text_center">09:49:17</td>
+													<td>00,000,000</td>
+													<td class="arrow up">00,000,000</td>
+													<td class="low">-000</td>
+													<td>000</td>
+													<td>00,000,000</td>
+												</tr>
+												<tr>
+													<td class="text_center">09:49:17</td>
+													<td>00,000,000</td>
+													<td class="arrow up">00,000,000</td>
+													<td class="low">-000</td>
+													<td>000</td>
+													<td>00,000,000</td>
+												</tr>
+												<tr>
+													<td class="text_center">09:49:17</td>
+													<td>00,000,000</td>
+													<td class="arrow up">00,000,000</td>
+													<td class="low">-000</td>
+													<td>000</td>
+													<td>00,000,000</td>
+												</tr>
+												<tr>
+													<td class="text_center">09:49:17</td>
+													<td>00,000,000</td>
+													<td class="arrow up">00,000,000</td>
+													<td class="low">-000</td>
+													<td>000</td>
+													<td>00,000,000</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<!-- //Timely -->
+							</div>
+
+							<div role="tabpanel" class="tab_pane" id="tab26">
+								<!-- Stock news -->
+								<div class="search_area in total">
+									<div class="pull_left">
+										<div class="input_search">
+											<input id="SectorInp" type="text">
+											<button type="button" class="btn_recent"><span class="screen_out">recent list</span></button>
+											<!-- layer_newest -->
+											<div class="layer_newest" style="display:;">
+												<ul>
+													<li>ASDF</li>
+													<li>ASDF</li>
+													<li>ASDF</li>
+													<li>ASDF</li>
+													<li>ASDF</li>
+												</ul>
+											</div>
+											<!-- //layer_newest -->
+											<button type="button">Search</button>
+										</div>
+										<input class="text" type="text" value="Stock Code">
+									</div>
+									<div class="pull_right">
+										<span class="stock_search">
+											<input class="text" type="text" placeholder="News Title search">
+										</span>
+										<button class="btn" type="button">Tra cứu</button>
+										<input type="text" class="datepicker" placeholder="13/05/2016">
+									</div>
+								</div>
+								<!-- e: style수정 -->
+								<div class="grid_area" style="height:318px;">
+
+									<div class="group_table center">
+										<table class="table">
+											<colgroup>
+												<col width="70">
+												<col width="80">
+												<col>
+												<col width="100">
+												<col width="70">
+											</colgroup>
+											<thead>
+												<tr>
+													<th>Ngày</th>
+													<th>Thời gian</th>
+													<th>Nội dung</th>
+													<th>Nguồn</th>
+													<th>Mã CK</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>11/05/2016</td>
+													<td>18:29:23</td>
+													<td class="text_subject">Title TitleTitle TitleTitle TitleTitle TitleTitle TitleTitle TitleTitle TitleTitle TitleTitle TitleTitle TitleTitle TitleTitle TitleTitle TitleTitle TitleTitle Title</td>
+													<td>000000000</td>
+													<td>000000000</td>
+												</tr>
+												<tr>
+													<td>11/05/2016</td>
+													<td>18:29:23</td>
+													<td class="text_subject">Title TitleTitle TitleTitle TitleTitle TitleTitle</td>
+													<td>000000000</td>
+													<td>000000000</td>
+												</tr>
+												<tr>
+													<td>11/05/2016</td>
+													<td>18:29:23</td>
+													<td class="text_subject">Title TitleTitle TitleTitle TitleTitle TitleTitle</td>
+													<td>000000000</td>
+													<td>000000000</td>
+												</tr>
+												<tr>
+													<td>11/05/2016</td>
+													<td>18:29:23</td>
+													<td class="text_subject">Title TitleTitle TitleTitle TitleTitle TitleTitle</td>
+													<td>000000000</td>
+													<td>000000000</td>
+												</tr>
+												<tr>
+													<td>11/05/2016</td>
+													<td>18:29:23</td>
+													<td class="text_subject">Title TitleTitle TitleTitle TitleTitle TitleTitle</td>
+													<td>000000000</td>
+													<td>000000000</td>
+												</tr>
+												<tr>
+													<td>11/05/2016</td>
+													<td>18:29:23</td>
+													<td class="text_subject">Title TitleTitle TitleTitle TitleTitle TitleTitle</td>
+													<td>000000000</td>
+													<td>000000000</td>
+												</tr>
+												<tr>
+													<td>11/05/2016</td>
+													<td>18:29:23</td>
+													<td class="text_subject">Title TitleTitle TitleTitle TitleTitle TitleTitle</td>
+													<td>000000000</td>
+													<td>000000000</td>
+												</tr>
+												<tr>
+													<td>11/05/2016</td>
+													<td>18:29:23</td>
+													<td class="text_subject">Title TitleTitle TitleTitle TitleTitle TitleTitle</td>
+													<td>000000000</td>
+													<td>000000000</td>
+												</tr>
+												<tr>
+													<td>11/05/2016</td>
+													<td>18:29:23</td>
+													<td class="text_subject">Title TitleTitle TitleTitle TitleTitle TitleTitle</td>
+													<td>000000000</td>
+													<td>000000000</td>
+												</tr>
+												<tr>
+													<td>11/05/2016</td>
+													<td>18:29:23</td>
+													<td class="text_subject">Title TitleTitle TitleTitle TitleTitle TitleTitle</td>
+													<td>000000000</td>
+													<td>000000000</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<!-- //Stock news -->
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<!-- //LEFT -->
+				<!-- RIGHT -->
+				<div class="wrap_right">
+
+					<!-- tabs -->
+					<div name="tabs">
+						<ul class="nav nav_tabs" role="tablist">
+							<li role="presentation" class="active"><a href="#tab31" aria-controls="tab31" role="tab" data-toggle="tab">BID</a></li>
+							<!-- <li role="presentation"><a href="#tab32" aria-controls="tab32" role="tab" data-toggle="tab">CUR</a></li> -->
+						</ul>
+						<div class="tab_content">
+							<div role="tabpanel" class="tab_pane" id="tab31">
+								<!-- BID -->
+								<div class="group_table bid_table">
+									<table class="table no_bbt">
+										<caption>
+											<span class="code">[ACC]</span>
+											<span class="name">CTCP BETONG BECAMX</span>
+										</caption>
+										<colgroup>
+											<col width="60" />
+											<col width="60" />
+											<col />
+											<col width="60" />
+											<col width="60" />
+										</colgroup>
+										<thead>
+											<tr>
+												<th scope="col">ASK</th>
+												<th scope="col">+/-</th>
+												<th scope="col">13:28:21</th>
+												<th scope="col">+/-</th>
+												<th scope="col">BID</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td class="no_bbt txt">CUR</td>
+												<td class="no_lbd no_bbt cur">
+													<span class="low">999,080</span>
+												</td>
+												<td class="bg01 text_center">
+													<span class="low">118,300</span>
+												</td>
+												<td class="bg01">
+													<span class="low">+100</span>
+												</td>
+												<td class="bg01">
+													<span class="upper">3,065</span>
+												</td>
+											</tr>
+											<tr>
+												<td class="no_bbt txt">+/-</td>
+												<td class="no_lbd no_bbt">
+													<span class="low">405</span>
+												</td>
+												<td class="bg01 text_center">
+													<span class="lower">18,300</span>
+												</td>
+												<td class="bg01"></td>
+												<td class="bg01">
+													<span class="up">3,065</span>
+												</td>
+											</tr>
+											<tr>
+												<td class="txt">%Change</td>
+												<td class="no_lbd">
+													<span class="low">-2.43</span>
+												</td>
+												<td class="bg01 text_center">
+													<span class="same">18,300</span>
+												</td>
+												<td class="bg01"></td>
+												<td class="bg01"></td>
+											</tr>
+											<tr>
+												<td class="bg02">
+													<span class="low">3.386</span>
+												</td>
+												<td class="bg02"></td>
+												<td class="bg02 text_center">
+													<span class="upper">18,050</span>
+												</td>
+												<td class="no_bbt txt">Open</td>
+												<td class="pr no_lbd no_bbt">
+													<span class="low">128,050</span>
+												</td>
+											</tr>
+											<tr>
+												<td class="bg02">
+													<span class="lower">18,050</span>
+												</td>
+												<td class="bg02">
+													<span class="low">-11</span>
+												</td>
+												<td class="bg02 text_center">
+													<span class="up">18,000</span>
+												</td>
+												<td class="no_bbt txt">High</td>
+												<td class="pr no_lbd no_bbt">
+													<span class="low">18,050</span>
+												</td>
+											</tr>
+											<tr>
+												<td class="bg02">
+													<span>18,050</span>
+												</td>
+												<td class="bg02"></td>
+												<td class="bg02 text_center">
+													<span class="up">17,050</span>
+												</td>
+												<td class="txt">Low</td>
+												<td class="pr no_lbd">
+													<span class="same">18,050</span>
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<span>78,137</span>
+												</td>
+												<td></td>
+												<td class="text_center"></td>
+												<td>
+													<span class="low">+100</span>
+												</td>
+												<td>
+													<span>18,050</span>
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<span>18,050</span>
+												</td>
+												<td>
+													<span>18,050</span>
+												</td>
+												<td class="sb_vol">
+													<span class="up">+43,453</span>
+												</td>
+												<td>
+													<span class="low">+100</span>
+												</td>
+												<td>
+													<span>18,050</span>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<!-- //BID -->
+							</div>
+							<div role="tabpanel" class="tab_pane" id="tab32" style="display:none;">
+								<!-- CUR -->
+								<ul class="summary_area">
+									<li>HNX</li>
+									<li>large-cap<br>(stock)</li>
+									<li>HNX300</li>
+									<li>Normal 30%<br>Credit</li>
+								</ul>
+								<div class="group_table type1">
+									<table class="table">
+										<colgroup>
+											<col width="23%">
+											<col width="30%">
+											<col width="23%">
+											<col>
+										</colgroup>
+										<tbody>
+											<tr>
+												<th>CUR</th>
+												<td>17,000</td>
+												<th>Cei</th>
+												<td>22,550</td>
+											</tr>
+											<tr>
+												<th>+/-</th>
+												<td class="up arrow">350</td>
+												<th>Flo</th>
+												<td>12,150</td>
+											</tr>
+											<tr>
+												<th>%Thay đổi</th>
+												<td>-2.02</td>
+												<th>Limt</th>
+												<td>5,200</td>
+											</tr>
+											<tr>
+												<th>Giá mở cửa</th>
+												<td>17,000</td>
+												<th>BID Unit</th>
+												<td>50</td>
+											</tr>
+											<tr>
+												<th>Giá cao nhất</th>
+												<td>16,950</td>
+												<th>Face val</th>
+												<td>5,000
+												(VND)</td>
+											</tr>
+											<tr>
+												<th>Giá thấp nhất</th>
+												<td>17,200</td>
+												<th>Capital</th>
+												<td>5,714 VND</td>
+											</tr>
+											<tr>
+												<th>High</th>
+												<td>17,350</td>
+												<th>Issued</th>
+												<td>114,285,871</td>
+											</tr>
+											<tr>
+												<th>Low</th>
+												<td>16,950</td>
+												<th>FL. Room</th>
+												<td>114,285,871</td>
+											</tr>
+											<tr>
+												<th>Prev Close</th>
+												<td>17,350</td>
+												<th>T. Room</th>
+												<td>102,133,389</td>
+											</tr>
+											<tr>
+												<th>Last vol</th>
+												<td>732,702</td>
+												<th>For. Room</th>
+												<td>10.63</td>
+											</tr>
+											<tr>
+												<th>Volume</th>
+												<td>411,851</td>
+												<th>For.Buy</th>
+												<td>9,000</td>
+											</tr>
+											<tr>
+												<th>Total PRI</th>
+												<td>7,059M VMD</td>
+												<th>For. Sell</th>
+												<td>9,000</td>
+											</tr>
+											<tr>
+												<th>Mkt Cap</th>
+												<td>19,429 (BVMD)</td>
+												<th></th>
+												<td></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<!-- //CUR -->
+							</div>
+						</div>
+					</div>
+					<!-- tabs -->
+					<!-- e: 클래스 추가 -->
+					<div name="tabs" class="eo">
+						<ul class="nav nav_tabs" role="tablist">
+							<li role="presentation" class="active"><a href="#tab41" aria-controls="tab41" role="tab" data-toggle="tab">Đặt lệnh giao dịch</a></li>
+							<!-- <li role="presentation"><a href="#tab42" aria-controls="tab42" role="tab" data-toggle="tab">SELL</a></li>
+							<li role="presentation"><a href="#tab43" aria-controls="tab43" role="tab" data-toggle="tab">MODIFY</a></li>
+							<li role="presentation"><a href="#tab44" aria-controls="tab44" role="tab" data-toggle="tab">CANCEL</a></li> -->
+						</ul>
+						<div class="tab_content">
+							<div role="tabpanel" class="tab_pane" id="tab41">
+								<!-- BUY -->
+								<!-- e: 클래스 삭제 -->
+								<div class="group_table">
+									<!-- e: 테이블 전체 수정 -->
+									<table class="eo_table no_bbt">
+										<colgroup>
+											<col width="135" />
+											<col />
+										</colgroup>
+										<tr>
+											<th>Mua/Bán</th>
+											<td>
+												<div class="radio_area">
+													<input type="radio" id="" name=""><label for="">Buy</label>
+													<input type="radio" id="" name=""><label for="">Sell</label>
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<th>Mua / Bán (tất cả)</th>
+											<td>
+												<div class="radio_area">
+													<input type="radio" id="" name=""><label for="">Buy</label>
+													<input type="radio" id="" name=""><label for="">Sell</label>
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<th>Mã CK / %Tỷ lệ cho vay</th>
+											<td>
+												<div class="input_dropdown">
+													<span>
+														<input type="text" title="value" />
+														<button type="button">show</button>
+													</span>
+													<div>
+														<ul>
+															<li><a href=""><span>aaa</span> - value1</a></li>
+															<li><a href="">value2</a></li>
+															<li><a href="">value3</a></li>
+															<li><a href="">value4</a></li>
+															<li><a href="">value5</a></li>
+															<li><a href="">value6</a></li>
+															<li><a href="">value7</a></li>
+															<li><a href="">value8</a></li>
+															<li><a href="">value9</a></li>
+															<li><a href="">value10</a></li>
+														</ul>
+													</div>
+												</div>
+											 	/ 40 %
+											 </td>
+										</tr>
+										<tr>
+											<th>SLCK cho vay tối đa (Sưc mua)</th>
+											<td class="right">860,000</td>
+										</tr>
+										<tr>
+											<th>Dự kiến</th>
+											<td class="right">860,000</td>
+										</tr>
+										<tr>
+											<th>Loại lệnh</th>
+											<td>
+												<select id="" title="Order Type">
+													<option>LO</option>
+													<option>MP</option>
+													<option>ATO</option>
+													<option>ATC</option>
+												</select>
+											</td>
+										</tr>
+										<tr>
+											<th>Khối lượng</th>
+											<td class="right"><input class="text won" type="text" value="0 VND"></td>
+										</tr>
+										<tr>
+											<th>Giá</th>
+											<td class="right"><input class="text won" type="text" value="0 VND"></td>
+										</tr>
+										<tr>
+											<th>Giá trị</th>
+											<td class="right">0 VND</td>
+										</tr>
+										<tr>
+											<th>Phí tạm tính</th>
+											<td class="right">0.00</td>
+										</tr>
+										<tr>
+											<th>Lệnh đến hạn</th>
+											<td>
+												<input type="checkbox">
+												<input type="text" class="datepicker" placeholder="13/05/2016">
+											</td>
+										</tr>
+										<tr>
+											<th>Lệnh đặt trước</th>
+											<td>
+												<input type="checkbox">
+												<input type="text" class="datepicker" placeholder="13/05/2016">
+											</td>
+										</tr>
+									</table>
+									<!-- // e: 테이블 전체 수정 -->
+								</div>
+
+								<div class="mdi_bottom cb">
+									<!-- <strong class="share">
+										Available for purchase<br><em>0</em> shares
+									</strong> -->
+									<input class="color" type="submit" value="Đặt lệnh">
+									<input type="reset" value="Xóa">
+								</div>
+								<!-- //BUY -->
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- //RIGHT -->
+			</div>
+		</div>
+		<!-- //템플릿 사용부분 -->
+
+		<div class="footer">
+			<!-- e: 추가, 헤더에서 이동함 -->
+			<!-- information -->
+			<div id="information">
+				<div class="wrap_ticker">
+					<div>
+						<div class="group_index">
+							<!-- KOSPI -->
+							<div class="index_area">
+								<div class="group_wrap">
+									<div class="group_item">
+										<h4>Dow Jones</h4>
+										<ul class="items">
+											<li class="item1"><span class="up">1,947.10</span></li>
+											<li class="item2"><span class="up arrow">2.46</span></li>
+											<li class="item3"><span class="up">+0.13</span></li>
+										</ul>
+									</div>
+								</div>
+								<div class="move_area">
+									<button type="button" class="btn_prev">prev</button>
+									<button type="button" class="btn_next">next</button>
+								</div>
+							</div>
+							<!-- //KOSPI -->
+							<!-- DOW -->
+							<div class="index_area">
+								<div class="group_wrap">
+									<div class="group_item">
+										<h4>DOW</h4>
+										<ul class="items">
+											<li class="item1"><span class="low">16,297.89</span></li>
+											<li class="item2"><span class="low arrow">50.58</span></li>
+											<li class="item3"><span class="low">-0.31</span></li>
+										</ul>
+									</div>
+								</div>
+								<div class="move_area">
+									<button type="button" class="btn_prev">prev</button>
+									<button type="button" class="btn_next">next</button>
+								</div>
+							</div>
+							<!-- //DOW -->
+						</div>
+						<!-- e: news삭제, 아래와 중복 -->
+						<!-- NEWS -->
+						<!--
+						<div class="group_news">
+							<h3 class="screen_out">주요뉴스</h3>
+							<ul class="items">
+								<li>VN NEWS , CSV - to Hold 2016 AGM on April 29... (11:00</li>
+							</ul>
+							<div class="move_area">
+								<button type="button" class="btn_prev">
+									<span class="screen_out">이전 뉴스</span>
+								</button>
+								<button type="button" class="btn_next">
+									<span class="screen_out">다음 뉴스</span>
+								</button>
+							</div>
+						</div>
+						-->
+						<!-- //NEWS -->
+						<!-- // e: news 삭제 -->
+					</div>
+				</div>
+			</div>
+			<!-- // information -->
+			<!-- // e: 추가, 헤더에서 이동함 -->
+			<div class="cb">
+				<div class="news">
+					<ul class="group_wrap">
+						<li class="group_item"><a href="">VN NEWS, CSV - to Hold 2016 AGM on Aprol 29... (11:00)</a></li>
+						<li class="group_item"><a href="">VN NEWS, CSV - to Hold 2016 AGM on Aprol 29... (11:00)</a></li>
+						<li class="group_item"><a href="">VN NEWS, CSV - to Hold 2016 AGM on Aprol 29... (11:00)</a></li>
+					</ul>
+					<div class="move_area">
+						<!-- e: 이미지를 텍스트로 교체 -->
+						<button type="button" class="btn_prev">prev</button>
+						<button type="button" class="btn_next">next</button>
+						<!-- // e: 이미지를 텍스트로 교체 -->
+					</div>
+				</div>
+				<!-- e: 카피라이트 기호 수정 -->
+				<div class="copy">copyright &copy; MIRAE ASSET Securities Vietnam.</div>
+				<!-- // e: 카피라이트 기호 수정 -->
+			</div>
+		</div>
+
+  	</div>
+
+  	<div class="modal_wrap loading_cover">
+		<div class="modal"></div>
+		<div class="loading">loading</div>
+	</div>
+<script src="/resources/js/jquery.min.js"></script>
+<script src="/resources/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/resources/js/jquery.blockUI.min.js"></script>
+<script>
+(function(){
+	function setInitEvt() {
+		$('.group_table').each(function() {
+			var table = $(this).find('table'),
+				tbody = table.find('tbody');
+
+			if(!tbody.find('th').length) {
+				tbody.find('tr:odd').addClass('even');
+			}
+
+			if(table.height() >= $(this).parent().height()) {
+				table.addClass('no_bbt');
+			}
+		});
+		$('div[name=tabs]').tabs();
+		$("#tabOrdGrp2").tabs("destroy");
+		$('.datepicker').datepicker({
+			//showOn:"button",
+			changeYear:true,
+			changeMonth:true
+		});
+	}
+	window.showFullLoading = function() {
+		$('.loading_cover').show();
+	}
+	window.hideFullLoading = function() {
+		$('.loading_cover').hide();
+	}
+
+	setInitEvt();
+	$(document).ajaxComplete(function() {
+		setInitEvt();
+	});
+}())
+</script>
+  </body>
+</html>

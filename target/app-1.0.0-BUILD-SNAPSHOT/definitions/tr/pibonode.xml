@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='utf-8'?>
+<transaction trcode="pibonode" servicecode=""  type="row">
+	<value io="out"		name="noden"		type="string"	length="32"	comment="wtsnode1.masvn.com or wtsnode2.masvn.com"/>
+</transaction>

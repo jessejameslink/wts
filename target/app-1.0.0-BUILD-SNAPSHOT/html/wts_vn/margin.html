@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>MARGIN STOCK LIST</title>
+
+<link href="/resources/css/common.css" rel="stylesheet">
+
+</head>
+  <body class="mdi L_VI">
+
+  	<div class="wrapper">
+		<!-- header -->
+		<!-- //header -->
+
+		<!-- 템플릿 사용부분 -->
+		<div class="mdi_container">
+			<div class="mg">
+				<div class="search_area in">
+					<label for="symbol">Mã CK</label>
+					<span><input type="text" class="text" id="symbol" /></span>
+
+					<button class="btn" type="button">Tra cứu</button>
+
+					<span class="initial_group">
+						<a href="" class="current">ALL</a>
+						<a href="">A</a>
+						<a href="">B</a>
+						<a href="">C</a>
+						<a href="">D</a>
+						<a href="">E</a>
+						<a href="">F</a>
+						<a href="">G</a>
+						<a href="">H</a>
+						<a href="">I</a>
+						<a href="">J</a>
+						<a href="">K</a>
+						<a href="">L</a>
+						<a href="">M</a>
+						<a href="">N</a>
+						<a href="">O</a>
+						<a href="">P</a>
+						<a href="">Q</a>
+						<a href="">R</a>
+						<a href="">S</a>
+						<a href="">T</a>
+						<a href="">U</a>
+						<a href="">V</a>
+						<a href="">W</a>
+						<a href="">X</a>
+						<a href="">Y</a>
+						<a href="">Z</a>
+					</span>
+
+					<a href="" class="btn_rescan">Rescan</a>
+				</div>
+
+				<div class="group_table mg_table">
+					<table class="table no_bbt">
+						<caption class="hidden">Margin Stock table</caption>
+						<colgroup>
+							<col width="90" />
+							<col width="130" />
+							<col />
+							<col width="130" />
+							<col width="130" />
+							<col width="130" />
+							<col width="130" />
+						</colgroup>
+						<thead>
+							<tr>
+								<th scope="col">Số TT</th>
+								<th scope="col">Mã CK</th>
+								<th scope="col">Tên công ty</th>
+								<th scope="col">Sàn</th>
+								<th scope="col">Tỷ lệ cho vay</th>
+								<th scope="col">SLCK cho vay tối đa</th>
+								<th scope="col">Đặt lệnh</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>1</td>
+								<td>AAA</td>
+								<td class="text_center">An phat plastic and green Environment JSC</td>
+								<td>HNX</td>
+								<td></td>
+								<td>40%</td>
+								<td>
+									<a href="" class="btn buy">Mua</a>
+								</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>BCI</td>
+								<td class="text_center">Binh Chanh Construction Investment Shareholding Company</td>
+								<td>HOSE</td>
+								<td></td>
+								<td>30%</td>
+								<td>
+									<a href="" class="btn buy">Mua</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="pagination">
+					<a href="" class="prev">prev</a>
+					<a href="" class="current">1</a>
+					<a href="">2</a>
+					<a href="">3</a>
+					<a href="">4</a>
+					<a href="">5</a>
+					<a href="" class="next">next</a>
+				</div>
+			</div>
+		</div>
+		<!-- //템플릿 사용부분 -->
+
+
+  	</div>
+
+<script src="/resources/js/jquery.min.js"></script>
+<script src="/resources/js/jquery-ui.min.js"></script>
+<script>
+(function(){
+	function setInitEvt() {
+		$('.group_table').each(function() {
+			var table = $(this).find('table'),
+				tbody = table.find('tbody');
+
+			if(!tbody.find('th').length) {
+				tbody.find('tr:odd').addClass('even');
+			}
+
+			if(table.height() >= $(this).parent().height()) {
+				table.addClass('no_bbt');
+			}
+		});
+		$('div[name=tabs]').tabs();
+		$('.datepicker').datepicker({
+			showOn:"button",
+			changeYear:true,
+			changeMonth:true
+		});
+	}
+	window.showFullLoading = function() {
+		$('.loading_cover').show();
+	}
+	window.hideFullLoading = function() {
+		$('.loading_cover').hide();
+	}
+
+	setInitEvt();
+	$(document).ajaxComplete(function() {
+		setInitEvt();
+	});
+}())
+</script>
+  </body>
+</html>

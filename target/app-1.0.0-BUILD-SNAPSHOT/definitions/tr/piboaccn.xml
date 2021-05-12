@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!--   계좌리스트  -->
+<transaction trcode="piboaccn" servicecode=""  type="row">
+	
+	<value io="in"		name="usid"		type="string"		length="16"	comment="User ID"/>
+	
+	<value io="out"		name="next"		type="string"		length="1"	comment="Next Data ? (Y/N)"/>
+	<value io="out"		name="nrec"		type="string"		length="4"	comment="# of record"/>
+	<value io="out"		name="skey"		type="string"		length="32"	comment="Search Key"/>
+	
+	<table name="list1" count="nrec">
+		<value io="out"	name="accn"		type="string"	length="12"	comment="Account Number"/>
+		<value io="out"	name="symb"		type="string"	length="32"	comment="Name"/>
+	</table>
+	
+</transaction>

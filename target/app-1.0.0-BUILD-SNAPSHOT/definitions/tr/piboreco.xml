@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!--   변동량 순위  -->
+<transaction trcode="piboreco" servicecode=""  type="row">
+	<value io="in"		name="fymd"		type="string"		length="10"	comment="From YMD 'DD/MM/YYYY'"/>
+	<value io="in"		name="tymd"		type="string"		length="10"	comment="To   YMD 'DD/MM/YYYY'"/>
+	<value io="in"		name="symb"		type="string"		length="12"	comment="Stock Symbol"/>
+	<value io="in"		name="lang"		type="string"		length="10"	comment="Language"/>
+	
+	<value io="out"		name="nrec"		type="string"		length="4"	comment="# of record"/>
+	
+	<table name="list1" count="nrec">
+		<value io="out"	name="reda"		type="string"	length="10"		comment="Recommend Date"/>
+		<value io="out"	name="peri"		type="string"	length="1"		comment="Period"/>
+		<value io="out"	name="symb"		type="string"	length="20"		comment="Stock Symbol"/>
+		<value io="out"	name="mark"		type="string"	length="10"		comment="Exchange"/>
+		<value io="out"	name="reco"		type="string"	length="1"		comment="Recommend"/>
+		<value io="out"	name="vnli"		type="string"	length="256"	comment="Refer Link"/>
+		<value io="out"	name="path"		type="string"	length="10"		comment="Language"/>
+	</table>
+	
+</transaction>

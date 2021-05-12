@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<transaction trcode="pibomgop" servicecode="" host="">
+	<value io="inout"		name="1301"		type="string"		length="0"	comment="종목코드"/>
+	
+	<table name="4500">
+		<value io="out"		name="27"		type="string"		length="0"	comment="거래량"/>
+		<value io="out"		name="23"		type="string"		length="0"	comment="종가"/>
+		<value io="out"		name="29"		type="string"		length="0"	comment="시가"/>
+		<value io="out"		name="30"		type="string"		length="0"	comment="고가"/>
+		<value io="out"		name="31"		type="string"		length="0"	comment="저가"/>
+		<value io="out"		name="32"		type="string"		length="0"	comment="체결수량"/>
+		<value io="out"		name="34"		type="string"		length="0"	comment="체결시간"/> 
+		<value io="out"		name="302"		type="string"		length="0"	comment="체결일자"/>
+		<value io="out"		name="303"		type="string"		length="0"	comment="날짜+시간(YYYYMMDDHHMMSS)"/>
+	</table>
+	
+</transaction>

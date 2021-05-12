@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<transaction trcode="pibomgop" servicecode="" host="">
+	<value io="inout"		name="1301"		type="string"		length="0"	comment="종목코드"/>
+	
+	<table name="5500">
+	 	<value io="out"		name="302"		type="string"		length="0"	comment=""/>
+		<value io="out"		name="29"		type="string"		length="0"	comment=""/>
+		<value io="out"		name="30"		type="string"		length="0"	comment=""/>
+		<value io="out"		name="31"		type="string"		length="0"	comment=""/>
+		<value io="out"		name="23"		type="string"		length="0"	comment=""/>
+		<value io="out"		name="27"		type="string"		length="0"	comment=""/>
+		<value io="out"		name="28"		type="string"		length="0"	comment=""/>
+	</table>
+	
+	
+</transaction>

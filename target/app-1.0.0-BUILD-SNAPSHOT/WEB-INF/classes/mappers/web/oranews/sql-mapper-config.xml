@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <typeAliases>
+		<typeAlias alias="HomeVO2" type="com.vn.app.webmain.oranews.home.service.HomeVO2"/>
+		<typeAlias alias="TablesVO" type="com.vn.app.webmain.oranews.home.service.TablesVO"/>
+	</typeAliases>
+</configuration>

@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!--   종목 현재가(시세)  -->
+<!--  대비
+	     대비기호 + 대비 값 
+   	     대비기호 -    1: 상한가, 2: 상승, 3: 보합, 4:하한가, 5:하락
+      ex) "1  2300", "3     0", "5   400"-->
+<!--  등락율
+	     부호 + 대비값 
+   	  ex) "+   400", "-  1000"
+ -->
+<transaction trcode="piborcnt" servicecode=""  type="row">
+	<value io="in"		name="rcnt"		type="string"	length="4"	comment="종목개수"/>
+	<value io="in"		name="symb"		type="string"	length="12"	comment="종목코드(연속   개수 MAX : 10개)"/>
+	<value io="out"		name="rcnt"		type="string"	length="4"	comment="종목개수"/>
+	<value io="out"		name="rcod"		type="string"	length="12"	comment="실시간 심볼"/>
+	<value io="out"		name="symb"		type="string"	length="12"	comment="종목코드"/>
+	<value io="out"		name="snam"		type="string"	length="32"	comment="종목명"/>
+	<value io="out"		name="curr"		type="string"	length="9"	comment="현재가"/>
+	<value io="out"		name="diff"		type="string"	length="9"	comment="대비"/>
+	<value io="out"		name="rate"		type="string"	length="9"	comment="등락율"/>
+</transaction>

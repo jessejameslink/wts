@@ -1,0 +1,59 @@
+Globals.OsType=UNIX
+
+Globals.DbType=oracle
+
+#mysql - Globals.oraweb
+###Globals.oraweb.DriverClassName=net.sf.log4jdbc.DriverSpy
+###Globals.oraweb.Url=jdbc:log4jdbc:mysql://127.0.0.1:3306/camp
+Globals.oraweb.DriverClassName=oracle.jdbc.driver.OracleDriver
+#Globals.oraweb.Url=jdbc:oracle:thin:@10.0.31.9:1521:orcl
+Globals.oraweb.Url=jdbc:oracle:thin:@10.0.9.40:1521:MIRAEDB
+#change QUOTE
+Globals.oraweb.UserName=STOCKINFO
+Globals.oraweb.Password=123456
+
+#mysql - Globals.oranews
+###Globals.oranews.DriverClassName=net.sf.log4jdbc.DriverSpy
+###Globals.oranews.Url=jdbc:log4jdbc:mysql://127.0.0.1:3306/adults
+Globals.oranews.DriverClassName=oracle.jdbc.driver.OracleDriver
+#Globals.oranews.Url=jdbc:oracle:thin:@10.0.31.9:1521:orcl
+Globals.oranews.Url=jdbc:oracle:thin:@10.0.9.40:1521:orcl
+#Globals.oranews.UserName=PRICEBOARD
+Globals.oranews.UserName=STOCKINFO
+Globals.oranews.Password=123456
+
+#mssql
+###Globals.mssql.DriverClassName=net.sf.log4jdbc.DriverSpy
+###Globals.mssql.Url=jdbc:log4jdbc:sqlserver://127.0.0.1:1433;databaseName=testdb
+#Globals.mssql.DriverClassName=com.microsoft.sqlserver.jdbc.SQLServerDriver
+#Globals.mssql.Url=jdbc:sqlserver://127.0.0.1:1433;databaseName=testdb
+Globals.mssql.DriverClassName=oracle.jdbc.driver.OracleDriver
+#Globals.mssql.Url=jdbc:oracle:thin:@10.0.31.9:1521:orcl
+Globals.mssql.Url=jdbc:oracle:thin:@10.0.9.40:1521:orcl
+#change QUOTE
+#10.0.9.5
+Globals.mssql.UserName=PRICEBOARD
+Globals.mssql.Password=123456
+
+#oracle
+#Globals.DriverClassName=oracle.jdbc.driver.OracleDriver
+#Globals.Url=jdbc:oracle:thin:@127.0.0.1:1521:egovfrm
+
+#Tibero
+#Globals.DriverClassName=com.tmax.tibero.jdbc.TbDriver
+#Globals.Url=jdbc:tibero:thin:@127.0.0.1:1821:egovfrm
+
+#cubrid
+#Globals.DriverClassName=cubrid.jdbc.driver.CUBRIDDriver
+#Globals.Url=jdbc:cubrid:127.0.0.1:33000:milpen:::?charset=euc-kr
+#Globals.DriverClassName=net.sf.log4jdbc.DriverSpy
+
+Globals.oraweb.fileStorePath =C:/upload/
+Globals.oraweb.SynchrnServerPath =C:/upload/Synch/
+
+# for JFile properties
+#system.uploadpath =C:/upload/
+#no.image.url =/resources/jfile/swfupload/images/no_img.gif
+#ftp.server.ip =127.0.0.1
+#ftp.user.id =test
+#ftp.user.password =test

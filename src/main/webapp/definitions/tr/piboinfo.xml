@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<transaction trcode="piboinfo" servicecode=""  type="row">
+	<value io="in"		name="symb"		type="string"	length="12"	comment="Stock symbol"/>
+	
+	<value io="out"		name="outstanding"		type="string"	length="12"	comment="Share outstanding"/>
+	<value io="out"		name="listshare"		type="string"	length="12"	comment="List share"/>
+	<value io="out"		name="mkcap"			type="string"	length="18"	comment="Market Cap"/>
+	<value io="out"		name="high52w"			type="string"	length="9"	comment="52 week high"/>
+	<value io="out"		name="low52w"			type="string"	length="9"	comment="52 week low"/>
+	<value io="out"		name="avg52w"			type="string"	length="9"	comment="52 week avg vol"/>
+	<value io="out"		name="fbuy"				type="string"	length="9"	comment="Foreign buy"/>
+	<value io="out"		name="fowned"			type="string"	length="16"	comment="Foreign owned"/>
+	<value io="out"		name="dividend"			type="string"	length="9"	comment="Dividend"/>
+	<value io="out"		name="dividendyield"	type="string"	length="9"	comment="Dividend Yield"/>
+	<value io="out"		name="beta"				type="string"	length="9"	comment="Beta	"/>
+	<value io="out"		name="eps"				type="string"	length="9"	comment="EPS"/>
+	<value io="out"		name="pe"				type="string"	length="9"	comment="P/E"/>
+	<value io="out"		name="fpe"				type="string"	length="9"	comment="F P/E"/>
+	<value io="out"		name="pvps"				type="string"	length="9"	comment="PVPS"/>
+	<value io="out"		name="pb"				type="string"	length="9"	comment="P/B"/>
+	<value io="out"		name="marketId"			type="string"	length="12"	comment="Market ID"/>
+	<value io="out"		name="name"				type="string"	length="128"	comment="Company name"/>
+	<value io="out"		name="nameEN"			type="string"	length="128"	comment="English Company name"/>
+	
+</transaction>

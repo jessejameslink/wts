@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>MARKET</title>
+
+<link href="/resources/css/common.css" rel="stylesheet">
+
+</head>
+  <body class="mdi">
+
+  	<div class="wrapper">
+		<!-- header -->
+		<!-- //header -->
+
+		<!-- 템플릿 사용부분 -->
+		<div class="mdi_container">
+			<!-- tabs -->
+			<div name="tabs">
+				<ul class="nav nav_tabs " role="tablist">
+					<li role="presentation" class="active"><a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">Market Overview</a></li>
+					<li role="presentation"><a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">Price history</a></li>
+					<li role="presentation"><a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">Trading results</a></li>
+					<li role="presentation"><a href="#tab4" aria-controls="tab4" role="tab" data-toggle="tab">Foreigner Transaction</a></li>
+				</ul>
+				<div class="tab_content market">
+					<!-- Market Overview -->
+					<div role="tabpanel" class="tab_pane" id="tab1">
+						<div style="height:500px; background:#a9a9a9; line-height:500px; font-size:20px; color:#fff; text-align:center; font-weight:700;">chart</div>
+					</div>
+					<!-- // Market Overview -->
+
+					<!-- Price history -->
+					<div role="tabpanel" class="tab_pane" id="tab2">
+						<div class="search_area in">
+							<label for="symbol">Symbol</label>
+							<span><input type="text" class="text" id="symbol" /></span>
+
+							<label for="fromSearch1">From</label>
+							<input id="fromSearch1" type="text" class="datepicker" placeholder="13/05/2016" />
+
+							<label for="toSearch1">To</label>
+							<input id="toSearch1" type="text" class="datepicker" placeholder="13/05/2016">
+
+							<button class="btn" type="button">Search</button>
+							<button type="button" class="btn_down" title="Download">download</button>
+						</div>
+
+						<div class="group_table ph_table">
+							<table class="table no_bbt">
+								<caption class="hidden">Price History table</caption>
+								<thead>
+									<tr>
+										<th scope="col">Date</th>
+										<th scope="col">Change (+ -/%)</th>
+										<th scope="col">Open Price</th>
+										<th scope="col">Highest price</th>
+										<th scope="col">Lowest price</th>
+										<th scope="col">Close Price</th>
+										<th scope="col">Average Price</th>
+										<th scope="col">Adjusted Price</th>
+										<th scope="col">Trading Volume</th>
+										<th scope="col">Put through Volume</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td class="text_center">2016-05-13</td>
+										<td class="text_center">
+											<span class="arrow low">-02 (-0.91%)</span>
+										</td>
+										<td>21.8</td>
+										<td>23.2</td>
+										<td>21.7</td>
+										<td>21.7</td>
+										<td>22.23</td>
+										<td>21.7</td>
+										<td>536,457</td>
+										<td>-</td>
+									</tr>
+									<tr>
+										<td class="text_center">2016-05-12</td>
+										<td class="text_center">
+											<span class="arrow up">+1.9 (+9.45)</span>
+										</td>
+										<td>20.4</td>
+										<td>22.1</td>
+										<td>20.2</td>
+										<td>22</td>
+										<td>21.73</td>
+										<td>22</td>
+										<td>558,080</td>
+										<td>15,000</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+						<div class="pagination">
+							<a href="" class="prev">prev</a>
+							<a href="" class="current">1</a>
+							<a href="">2</a>
+							<a href="">3</a>
+							<a href="">4</a>
+							<a href="">5</a>
+							<a href="" class="next">next</a>
+						</div>
+					</div>
+					<!-- // Price history -->
+
+					<!-- Trading results -->
+					<div role="tabpanel" class="tab_pane" id="tab3">
+						<div class="search_area in">
+							<label for="market_sel">Market</label>
+							<span>
+								<select name="" id="market_sel">
+									<option value="">HNX</option>
+									<option value="">HNX</option>
+									<option value="">HNX</option>
+									<option value="">HNX</option>
+								</select>
+							</span>
+
+							<label for="tr_date">Date</label>
+							<input id="tr_date" type="text" class="datepicker" placeholder="13/05/2016">
+
+							<button class="btn" type="button">Search</button>
+							<button type="button" class="btn_down" title="Download">download</button>
+						</div>
+
+						<div class="group_table tr_table">
+							<table class="table no_bbt">
+								<caption class="hidden">Trading results table</caption>
+								<thead>
+									<tr>
+										<th scope="col" rowspan="2">Symbol</th>
+										<th scope="col" rowspan="2">Close Price</th>
+										<th scope="colgroup" colspan="2">Bid</th>
+										<th scope="colgroup" colspan="2">Ask</th>
+										<th scope="col" rowspan="2">Bid Average</th>
+										<th scope="col" rowspan="2">Ask Average</th>
+										<th scope="col" rowspan="2">Buy - Sell</th>
+										<th scope="col" rowspan="2">Total Volume</th>
+										<th scope="col" rowspan="2">Total Value</th>
+									</tr>
+									<tr>
+										<th scope="col">Orders</th>
+										<th scope="col">Volume</th>
+										<th scope="col">Orders</th>
+										<th scope="col">Volume</th>
+									</tr>
+								</thead>
+								<tbody>
+									<td class="text_center">AAA</td>
+									<td>21.7</td>
+									<td>390</td>
+									<td>625,800</td>
+									<td>277</td>
+									<td>689,800</td>
+									<td>1,604.60</td>
+									<td>2,409.30</td>
+									<td>-64,000</td>
+									<td>536,457</td>
+									<td>11,925,985,000</td>
+								</tbody>
+							</table>
+						</div>
+
+						<div class="pagination">
+							<a href="" class="prev">prev</a>
+							<a href="" class="current">1</a>
+							<a href="">2</a>
+							<a href="">3</a>
+							<a href="">4</a>
+							<a href="">5</a>
+							<a href="" class="next">next</a>
+						</div>
+					</div>
+					<!-- // Trading results -->
+
+					<!-- Foreigner Transaction -->
+					<div role="tabpanel" class="tab_pane" id="tab4">
+						<div class="search_area in">
+							<label for="ft_market_sel">Market</label>
+							<span>
+								<select name="" id="ft_market_sel">
+									<option value="">HNX</option>
+									<option value="">HNX</option>
+									<option value="">HNX</option>
+									<option value="">HNX</option>
+								</select>
+							</span>
+
+							<label for="ft_date">Date</label>
+							<input id="ft_date" type="text" class="datepicker" placeholder="13/05/2016">
+
+							<button class="btn" type="button">Search</button>
+						</div>
+
+						<div class="group_table ft_table">
+							<table class="table no_bbt">
+								<caption class="hidden">Foreigner Transaction table</caption>
+								<colgroup>
+									<col width="70" />
+									<col />
+									<col />
+									<col />
+									<col />
+									<col />
+									<col />
+									<col />
+									<col />
+								</colgroup>
+								<thead>
+									<tr>
+										<th scope="col" rowspan="2">Symbol</th>
+										<th scope="col" rowspan="2">Total Room</th>
+										<th scope="col" rowspan="2">Current Room</th>
+										<th scope="col" colspan="2">Buy</th>
+										<th scope="col" colspan="2">Sell</th>
+										<th scope="col" colspan="2">Net Trading</th>
+									</tr>
+									<tr>
+										<th scope="col">Bid Volume</th>
+										<th scope="col">Value</th>
+										<th scope="col">Ask Volume</th>
+										<th scope="col">Value</th>
+										<th scope="col">Net Volume</th>
+										<th scope="col">Net Value</th>
+									</tr>
+								</thead>
+								<tbody>
+									<td class="text_center">AAA</td>
+									<td>14,125,917</td>
+									<td>19,404,000</td>
+									<td>0</td>
+									<td>0</td>
+									<td>0</td>
+									<td>0</td>
+									<td>0</td>
+									<td>0</td>
+								</tbody>
+							</table>
+						</div>
+
+						<div class="pagination">
+							<a href="" class="prev">prev</a>
+							<a href="" class="current">1</a>
+							<a href="">2</a>
+							<a href="">3</a>
+							<a href="">4</a>
+							<a href="">5</a>
+							<a href="" class="next">next</a>
+						</div>
+					</div>
+					<!-- // Foreigner Transaction -->
+				</div>
+			</div>
+		</div>
+		<!-- //템플릿 사용부분 -->
+
+
+  	</div>
+
+<script src="/resources/js/jquery.min.js"></script>
+<script src="/resources/js/jquery-ui.min.js"></script>
+<script>
+(function(){
+	function setInitEvt() {
+		$('.group_table').each(function() {
+			var table = $(this).find('table'),
+				tbody = table.find('tbody');
+
+			if(!tbody.find('th').length) {
+				tbody.find('tr:odd').addClass('even');
+			}
+
+			if(table.height() >= $(this).parent().height()) {
+				table.addClass('no_bbt');
+			}
+		});
+		$('div[name=tabs]').tabs();
+		$('.datepicker').datepicker({
+			showOn:"button",
+			changeYear:true,
+			changeMonth:true
+		});
+	}
+	window.showFullLoading = function() {
+		$('.loading_cover').show();
+	}
+	window.hideFullLoading = function() {
+		$('.loading_cover').hide();
+	}
+
+	setInitEvt();
+	$(document).ajaxComplete(function() {
+		setInitEvt();
+	});
+}())
+</script>
+  </body>
+</html>

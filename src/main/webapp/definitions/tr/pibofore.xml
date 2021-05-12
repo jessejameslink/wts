@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!--   Foreigner Buy/Sell   -->
+<transaction trcode="pibofore" servicecode=""  type="row">
+	<value io="in"		name="mark"		type="string"		length="1"	comment="'0':ALL   '1':UPCOM  '2':HNX   '3':HOSE "/>
+	<value io="in"		name="skey"		type="string"		length="12"	comment="Search key"/>
+	
+	<value io="out"		name="nrec"		type="string"		length="4"	comment="# of record"/>
+	<value io="out"		name="next"		type="string"		length="1"	comment="Next Data ? (Y/N)"/>
+	<value io="out"		name="skey"		type="string"		length="12"	comment="Search Key"/>
+	
+	<table name="list1" count="nrec">
+		<value io="out"	name="rcod"		type="string"	length="12"	comment="RTS Symbol"/>
+		<value io="out"	name="symb"		type="string"	length="12"	comment="Security Symbol"/>
+		<value io="out"	name="buyf"		type="string"	length="12"	comment="Buy Foreign"/>
+		<value io="out"	name="self"		type="string"	length="12"	comment="Sell Foreign"/>
+		<value io="out"	name="crom"		type="string"	length="12"	comment="Current Room"/>		
+	</table>
+</transaction>

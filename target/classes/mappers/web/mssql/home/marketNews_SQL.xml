@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.vn.app.webmain.mssqlweb.home.service.impl.MarketNewsDAO">
+	<select id="getMarketNewsList" resultType="MarketNewsVO" parameterType="SearchVO">
+		SELECT *
+		FROM (
+			SELECT 
+				T.name, T.ChannelID, T.ArticleID, T.Title, T.TextID, T.PublishTime, T.Source, T.LastUpdate
+				, convert(varchar, T.LastUPdate, 3) as crtDate, convert(varchar, T.LastUPdate, 108) as crtTime
+				, ROW_NUMBER() OVER(ORDER BY T.LastUpdate DESC) AS NUM
+			FROM (
+				SELECT cn.[name],cn.ChannelID,a.ArticleID,a.Title,a.TextID,a.PublishTime, a.Source, a.LastUPdate
+				<choose>
+					<when test='lang == "1"'>
+					FROM MiraeAsset.dbo.ArticleEn a WITH ( NOLOCK )
+					</when>
+					<when test='lang == "0"'>
+					FROM MiraeAsset.dbo.Article a WITH ( NOLOCK )
+					</when>
+					<otherwise>
+					FROM MiraeAsset.dbo.Article a WITH ( NOLOCK )
+					</otherwise>
+				</choose>
+				<choose>
+					<when test='lang == "1"'>
+					INNER JOIN MiraeAsset.dbo.ChannelEn cn WITH ( NOLOCK ) ON a.ChannelID = cn.ChannelID 
+					</when>
+					<when test='lang == "0"'>
+					INNER JOIN MiraeAsset.dbo.Channel cn WITH ( NOLOCK ) ON a.ChannelID = cn.ChannelID 
+					</when>
+					<otherwise>
+					INNER JOIN MiraeAsset.dbo.Channel cn WITH ( NOLOCK ) ON a.ChannelID = cn.ChannelID 
+					</otherwise>
+				</choose>
+				
+				WHERE a.StatusID = -1 AND a.PublishTime &lt;= GETDATE()
+				<!-- AND a.LastUPdate Between CONVERT(datetime, #{startDate}) AND CONVERT(datetime, #{endDate}) + 1 -->
+				<choose>
+					<when test='schMarket == "all"'>
+						AND 1 = 1
+					</when>
+					<otherwise>
+						AND a.Source = #{schMarket}
+					</otherwise>
+				</choose>
+				AND (CASE WHEN #{schItem} IS NULL THEN '1'
+						  WHEN #{schItem} = '' THEN '1'
+						  ELSE SUBSTRING(a.title, 1, 3) END) =  (CASE WHEN #{schItem} IS NULL THEN '1'
+						  											  WHEN #{schItem} = '' THEN '1'
+						                                              ELSE #{schItem} END)
+				AND (CASE WHEN #{searchKey} IS NULL THEN '1'
+						  WHEN #{searchKey} = '' THEN '1'
+						  ELSE a.title END) LIKE (CASE WHEN #{searchKey} IS NULL THEN '1'
+						  							   WHEN #{searchKey} = '' THEN '1'
+						                               ELSE '%'+#{searchKey}+'%' END)
+				AND a.Title LIKE '%' + #{searchKey} + '%'				
+			) T
+		) TOT
+		WHERE TOT.NUM BETWEEN (( #{page} - 1 ) * 20 + 1) AND (( #{page} ) * 20 )
+	</select>
+	
+	<select id="getMarketNewsListCnt"  resultType="integer" parameterType="SearchVO">
+		SELECT 
+			COUNT(*) as cnt
+		FROM (
+			SELECT cn.[name],cn.ChannelID,a.ArticleID,a.Title,a.TextID,a.PublishTime, a.Source, a.LastUPdate
+			<choose>
+				<when test='lang == "1"'>
+				FROM MiraeAsset.dbo.ArticleEn a WITH ( NOLOCK )
+				</when>
+				<when test='lang == "0"'>
+				FROM MiraeAsset.dbo.Article a WITH ( NOLOCK )
+				</when>
+				<otherwise>
+				FROM MiraeAsset.dbo.Article a WITH ( NOLOCK )
+				</otherwise>
+			</choose>
+			<choose>
+					<when test='lang == "1"'>
+					INNER JOIN MiraeAsset.dbo.ChannelEn cn WITH ( NOLOCK ) ON a.ChannelID = cn.ChannelID 
+					</when>
+					<when test='lang == "0"'>
+					INNER JOIN MiraeAsset.dbo.Channel cn WITH ( NOLOCK ) ON a.ChannelID = cn.ChannelID 
+					</when>
+					<otherwise>
+					INNER JOIN MiraeAsset.dbo.Channel cn WITH ( NOLOCK ) ON a.ChannelID = cn.ChannelID 
+					</otherwise>
+				</choose> 
+			WHERE a.StatusID = -1 AND a.PublishTime &lt;= GETDATE()
+			<!-- AND a.LastUPdate Between CONVERT(datetime, #{startDate}) AND CONVERT(datetime, #{endDate}) + 1 -->
+			<choose>
+				<when test='schMarket == "all"'>
+					AND 1 = 1
+				</when>
+				<otherwise>
+					AND a.Source = #{schMarket}
+				</otherwise>
+			</choose>
+			AND (CASE WHEN #{schItem} IS NULL THEN '1'
+					  WHEN #{schItem} = '' THEN '1'
+					  ELSE SUBSTRING(a.title, 1, 3) END) =  (CASE WHEN #{schItem} IS NULL THEN '1'
+						  										  WHEN #{schItem} = '' THEN '1'
+						                                          ELSE #{schItem} END)
+			AND (CASE WHEN #{searchKey} IS NULL THEN '1'
+					  WHEN #{searchKey} = '' THEN '1'
+					  ELSE a.title END) LIKE (CASE WHEN #{searchKey} IS NULL THEN '1'
+					  							   WHEN #{searchKey} = '' THEN '1'
+					                               ELSE '%'+#{searchKey}+'%' END)
+			AND a.Title LIKE '%' + #{searchKey} + '%'		
+		) T
+	</select>
+	
+	
+	<select id="getMarketNewsTop3List" resultType="MarketNewsVO" parameterType="SearchVO">
+		SELECT 
+			TOP 3 T.name, T.ChannelID, T.ArticleID, T.Title, T.TextID, T.PublishTime, T.Source, T.LastUpdate, T.HeadImageUrl
+			, ROW_NUMBER() OVER(ORDER BY T.LastUpdate DESC) AS NUM
+		FROM (
+			SELECT cn.[name],cn.ChannelID,a.ArticleID,a.Title,a.TextID,a.PublishTime, a.Source, a.LastUPdate, a.HeadImageUrl
+			<choose>
+				<when test='lang == "1"'>
+				FROM MiraeAsset.dbo.ArticleEn a WITH ( NOLOCK )
+				</when>
+				<when test='lang == "0"'>
+				FROM MiraeAsset.dbo.Article a WITH ( NOLOCK )
+				</when>
+				<otherwise>
+				FROM MiraeAsset.dbo.Article a WITH ( NOLOCK )
+				</otherwise>
+			</choose>
+			<choose>
+					<when test='lang == "1"'>
+					INNER JOIN MiraeAsset.dbo.ChannelEn cn WITH ( NOLOCK ) ON a.ChannelID = cn.ChannelID 
+					</when>
+					<when test='lang == "0"'>
+					INNER JOIN MiraeAsset.dbo.Channel cn WITH ( NOLOCK ) ON a.ChannelID = cn.ChannelID 
+					</when>
+					<otherwise>
+					INNER JOIN MiraeAsset.dbo.Channel cn WITH ( NOLOCK ) ON a.ChannelID = cn.ChannelID 
+					</otherwise>
+				</choose> 
+			WHERE a.StatusID = -1 AND a.PublishTime &lt;= GETDATE()			
+		) T
+		ORDER BY T.LastUpdate DESC
+	</select>
+</mapper>

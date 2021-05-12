@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!--   일자별  -->
+<transaction trcode="piboiday" servicecode=""  type="row">
+	<value io="in"		name="symb"		type="string"		length="32"	comment="Security Symbol"/>
+	<value io="in"		name="func"		type="string"		length="1"	comment="Function Code 'D':daily 'W':weekly 'M':monthly"/>
+	<value io="in"		name="skey"		type="string"		length="10"	comment="Search Key"/>
+	
+	<value io="out"		name="inam"		type="string"		length="32"	comment="Security Name"/>
+	<value io="out"		name="next"		type="string"		length="1"	comment="Next Data ? (Y/N)"/>
+	<value io="out"		name="nrec"		type="string"		length="4"	comment="of Record"/>
+	<value io="out"		name="skey"		type="string"		length="10"	comment="Search Key"/>
+	
+	<table name="list1" count="nrec">
+		<value io="out"	name="rcod"		type="string"	length="32"	comment="RTS Symbol"/>
+		<value io="out"	name="date"		type="string"	length="10"	comment="Date 'DD/MM/YYYY'"/>
+		<value io="out"	name="clos"		type="string"	length="9"	comment="Close"/>
+		<value io="out"	name="diff"		type="string"	length="7"	comment="Change(+/-)"/>
+		<value io="out"	name="tvol"		type="string"	length="12"	comment="Total Volume	"/>
+	</table>
+	
+</transaction>

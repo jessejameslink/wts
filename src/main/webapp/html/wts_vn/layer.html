@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>layer수정</title>
+
+<link href="/resources/css/common.css" rel="stylesheet">
+
+</head>
+  <body class="mdi L_VI">
+
+  	<div class="wrapper" style="width:100%;">
+		<!-- header -->
+		<!-- //header -->
+
+
+		<!-- 템플릿 사용부분 -->
+		<div class="mdi_container">
+
+			<!-- 레이어 -->
+			<div class="modal_wrap" style="position:static; display:block; width:2000px; height:2000px;">
+
+				<!-- Order : Buy -->
+				<div class="modal_layer buy" style="top:610px; left:10px; margin-left:0;"> <!-- 클래스 확인!!! add, buy, sell, modify, cancel -->
+					<h2>Lệnh : Mua</h2>
+					<div class="cont">
+						<table>
+							<colgroup>
+								<col width="100">
+								<col>
+							</colgroup>
+							<tr>
+								<th>Tên Công ty</th>
+								<td>AAA</td>
+							</tr>
+							<tr>
+								<th>Mã CK</th>
+								<td>AAA</td>
+							</tr>
+							<tr>
+								<th>Giá (VND)</th>
+								<td>000,000</td>
+							</tr>
+							<tr>
+								<th>Khối lượng</th>
+								<td>AAA</td>
+							</tr>
+							<tr>
+								<th>Loại lệnh</th>
+								<td>000,000</td>
+							</tr>
+							<tr>
+								<th>Giá trị (VND)</th>
+								<td>000,000</td>
+							</tr>
+							<tr>
+								<th>Phí tạm tính</th>
+								<td>000,000</td>
+							</tr>
+						</table>
+						<div class="btn_wrap">
+							<button class="add" type="button">Xác nhận</button>
+							<button type="button">Hủy</button>
+						</div>
+					</div>
+					<div class="layer_add">
+						<h3 class="layer_add_title">Authentication</h3>
+						<div class="form_area">
+							<ul class="security_check">
+								<li><strong>3 F</strong><input type="password" value="00"></li>
+								<li><strong>1 F</strong><input type="password" value="00"></li>
+							</ul>
+							<div>
+								<input id="saveA" type="checkbox">
+								<label for="saveA">Save Authentication?</label>
+							</div>
+						</div>
+						<div class="btn_wrap">
+							<button class="add" type="button">OK</button>
+							<button type="button">Cancel</button>
+						</div>
+					</div>
+				</div>
+				<!-- //Order : Buy -->
+
+				<!-- Order : Sell -->
+				<div class="modal_layer sell" style="top:610px; left:380px; margin-left:0;">
+					<h2>Lênh : Bán</h2>
+					<div class="cont">
+						<table>
+							<colgroup>
+								<col width="100">
+								<col>
+							</colgroup>
+							<tr>
+								<th>Tên Công ty</th>
+								<td>AAA</td>
+							</tr>
+							<tr>
+								<th>Mã CK</th>
+								<td>AAA</td>
+							</tr>
+							<tr>
+								<th>Giá (VND)</th>
+								<td>000,000</td>
+							</tr>
+							<tr>
+								<th>Khối lượng</th>
+								<td>AAA</td>
+							</tr>
+							<tr>
+								<th>Loại lệnh</th>
+								<td>000,000</td>
+							</tr>
+							<tr>
+								<th>Giá trị (VND)</th>
+								<td>000,000</td>
+							</tr>
+							<tr>
+								<th>Phí tạm tính</th>
+								<td>000,000</td>
+							</tr>
+						</table>
+						<div class="btn_wrap">
+							<button class="add" type="button">Xác nhận</button>
+							<button type="button">Hủy</button>
+						</div>
+					</div>
+					<div class="layer_add">
+						<h3 class="layer_add_title">Authentication</h3>
+						<div class="form_area">
+							<ul class="security_check">
+								<li><strong>3 F</strong><input type="password" value="00"></li>
+								<li><strong>1 F</strong><input type="password" value="00"></li>
+							</ul>
+							<div>
+								<input id="saveA" type="checkbox">
+								<label for="saveA">Save Authentication?</label>
+							</div>
+						</div>
+						<div class="btn_wrap">
+							<button class="add" type="button">OK</button>
+							<button type="button">Cancel</button>
+						</div>
+					</div>
+				</div>
+				<!-- //Order : Buy -->
+
+				<!-- Modify : AAA (Stock name) -->
+				<div class="modal_layer modify" style="top:610px; left:760px; margin-left:0;">
+					<h2>Sửa : AAA (Stock name)</h2>
+					<div class="cont">
+						<table>
+							<colgroup>
+								<col width="100">
+								<col>
+							</colgroup>
+							<tr>
+								<th>Tên Công ty</th>
+								<td>AAA</td>
+							</tr>
+							<tr>
+								<th>Mã CK</th>
+								<td>AAA</td>
+							</tr>
+							<tr>
+								<th>Giá(VND)</th>
+								<td><input class="text won" type="text" value="VND"></td>
+							</tr>
+							<tr>
+								<th>Khối lượng</th>
+								<td><input class="text won" type="text" value="0"></td>
+							</tr>
+							<tr>
+								<th>Loại lệnh</th>
+								<td>000,000</td>
+							</tr>
+							<tr>
+								<th>Giá trị (VND)</th>
+								<td>000,000</td>
+							</tr>
+							<tr>
+								<th>Phí tạm tính</th>
+								<td>000,000</td>
+							</tr>
+						</table>
+						<div class="btn_wrap">
+							<button class="add" type="button">Xác nhận</button>
+							<button type="button">Hủy</button>
+						</div>
+					</div>
+				</div>
+				<!-- //Modify : AAA (Stock name) -->
+
+				<!-- Cancel : AAA (Stock name) -->
+				<div class="modal_layer cancel" style="top:610px; left:1160px; margin-left:0;">
+					<h2>Hủy : AAA (Stock name)</h2>
+					<div class="cont">
+						<table>
+							<colgroup>
+								<col width="100">
+								<col>
+							</colgroup>
+							<tr>
+								<th>Tên Công ty</th>
+								<td>AAA</td>
+							</tr>
+							<tr>
+								<th>Mã CK</th>
+								<td>AAA</td>
+							</tr>
+							<tr>
+								<th>Giá (VND)</th>
+								<td><input class="text won" type="text" value="VND"></td>
+							</tr>
+							<tr>
+								<th>Khối lượng</th>
+								<td><input class="text won" type="text" value="0"></td>
+							</tr>
+							<tr>
+								<th>Loại lệnh</th>
+								<td>000,000</td>
+							</tr>
+							<tr>
+								<th>Giá trị (VND)</th>
+								<td>000,000</td>
+							</tr>
+							<tr>
+								<th>Phí tạm tính</th>
+								<td>000,000</td>
+							</tr>
+						</table>
+						<div class="btn_wrap">
+							<button class="add" type="button">Xác nhận</button>
+							<button type="button">Cancel</button>
+						</div>
+					</div>
+				</div>
+				<!-- //Cancel : AAA (Stock name) -->
+
+				<!-- CODE SEARCH -->
+				<div class="modal_layer add" style="top:20px; left:10px; margin-left:0;">
+					<h2>CODE SEARCH</h2>
+					<div class="search_area">
+						<label for="schName">Name</label>
+						<div class="input_search">
+							<input id="schName" type="text">
+							<button type="button">Search</button>
+						</div>
+					</div>
+					<div class="under_wrap">
+						<div class="mdi_search">
+							<div class="radio_area">
+								<input type="radio" id="" name=""><label for="">All</label>
+								<input type="radio" id="" name=""><label for="">VN</label>
+								<input type="radio" id="" name=""><label for="">HNX</label>
+								<input type="radio" id="" name=""><label for="">HSX</label>
+								<input type="radio" id="" name=""><label for="">UPCOM</label>
+								<input type="radio" id="" name=""><label for="">HOSE</label>
+							</div>
+						</div>
+						<div class="inner">
+							<div class="table_outer">
+								<div class="group_table type1">
+									<table class="table">
+										<caption></caption>
+										<colgroup>
+											<col width="80">
+											<col>
+										</colgroup>
+										<thead>
+											<tr>
+												<th>Symbol</th>
+												<th>Name</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td class="text_center">AAA</td>
+												<td class="text_left"><p class="ellipsis">Anphat Plastic and Green EnvAnphat Plastic and Green EnvAnphat Plastic and Green Env</p></td>
+											</tr>
+											<tr>
+												<td class="text_center">AAA</td>
+												<td class="text_left"><p class="ellipsis">Anphat Plastic and Green Env</p></td>
+											</tr>
+											<tr>
+												<td class="text_center">AAA</td>
+												<td class="text_left"><p class="ellipsis">Anphat Plastic and Green Env</p></td>
+											</tr>
+											<tr>
+												<td class="text_center">AAA</td>
+												<td class="text_left"><p class="ellipsis">Anphat Plastic and Green Env</p></td>
+											</tr>
+											<tr>
+												<td class="text_center">AAA</td>
+												<td class="text_left"><p class="ellipsis">Anphat Plastic and Green Env</p></td>
+											</tr>
+											<tr>
+												<td class="text_center">AAA</td>
+												<td class="text_left"><p class="ellipsis">Anphat Plastic and Green Env</p></td>
+											</tr>
+											<tr>
+												<td class="text_center">AAA</td>
+												<td class="text_left"><p class="ellipsis">Anphat Plastic and Green Env</p></td>
+											</tr>
+											<tr>
+												<td class="text_center">AAA</td>
+												<td class="text_left"><p class="ellipsis">Anphat Plastic and Green Env</p></td>
+											</tr>
+											<tr>
+												<td class="text_center">AAA</td>
+												<td class="text_left"><p class="ellipsis">Anphat Plastic and Green Env</p></td>
+											</tr>
+											<tr>
+												<td class="text_center">AAA</td>
+												<td class="text_left"><p class="ellipsis">Anphat Plastic and Green Env</p></td>
+											</tr>
+											<tr>
+												<td class="text_center">AAA</td>
+												<td class="text_left"><p class="ellipsis">Anphat Plastic and Green Env</p></td>
+											</tr>
+											<tr>
+												<td class="text_center">AAA</td>
+												<td class="text_left"><p class="ellipsis">Anphat Plastic and Green Env</p></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="btn_wrap">
+						<button class="add" type="button">Choice Ok</button>
+						<button type="button">Cancel</button>
+					</div>
+					<button class="close" type="button">close</button>
+				</div>
+				<!-- //CODE SEARCH -->
+
+				<!-- WATCH LIST GROUP -->
+				<div class="modal_layer add" style="top:20px; left:550px; margin-left:0;">
+					<h2>WATCH LIST GROUP</h2>
+					<div class="stock_search">
+						<select style="width:100%;">
+							<option>Group1</option>
+							<option>Group1</option>
+						</select>
+					</div>
+					<div class="under_wrap">
+						<div class="mdi_search">
+							<div class="btn_area layer_sub_btn">
+								<button type="button">+ Group Add</button>
+								<!-- layer_sub -->
+								<div class="layer_sub">
+									<h3>+ Group Add</h3>
+									<div>
+										<label for="">Name</label>
+										<input id="" type="text" placeholder="Group">
+									</div>
+									<div class="btn_wrap">
+										<button class="add" type="button">OK</button>
+										<button type="button">Cancel</button>
+									</div>
+								</div>
+								<!-- //layer_sub -->
+								<button type="button">- Group Del</button>
+								<!-- layer_sub -->
+								<div class="layer_sub">
+									<h3>Conformation</h3>
+									<div class="layer_body">
+										<p>Are You sure want to Delete?</p>
+									</div>
+									<div class="btn_wrap">
+										<button class="add" type="button">Yes</button>
+										<button type="button">No</button>
+									</div>
+								</div>
+								<!-- //layer_sub -->
+								<button type="button">· Name Change</button>
+								<!-- layer_sub -->
+								<div class="layer_sub">
+									<h3>Group Name Change</h3>
+									<div>
+										<label for="">Name</label>
+										<input id="" type="text" placeholder="Group">
+									</div>
+									<div class="btn_wrap">
+										<button class="add" type="button">OK</button>
+										<button type="button">Cancel</button>
+									</div>
+								</div>
+								<!-- //layer_sub -->
+							</div>
+						</div>
+						<div class="inner">
+							<div class="table_outer">
+								<div class="group_table type1">
+									<table class="table">
+										<caption></caption>
+										<colgroup>
+											<col width="80">
+											<col>
+										</colgroup>
+										<thead>
+											<tr>
+												<th>Del</th>
+												<th>Name</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td class="text_center">
+													<button type="button" class="btn_del">cancel</button>
+												<td class="text_left"><p class="ellipsis">AAA - Anphat Plastic and Green EnvAnphat Plastic and Green EnvAnphat Plastic and Green Env</p></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="btn_wrap">
+						<button class="add" type="button">Save</button>
+						<button type="button">Cancel</button>
+					</div>
+					<button class="close" type="button">close</button>
+				</div>
+				<!-- //WATCH LIST GROUP -->
+
+
+				<!-- PLACE BUY ORDER -->
+				<div class="modal_layer pbo" style="width:auto; top:20px; left:1080px; margin-left:0;">
+					<h2>Đặt lệnh mua</h2>
+					<!-- tabs -->
+					<div class="place_buy_order">
+						<ul class="nav_tabs">
+							<li class="ui-tabs-active"><a href="#orderBuy">Mua</a></li>
+							<li><a href="#orderSell">Bán</a></li>
+						</ul>
+						<div class="pbo_container">
+							<div class="wrap_left">
+								<table>
+									<colgroup>
+										<col width="95">
+										<col >
+									</colgroup>
+									<tbody>
+										<tr>
+											<th>Mua tất cả</th>
+											<td>
+												<select>
+													<option>O</option>
+												</select>
+											</td>
+										</tr>
+										<tr>
+											<th>Số tài khoản</th>
+											<td><input class="text won" type="text" value="VND"></td>
+										</tr>
+										<tr>
+											<th>Mã CK</th>
+											<td><input class="text" type="text" value="VND"></td>
+										</tr>
+										<tr>
+											<th>Khối lượng</th>
+											<td><input class="text won" type="text" value="0"></td>
+										</tr>
+										<tr>
+											<th>Giá</th>
+											<td><input class="text won" type="text" value="VND"></td>
+										</tr>
+										<tr>
+											<th>Loại lệnh</th>
+											<td><input class="text won" type="text" value="VND"></td>
+										</tr>
+									</tbody>
+								</table>
+								<div class="btn_wrap">
+									<button class="add buy" type="button">MUA</button>
+								</div>
+							</div>
+							<div class="wrap_right">
+								<div class="group_table">
+									<table class="no_bbt">
+										<colgroup>
+											<col width="33.3%" />
+											<col />
+										</colgroup>
+										<tr>
+											<th>Sức mua</th>
+											<td>0.00</td>
+										</tr>
+										<tr>
+											<th>Tỷ lệ ký quỹ</th>
+											<td>0.00</td>
+										</tr>
+										<tr>
+											<th>SL CK cho vay tối đa</th>
+											<td>0.00</td>
+										</tr>
+										<tr>
+											<th>Số dư tiền</th>
+											<td>-</td>
+										</tr>
+									</table>
+								</div>
+								<div class="group_table">
+									<table class="no_bbt">
+										<caption>AAA – HNX Allowing key order.</caption>
+										<colgroup>
+											<col width="33.3%">
+											<col width="33.3%">
+											<col>
+										</colgroup>
+										<thead>
+											<tr>
+												<th class="ceiling">Giá trần</th>
+												<th class="reference">Giá tham chiếu</th>
+												<th class="floor">Giá sàn</th>
+											</tr>
+										</thead>
+										<tfoot>
+											<tr>
+												<th colspan="2">KL NDT NN được phép mua</th>
+												<td>000,000.00</td>
+											</tr>
+										</tfoot>
+										<tbody>
+											<tr>
+												<td class="ceiling">0.00</td>
+												<td class="reference">0.00</td>
+												<td class="floor">0.00</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+					<button class="close" type="button">close</button>
+				</div>
+				<!-- //PLACE BUY ORDER -->
+
+				<!-- Buy : Authentication -->
+				<div class="modal_layer auth" style="top:610px; left:1550px; margin-left:0;">
+					<div class="layer_add">
+						<h2 class="layer_add_title">Authentication</h2>
+						<div class="form_area">
+							<ul class="security_check">
+								<li><strong>3,F</strong><input type="password" value="00"></li>
+								<li><strong>1,F</strong><input type="password" value="00"></li>
+							</ul>
+							<div>
+								<input id="saveA" type="checkbox">
+								<label for="saveA">Save Authentication?</label>
+							</div>
+						</div>
+						<div class="btn_wrap">
+							<button class="add" type="button">OK</button>
+							<button type="button">Cancel</button>
+						</div>
+					</div>
+				</div>
+				<!-- //Buy : Authentication -->
+
+
+
+
+
+
+				<!-- TOTAL SEARCH -->
+				<div class="modal_layer add total" style="top:1300px; left:10px; margin-left:0;">
+					<div class="total_wrap">
+						<h2>CODE SEARCH</h2>
+						<div class="search_area">
+							<label for="schName">Tên</label>
+							<div class="input_search">
+								<input id="schName" type="text">
+								<button type="button">Tra cứu</button>
+							</div>
+						</div>
+						<div class="under_wrap">
+							<div class="mdi_search">
+								<div class="radio_area">
+									<input type="radio" id="" name=""><label for="">All</label>
+									<input type="radio" id="" name=""><label for="">VN</label>
+									<input type="radio" id="" name=""><label for="">HNX</label>
+									<input type="radio" id="" name=""><label for="">HSX</label>
+									<input type="radio" id="" name=""><label for="">UPCOM</label>
+									<input type="radio" id="" name=""><label for="">HOSE</label>
+								</div>
+							</div>
+							<div class="inner">
+								<div class="table_outer">
+									<div class="group_table type1">
+										<table class="table">
+											<caption></caption>
+											<colgroup>
+												<col width="80">
+												<col>
+											</colgroup>
+											<thead>
+												<tr>
+													<th>Mã CK</th>
+													<th>Tên Công ty</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr class="selected">
+													<td class="text_center">AAA</td>
+													<td class="text_left"><p class="ellipsis">Anphat Plastic and Green EnvAnphat Plastic and Green EnvAnphat Plastic and Green Env</p></td>
+												</tr>
+												<tr>
+													<td class="text_center">AAA</td>
+													<td class="text_left"><p class="ellipsis">Anphat Plastic and Green Env</p></td>
+												</tr>
+												<tr>
+													<td class="text_center">AAA</td>
+													<td class="text_left"><p class="ellipsis">Anphat Plastic and Green Env</p></td>
+												</tr>
+												<tr>
+													<td class="text_center">AAA</td>
+													<td class="text_left"><p class="ellipsis">Anphat Plastic and Green Env</p></td>
+												</tr>
+												<tr>
+													<td class="text_center">AAA</td>
+													<td class="text_left"><p class="ellipsis">Anphat Plastic and Green Env</p></td>
+												</tr>
+												<tr>
+													<td class="text_center">AAA</td>
+													<td class="text_left"><p class="ellipsis">Anphat Plastic and Green Env</p></td>
+												</tr>
+												<tr>
+													<td class="text_center">AAA</td>
+													<td class="text_left"><p class="ellipsis">Anphat Plastic and Green Env</p></td>
+												</tr>
+												<tr>
+													<td class="text_center">AAA</td>
+													<td class="text_left"><p class="ellipsis">Anphat Plastic and Green Env</p></td>
+												</tr>
+												<tr>
+													<td class="text_center">AAA</td>
+													<td class="text_left"><p class="ellipsis">Anphat Plastic and Green Env</p></td>
+												</tr>
+												<tr>
+													<td class="text_center">AAA</td>
+													<td class="text_left"><p class="ellipsis">Anphat Plastic and Green Env</p></td>
+												</tr>
+												<tr>
+													<td class="text_center">AAA</td>
+													<td class="text_left"><p class="ellipsis">Anphat Plastic and Green Env</p></td>
+												</tr>
+												<tr>
+													<td class="text_center">AAA</td>
+													<td class="text_left"><p class="ellipsis">Anphat Plastic and Green Env</p></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="btn_wrap">
+							<button class="add" type="button">Choice Ok</button>
+							<button type="button">Hủy</button>
+						</div>
+					</div>
+
+					<div class="total_wrap">
+						<h2>NHÓM DANH MỤC QUAN TÂM</h2>
+						<div class="stock_search">
+							<select style="width:100%;">
+								<option>Group1</option>
+								<option>Group1</option>
+							</select>
+						</div>
+						<div class="under_wrap">
+							<div class="mdi_search">
+								<div class="btn_area layer_sub_btn">
+									<button type="button">+ Thêm Nhóm</button>
+									<!-- layer_sub -->
+									<div class="layer_sub">
+										<h3>+ Thêm Nhóm</h3>
+										<div>
+											<label for="">Tên</label>
+											<input id="" type="text" placeholder="Group">
+										</div>
+										<div class="btn_wrap">
+											<button class="add" type="button">OK</button>
+											<button type="button">Hủy</button>
+										</div>
+									</div>
+									<!-- //layer_sub -->
+									<button type="button">- Xóa Nhóm</button>
+									<!-- layer_sub -->
+									<div class="layer_sub">
+										<h3>Conformation</h3>
+										<div class="layer_body">
+											<p>Are You sure want to Delete?</p>
+										</div>
+										<div class="btn_wrap">
+											<button class="add" type="button">Yes</button>
+											<button type="button">Hủy</button>
+										</div>
+									</div>
+									<!-- //layer_sub -->
+									<button type="button">· Đổi tên Nhóm</button>
+									<!-- layer_sub -->
+									<div class="layer_sub">
+										<h3>Đổi tên nhóm</h3>
+										<div>
+											<label for="">Tên</label>
+											<input id="" type="text" placeholder="Group">
+										</div>
+										<div class="btn_wrap">
+											<button class="add" type="button">OK</button>
+											<button type="button">Hủy</button>
+										</div>
+									</div>
+									<!-- //layer_sub -->
+								</div>
+							</div>
+							<div class="inner">
+								<div class="table_outer">
+									<div class="group_table type1">
+										<table class="table">
+											<caption></caption>
+											<colgroup>
+												<col width="80">
+												<col>
+											</colgroup>
+											<thead>
+												<tr>
+													<th>Xóa</th>
+													<th>Tên Công ty</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td class="text_center"><button type="button" class="btn_del">cancel</button></td>
+													<td class="text_left"><p class="ellipsis">AAA - Anphat Plastic and Green EnvAnphat Plastic and Green EnvAnphat Plastic and Green Env</p></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="btn_wrap">
+							<button class="add" type="button">Save</button>
+							<button type="button">Cancel</button>
+						</div>
+					</div>
+					<button class="close" type="button">close</button>
+				</div>
+				<!-- // TOTAL SEARCH -->
+			</div>
+			<!-- //레이어 -->
+		</div>
+	<!-- //템플릿 사용부분 -->
+
+  	</div>
+
+	<script src="/resources/js/jquery.min.js"></script>
+	<script src="/resources/js/jquery-ui.min.js"></script>
+	<script>
+	$('.layer_sub_btn .layer_sub').hide();
+	$('.layer_sub_btn button').click(function(e){
+		var self = $(this);
+
+		if(self.closest('.btn_wrap').length){ // sub layer button
+			self.closest('.layer_sub').hide();
+			$('.layer_sub_btn button').removeClass('on');
+		} else { // layer toggle button
+			self.toggleClass('on');
+			$('.layer_sub_btn button').not(this).removeClass('on');
+			$('.layer_sub_btn .layer_sub').not($(this).next()).hide();
+			self.next().toggle();
+		}
+	});
+
+	/* place buy order tab button */
+	(function() {
+		var tabs = $('.place_buy_order .nav_tabs a'),
+			btn = $('.place_buy_order .btn_wrap button');
+
+		tabs.on('click', function(e) {
+			var id = $(this).attr('href');
+			tabs.parent().removeClass('ui-tabs-active');
+			$(this).parent().addClass('ui-tabs-active');
+
+			if(id === '#orderBuy') {
+				btn.removeClass('sell').addClass('buy');
+				btn.text('Mua');
+			} else {
+				btn.removeClass('buy').addClass('sell');
+				btn.text('Bán');
+			}
+			e.preventDefault();
+		});
+	}())
+
+	(function(){
+		function setInitEvt() {
+			$('.group_table').each(function() {
+				var table = $(this).find('table'),
+					tbody = table.find('tbody');
+
+				if(!tbody.find('th').length) {
+					tbody.find('tr:odd').addClass('even');
+				}
+
+				if(table.height() >= $(this).parent().height()) {
+					table.addClass('no_bbt');
+				}
+			});
+			$('div[name=tabs]').tabs();
+			$('.datepicker').datepicker({
+				showOn:"button",
+				changeYear:true,
+				changeMonth:true
+			});
+		}
+		window.showFullLoading = function() {
+			$('.loading_cover').show();
+		}
+		window.hideFullLoading = function() {
+			$('.loading_cover').hide();
+		}
+
+		setInitEvt();
+		$(document).ajaxComplete(function() {
+			setInitEvt();
+		});
+	}())
+	</script>
+  </body>
+</html>

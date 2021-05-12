@@ -1,0 +1,39 @@
+@charset "utf-8";
+/**************************/
+/*	Name: MIRAE ASSET
+/*	PART: BASE STYLE
+/*	Version: 1.0
+/**************************/
+
+body,html,
+header,footer,aside,nav,section,article,details,figure,figcaption,menu,command,
+div,dl,dd,ol,ul,li,form,fieldset,legend,iframe,
+h1,h2,h3,h4,h5,h6,dt,summary,input,textarea,button,select,datalist,
+img,embed,object,canvas,audio,video,meter,progress,keygen,
+a,label,output,dialog,
+address,blockquote,
+p,pre,
+span,b,strong,i,em,dfn,var,u,ins,s,del,q,mark,small,sub,sup,abbr,bdi,bdo,cite,time,ruby,rp,rt,code,kbd,samp,
+acronym,big,frame,frameset,noframes,tt,
+map,option,hr {border:0;padding:0;margin:0;color:inherit;font-family:inherit;font-size:inherit;line-height:inherit;vertical-align:top}
+header,footer,aside,nav,section,article,details,summary,figure,figcaption,menu,command{display:block}
+applet,basefont,center,dir,strike{display:none}
+q,blockquote{quotes:none;content:none}
+li,menu{list-style:none}
+
+table{width:100%;border-collapse:collapse; border-spacing:0; }
+
+address{font-style:normal}
+label{display:inline-block;*zoom:1}
+a{text-decoration:none;}
+
+.blind{position:absolute;width:0;height:0;left:0;top:0;font-size:0;line-height:0;overflow:hidden}
+caption,
+legend,
+.hidden{width:0;height:0;font-size:0;line-height:0;overflow:hidden;visibility:hidden}
+em{font-style:normal;}
+img{max-width:100%;}
+strong,th,h1,h2,h3,h4,h5,h6{font-weight:normal;}
+
+body {font-family:Arial, Helvetica, sans-serif; font-size:14px; letter-spacing:0px; color:#4f4e4e; overflow-x:auto; overflow-y:auto;}
+

@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!--   Foreigner Buy/Sell   -->
+<transaction trcode="pibofore" servicecode=""  type="row">
+	<value io="in"		name="symb"		type="string"	length="12"	comment="종목코드"/>
+	<value io="in"		name="lang"		type="string"	length="1"	comment="Language  0:VN  1:EN"/>
+	
+	<value io="out"		name="rcod"		type="string"	length="12"	comment="실시간 심볼"/>
+	<value io="out"		name="symb"		type="string"	length="12"	comment="종목코드"/>
+	<value io="out"		name="snam"		type="string"	length="32"	comment="종목명"/>
+	<value io="out"		name="mark"		type="string"	length="12"	comment="시장구분('HOSE','HNX')"/>
+	<value io="out"		name="curr"		type="string"	length="9"	comment="현재가"/>
+	<value io="out"		name="diff"		type="string"	length="7"	comment="대비"/>
+	<value io="out"		name="rate"		type="string"	length="7"	comment="등락율"/>
+	<value io="out"		name="avol"		type="string"	length="9"	comment="누적거래량"/>
+	<value io="out"		name="mrgn"		type="string"	length="5"	comment="Magin Ratio"/>
+</transaction>

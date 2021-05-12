@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>CHART SERVICE</title>
+
+<link href="/resources/css/common.css" rel="stylesheet">
+
+</head>
+  <body class="mdi L_VI">
+
+  	<div class="wrapper">
+		<!-- header -->
+		<!-- //header -->
+
+		<!-- 템플릿 사용부분 -->
+		<div class="mdi_container">
+			<div class="chart">
+				<div class="chart_search">
+					<div class="input_search">
+						<input id="SectorInp" type="text">
+						<button type="button" class="btn_recent"><span class="screen_out">recent search</span></button>
+						<!-- layer_newest -->
+						<div class="layer_newest" style="display:none;">
+							<ol>
+								<li>value1</li>
+								<li>value2</li>
+								<li>value3</li>
+							</ol>
+						</div>
+						<!-- //layer_newest -->
+						<button type="button">Search</button>
+					</div>
+
+					<div class="button_set">
+						<input type="radio" id="datetime1" name="datetime" checked="checked"><label for="datetime1">Theo ngày</label>
+						<input type="radio" id="datetime2" name="datetime"><label for="datetime2">Theo tuần</label>
+						<input type="radio" id="datetime3" name="datetime"><label for="datetime3">Theo tháng</label>
+						<input type="radio" id="datetime4" name="datetime"><label for="datetime4">Tick</label>
+					</div>
+
+					<select>
+						<option>select</option>
+					</select>
+
+					<input type="text" class="datepicker" placeholder="13/05/2016">
+
+					<span class="radio_area">
+						<input type="checkbox" id="today" name="today" checked="checked"><label for="today">Hôm nay</label>
+					</span>
+					<a href="" class="btn_rescan">Rescan</a>
+				</div>
+				<!-- LEFT -->
+				<div class="wrap_left">
+					<!-- tree_menu -->
+					<div class="tree_menu">
+						<ul class="tree_list">
+							<li>
+								<button type="button">Tất cả</button>
+								<ul>
+									<li>
+										<button type="button">Watch list</button>
+										<ul>
+											<li>
+												<button type="button">Watch list group</button>
+												<ul>
+													<li>
+														<button type="button">Group Item</button>
+														<ul>
+															<li><a href="#" class="on">HNXIndex</a></li>
+															<li><a href="#"> HNX30</a></li>
+														</ul>
+													</li>
+													<li>
+														<button type="button">Group Item</button>
+														<ul>
+															<li><a href="#" class="on">HNXIndex</a></li>
+															<li><a href="#"> HNX30</a></li>
+														</ul>
+													</li>
+												</ul>
+											</li>
+											<li>
+												<button type="button">Watch list group</button>
+												<ul>
+													<li>
+														<button type="button">Group Item</button>
+														<ul>
+															<li><a href="#" class="on">HNXIndex</a></li>
+															<li><a href="#"> HNX30</a></li>
+														</ul>
+													</li>
+												</ul>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<a href="#">My stock</a>
+									</li>
+									<li>
+										<a href="#">Stock exchange</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
+						<!-- Sector -->
+						<div class="sector">
+							<h2>Danh sách Công ty</h2>
+							<ul>
+								<li><span>AAA</span> Anphat Plastic</li>
+								<li><span>AAA</span> Anphat Plastic</li>
+								<li><span>AAA</span> Anphat Plastic</li>
+								<li><span>AAA</span> Anphat Plastic</li>
+								<li><span>AAA</span> Anphat Plastic</li>
+							</ul>
+						</div>
+						<!-- //Sector -->
+					</div>
+					<!-- //tree_menu -->
+				</div>
+				<!-- //LEFT -->
+				<!-- RIGHT -->
+				<div class="wrap_right">
+					<div class="summary">
+						<p class="price">49,000</p>
+						<p class="state">
+							<span class="arrow low">1,400</span>
+						</p>
+						<p class="val">
+							<span class="up">+0.37%</span>
+						</p>
+						<p class="vol">
+							<span class="label">Volume</span>
+							411,851
+						</p>
+						<p class="detail">
+							<span class="low">
+								<span class="label">Open</span>
+								22,950
+							</span>
+							<span class="up">
+								<span class="label">High</span>
+								23,445
+							</span>
+							<span class="low">
+								<span class="label">Low</span>
+								22,500
+							</span>
+						</p>
+					</div>
+					<div class="chart">
+						<div style="height:100%; background:#a9a9a9; line-height:800px; font-size:20px; color:#fff; text-align:center; font-weight:700;">chart</div>
+					</div>
+
+				</div>
+				<!-- //RIGHT -->
+			</div>
+		</div>
+		<!-- //템플릿 사용부분 -->
+
+
+  	</div>
+
+<script src="/resources/js/jquery.min.js"></script>
+<script src="/resources/js/jquery-ui.min.js"></script>
+<script>
+(function(){
+	function setInitEvt() {
+		$('.group_table').each(function() {
+			var table = $(this).find('table'),
+				tbody = table.find('tbody');
+
+			if(!tbody.find('th').length) {
+				tbody.find('tr:odd').addClass('even');
+			}
+
+			if(table.height() >= $(this).parent().height()) {
+				table.addClass('no_bbt');
+			}
+		});
+		$('div[name=tabs]').tabs();
+		$('.datepicker').datepicker({
+			showOn:"button",
+			changeYear:true,
+			changeMonth:true
+		});
+		$('.tree_list button').on('click', function(e) {
+			var self = $(this);
+			if(self.hasClass('on')) {
+				self.removeClass('on');
+				self.parent().find('ul').slideUp(150);
+				self.parent().find('button').removeClass('on');
+			} else {
+				self.addClass('on');
+				self.next('ul').slideDown(150);
+			}
+			e.preventDefault();
+		});
+	}
+	window.showFullLoading = function() {
+		$('.loading_cover').show();
+	}
+	window.hideFullLoading = function() {
+		$('.loading_cover').hide();
+	}
+
+	setInitEvt();
+	$(document).ajaxComplete(function() {
+		setInitEvt();
+	});
+}())
+</script>
+  </body>
+</html>

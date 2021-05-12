@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>CURRENT STATUS</title>
+
+<!-- e: 삭제 -->
+<!-- <link href="/resources/css/jquery-ui.min.css" rel="stylesheet"> -->
+<!-- // e: 삭제 -->
+<link href="/resources/css/base.css" rel="stylesheet">
+<link href="/resources/css/common.css" rel="stylesheet">
+
+</head>
+  <body class="mdi">
+
+  	<div>
+		<!-- header -->
+		<header>
+			<div class="container">
+				<h1><img src="/resources/US/images/logo.png" alt="MIRAE ASSET WTS"></h1>
+
+				<!-- information -->
+				<div id="information">
+					<h2 class="screen_out">최근 조회 종목,주요지수,주요뉴스</h2>
+					<div class="wrap_ticker">
+						<div>
+							<h3 class="screen_out">주요지수 (국내/해외)</h3>
+							<div class="group_index">
+								<!-- KOSPI -->
+								<div class="index_area">
+									<h4>Dow Jones</h4>
+									<ul class="items">
+										<li class="item1 up">1,947.10</li>
+										<li class="item2 up arrow"><span class="caret"></span>2.46</li>
+										<li class="item3 up">+0.13</li>
+									</ul>
+									<div class="move_area">
+										<button type="button" class="btn_prev"><span class="screen_out">이전</span></button>
+										<button type="button" class="btn_next"><span class="screen_out">다음</span></button>
+									</div>
+								</div>
+								<!-- //KOSPI -->
+								<!-- DOW -->
+								<div class="index_area pl25">
+									<h4>DOW</h4>
+									<ul class="items">
+										<li class="item1 low">16,297.89</li>
+										<li class="item2 low arrow"><span class="caret"></span>50.58</li>
+										<li class="item3 low">-0.31</li>
+									</ul>
+									<div class="move_area">
+										<button type="button" class="btn_prev"><span class="screen_out">이전</span></button>
+										<button type="button" class="btn_next"><span class="screen_out">다음</span></button>
+									</div>
+								</div>
+								<!-- //DOW -->
+							</div>
+							<!-- NEWS -->
+							<div class="group_news">
+								<h3 class="screen_out">주요뉴스</h3>
+								<ul class="items">
+									<li>VN NEWS , CSV - to Hold 2016 AGM on April 29... (11:00</li>
+								</ul>
+								<div class="move_area">
+									<button type="button" class="btn_prev"><span class="screen_out">이전 뉴스</span></button>
+									<button type="button" class="btn_next"><span class="screen_out">다음 뉴스</span></button>
+								</div>
+							</div>
+							<!-- //NEWS -->
+						</div>
+					</div>
+				</div>
+				<!-- // information -->
+
+				<!-- gnb -->
+				<div class="group_gnb">
+					<ul class="wts_menu">
+						<li class="on">
+							<button type="button">WATCH LIST</button>
+						</li>
+						<li class="wide">
+							<button type="button">CURRENT STATUS</button>
+						</li>
+						<li class="wide">
+							<button type="button">MARKET INFORMATION</button>
+						</li>
+						<li>
+							<button type="button">INDEXCHART</button>
+						</li>
+						<li>
+							<button type="button">BANKING</button>
+						</li>
+						<li class="wide">
+							<button type="button">ACCOUNT INFORMATION</button>
+						</li>
+					</ul>
+				</div>
+				<!-- //gnb -->
+
+				<div class="side">
+					<div class="buttons">
+						<button type="button">eng</button>
+						<button type="button">viet</button>
+						<button type="button">logout</button>
+					</div>
+					<div class="text">
+						<strong>077C080123</strong>
+						<em>Nnnnnn nnnn nnn</em>
+						<em>Nnnnnn nnnn nnn</em>
+						<span>Trandate 21/05/2016 18:18:18</span>
+					</div>
+				</div>
+			</div>
+		</header>
+		<!-- //header -->
+
+		<!-- 템플릿 사용부분 -->
+		<div class="mdi_container">
+			<!-- mdi_search -->
+			<div class="mdi_search">
+				<div class="radio_area">
+					<input type="checkbox" id=""><label for="">All</label>
+					<input type="checkbox" id=""><label for="">Executed</label>
+					<input type="checkbox" id=""><label for="">Cancel</label>
+					<input type="checkbox" id=""><label for="">Rejected</label>
+				</div>
+				<button class="btn_write" type="button">counter check</button>
+			</div>
+			<!-- //mdi_search -->
+			<div class="mdi_content">
+				<div class="grid_area" style="height:146px;">
+					<div class="group_table type2">
+						<table class="table">
+							<colgroup>
+								<col>
+								<col width="88">
+								<col width="88">
+								<col width="88">
+								<col width="118">
+								<col width="118">
+								<col width="118">
+								<col width="118">
+								<col width="118">
+								<col width="118">
+								<col width="118">
+							</colgroup>
+							<thead>
+								<tr>
+									<th rowspan="2"></th>
+									<th rowspan="2">No.</th>
+									<th rowspan="2">Order ID</th>
+									<th rowspan="2">Time</th>
+									<th class="bd_bt2">Symbol</th>
+									<th>Account No.</th>
+									<th rowspan="2">Status</th>
+									<th class="bd_bt2">Executed vol.</th>
+									<th class="bd_bt2">Time (Executed)</th>
+									<th class="bd_bt2">Amount</th>
+									<th class="bd_bt2">Cancelled vol.</th>
+								</tr>
+								<tr>
+									<th>volum</th>
+									<th>Order Type</th>
+									<th>Executed Price</th>
+									<th>Time (Cancel)</th>
+									<th>Price</th>
+									<th>Channel Order</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td class="btn_del"><input type="button" value="delete"></td>
+									<td class="text_center">000</td>
+									<td class="text_center">ididididid</td>
+									<td class="text_center">09:49:17</td>
+									<td><p>00,000,000</p><p>00,000,000</p></td>
+									<td><p>00,000,000</p><p>00,000,000</p></td>
+									<td>00,000,000</td>
+									<td><p>00,000,000</p><p>00,000,000</p></td>
+									<td><p>00,000,000</p><p>00,000,000</p></td>
+									<td><p>00,000,000</p><p>00,000,000</p></td>
+									<td><p>00,000,000</p><p>00,000,000</p></td>
+								</tr>
+								<tr class="even">
+									<td class="btn_del"><input type="button" value="delete"></td>
+									<td class="text_center">000</td>
+									<td class="text_center">ididididid</td>
+									<td class="text_center">09:49:17</td>
+									<td><p>00,000,000</p><p>00,000,000</p></td>
+									<td><p>00,000,000</p><p>00,000,000</p></td>
+									<td>00,000,000</td>
+									<td><p>00,000,000</p><p>00,000,000</p></td>
+									<td><p>00,000,000</p><p>00,000,000</p></td>
+									<td><p>00,000,000</p><p>00,000,000</p></td>
+									<td><p>00,000,000</p><p>00,000,000</p></td>
+								</tr>
+								<tr>
+									<td class="btn_del"><input type="button" value="delete"></td>
+									<td class="text_center">000</td>
+									<td class="text_center">ididididid</td>
+									<td class="text_center">09:49:17</td>
+									<td><p>00,000,000</p><p>00,000,000</p></td>
+									<td><p>00,000,000</p><p>00,000,000</p></td>
+									<td>00,000,000</td>
+									<td><p>00,000,000</p><p>00,000,000</p></td>
+									<td><p>00,000,000</p><p>00,000,000</p></td>
+									<td><p>00,000,000</p><p>00,000,000</p></td>
+									<td><p>00,000,000</p><p>00,000,000</p></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<div class="under_wrap">
+					<!-- mdi_search -->
+					<div class="mdi_search">
+						<div class="pull_left">
+							<div class="search_area">
+								<label for="" class="screen_out">화면번호 검색</label>
+								<input type="text" id="" class="search_num" value="037620">
+								<button type="button" class="btn_recent"><span class="screen_out">최근조회 목록 보기</span></button>
+								<!-- 최근조회 layer -->
+								<div class="layer_newest" style="display:none;">
+									<ul>
+										<li>
+											<strong>일이삼사오육칠팔구십</strong><em>000000</em>
+											<input type="button" value="삭제후닫기">
+										</li>
+										<li>
+											<strong>일이삼사오육칠팔구십</strong><em>000000</em>
+											<input type="button" value="삭제후닫기">
+										</li>
+										<li>
+											<strong>일이삼사오육</strong><em>000000</em>
+											<input type="button" value="삭제후닫기">
+										</li>
+										<li>
+											<strong>일이삼사오육칠팔구십</strong><em>000000</em>
+											<input type="button" value="삭제후닫기">
+										</li>
+									</ul>
+									<button type="button">전체삭제</button>
+								</div>
+								<!-- //최근조회 layer -->
+
+								<button type="button" class="btn_search" name="refcode_search"><span class="screen_out">검색하기</span></button>
+								<!-- 주식종목검색 layer -->
+								<div class="layer_sub tree_wrap" style="display:none;">
+									<h4>주식종목검색</h4>
+									<div class="layer_body cb">
+										<div class="tree_scroll">
+											tree_scroll
+										</div>
+										<div class="tree_right">
+											<div class="search_area">
+												<input type="text" id="" class="search_num" value="037620">
+												<button type="button" class="btn_search" name="refcode_search"><span class="screen_out">검색하기</span></button>
+											</div>
+											<ul>
+												<li>
+													<strong>일이삼사오육칠팔구십</strong><em>000000</em>
+													<input type="button" value="삭제후닫기">
+												</li>
+												<li>
+													<strong>일이삼사오육칠팔구십일이삼사오육칠팔구십</strong><em>000000</em>
+													<input type="button" value="삭제후닫기">
+												</li>
+												<li>
+													<strong>일이삼사오육</strong><em>000000</em>
+													<input type="button" value="삭제후닫기">
+												</li>
+												<li>
+													<strong>일이삼사오육칠팔구십</strong><em>000000</em>
+													<input type="button" value="삭제후닫기">
+												</li>
+											</ul>
+										</div>
+									</div>
+									<button type="button" class="btn_close">레이어닫기</button>
+								</div>
+								<!-- //주식종목검색 layer -->
+								<button type="button" class="btn_info" name="corpo_info"><span class="screen_out">기업정보</span></button>
+								<!-- 기업정보 layer -->
+								<div class="layer_sub " style="display:none; width:260px;">
+									<h4>기업정보요약</h4>
+									<div class="layer_body">
+										<div class="layer_head">
+											<strong>Stock Code</strong>
+											<em>[037620]</em>
+										</div>
+										<div class="group_table type1">
+											<table class="table">
+												<caption class="screen_out"></caption>
+												<colgroup>
+													<col width="25%">
+													<col width="25%">
+													<col width="25%">
+													<col>
+												</colgroup>
+												<tbody>
+													<tr>
+														<th>현재가</th>
+														<td>17,700</td>
+														<th>등락률</th>
+														<td>13,880</td>
+													</tr>
+													<tr>
+														<th>전일대비</th>
+														<td>17,700</td>
+														<th>거래량</th>
+														<td>13,880</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+										<div class="layer_half">
+											<!-- 종목기본현황 -->
+											<div class="pull_left">
+												<h5 class="sub_tit">종목기본현황</h5>
+												<div class="group_table type1">
+													<table class="table">
+														<caption class="screen_out"></caption>
+														<tbody>
+															<tr>
+																<td class="text_left bd_bt2">거래소/대형/정상</td>
+															</tr>
+															<tr>
+																<td class="text_left">KOSPI200(금융)</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+												<div class="group_table type1">
+													<table class="table">
+														<caption class="screen_out"></caption>
+														<colgroup>
+															<col width="45%">
+															<col>
+														</colgroup>
+														<tbody>
+															<tr>
+																<th class="text_left">업종</th>
+																<td>증권</td>
+															</tr>
+															<tr>
+																<th class="text_left">결산월</th>
+																<td>12월결산</td>
+															</tr>
+															<tr>
+																<th class="text_left">대용가</th>
+																<td>13,880원</td>
+															</tr>
+															<tr>
+																<th class="text_left">상장주</th>
+																<td>114,286천</td>
+															</tr>
+															<tr>
+																<th class="text_left">자본금</th>
+																<td>5,714억</td>
+															</tr>
+															<tr>
+																<th class="text_left">액면가</th>
+																<td>13,880원</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+											<!-- //종목기본현황 -->
+
+											<!-- 재무정보 -->
+											<div class="pull_right">
+												<h5 class="sub_tit">재무정보</h5>
+												<div class="group_table type1">
+													<table class="table">
+														<caption class="screen_out"></caption>
+														<colgroup>
+															<col width="45%">
+															<col>
+														</colgroup>
+														<tfoot>
+															<tr>
+																<th class="text_left">전일시총</th>
+																<td>00억</td>
+															</tr>
+														</tfoot>
+														<tbody>
+															<tr>
+																<th class="text_left">매출액</th>
+																<td>00억</td>
+															</tr>
+															<tr>
+																<th class="text_left">결산월</th>
+																<td>00억</td>
+															</tr>
+															<tr>
+																<th class="text_left">대용가</th>
+																<td>00억</td>
+															</tr>
+															<tr>
+																<th class="text_left">상장주</th>
+																<td>00.00</td>
+															</tr>
+															<tr>
+																<th class="text_left">자본금</th>
+																<td>00.00</td>
+															</tr>
+															<tr>
+																<th class="text_left">액면가</th>
+																<td>00.00</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+											<!-- //재무정보 -->
+										</div>
+
+										<h5 class="sub_tit">지정기본현황</h5>
+										<div class="group_table type1">
+											<table class="table">
+												<caption class="screen_out"></caption>
+												<colgroup>
+													<col width="33.3%">
+													<col width="33.3%">
+													<col>
+												</colgroup>
+												<tbody>
+													<tr>
+														<td class="text_center">증거금율 30%</td>
+														<td class="text_center">신용불가</td>
+														<td class="text_center">대출가능 30%</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+									<button type="button" class="btn_close">레이어닫기</button>
+								</div>
+								<!-- //기업정보 layer -->
+								<input class="search_input" type="text" value="Stock Code">
+
+							</div>
+							<ul class="summary_area">
+								<li>large-cap</li>
+								<li>stock</li>
+								<li>HNX</li>
+								<li>Normal 30%</li>
+								<li>Credit</li>
+							</ul>
+
+						</div>
+					</div>
+					<!-- //mdi_search -->
+					<div class="inner">
+						<div class="pull_left">
+							<div class="group_table type1">
+								<table class="table">
+									<caption></caption>
+									<colgroup>
+										<col>
+										<col width="28%">
+										<col width="22%">
+										<col width="28%">
+									</colgroup>
+									<tbody>
+										<tr>
+											<th>Current</th>
+											<td>000</td>
+											<th>Trade vol</th>
+											<td>000</td>
+										</tr>
+										<tr>
+											<th>Change</th>
+											<td>000</td>
+											<th>Total PRI</th>
+											<td>000</td>
+										</tr>
+										<tr>
+											<th>%Chg</th>
+											<td>000,000</td>
+											<th>Last vol</th>
+											<td>000,000</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<!-- 호가 -->
+							<div class="group_table type2 price">
+								<table class="table">
+									<colgroup>
+										<col width="18%">
+										<col width="20.5%">
+										<col>
+										<col width="20.5%">
+										<col width="20.5%">
+									</colgroup>
+									<thead>
+										<tr>
+											<th>Eve</th>
+											<th>Sell</th>
+											<th>13:28:21</th>
+											<th>Buy</th>
+											<th>Eve</th>
+										</tr>
+									</thead>
+									<tfoot>
+										<tr>
+											<td></td>
+											<td>0</td>
+											<td class="text_right">AH <button type="button" class="btn_refresh"><span class="screen_out">재검색</span></button></td>
+											<td>0</td>
+											<td></td>
+										</tr>
+									</tfoot>
+									<tbody>
+											<tr>
+												<td class="bg_blue text_left up"><div>+100</div></td>
+												<td class="bg_blue bar"><div>1,766<div style="width:50%;"></div></div></td>
+												<td class="bg_blue bold"><div class="low sel_box">318,300<div></div></td>
+												<th class="white text_left"><div>CUR</div></th>
+												<td><div>18,000</div></td>
+											</tr>
+											<tr>
+												<td class="bg_blue text_left up"><div>+100</div></td>
+												<td class="bg_blue bar"><div>1,766<div style="width:80%;"></div></div></td>
+												<td class="bg_blue bold"><div class="same sel_box">318,300<div></div></div></td>
+												<th class="white text_left"><div>Change</div></th>
+												<td><div>18,000</div></td>
+											</tr>
+											<tr>
+												<td class="bg_blue bd_bt2"><div></div></td>
+												<td class="bg_blue bd_bt2"><div>1,766</div></td>
+												<td class="bg_blue bold bd_bt2"><div class="up arrow sel_box">18,300<div></div></div></td>
+												<th class="white text_left bd_bt2"><div>%Chg</div></th>
+												<td class="bd_bt2"><div>18,000</div></td>
+											</tr>
+
+											<tr>
+												<th class="white text_left"><div class="up">Cei</div></th>
+												<td><div>00,000,000</div></td>
+												<td class="bg_red bold"><div class="up sel_box">318,300<div></div></div></td>
+												<td class="bg_red text_right"><div>00</div></td>
+												<td class="bg_red"><div>00,000,000</div></td>
+											</tr>
+											<tr>
+												<th class="white text_left"><div class="low">Flo</div></th>
+												<td><div>1,766</div></td>
+												<td class="bg_red bold"><div class="low">00,000,000<div></div></div></td>
+												<td class="bg_red text_right bar"><div>00<div style="width:50%;"></div></div></td>
+												<td class="bg_red"><div>18,000</div></td>
+											</tr>
+											<tr>
+												<th class="white text_left bd_bt2"><div>52Wk H/L</div></th>
+												<td class="bd_bt2"><div>1,766</div></td>
+												<td class="bg_red bold bd_bt2"><div class="low arrow sel_box">17,800<div></div></div></td>
+												<td class="bg_red text_right low bd_bt2 bar"><div>1,108<div style="width:80%;"></div></div></td>
+												<td class="bg_red bd_bt2"><div></div></td>
+											</tr>
+											<tr>
+												<th class="white text_left bd_bt2"><div>Volume</div></th>
+												<td class="bd_bt2"><div>1,766</div></td>
+												<td class="bold bd_bt2" rowspan="2"><div class="up sel_box">+000<div></div></div></td>
+												<th class="white text_left bd_bt2"><div>Last volume</div></th>
+												<td class="bd_bt2"><div>000,000</div></td>
+											</tr>
+											<tr>
+												<td class="text_left bd_bt2"><div>+100</div></td>
+												<td class="bd_bt2"><div>1,766</div></td>
+												<td class="low bd_bt2"><div>1,108</div></td>
+												<td class="bd_bt2"><div></div></td>
+											</tr>
+										</tbody>
+								</table>
+							</div>
+							<!-- //호가 -->
+
+							<!-- 예상 체결, 체결량 -->
+							<div class="group_table type1">
+								<table class="table">
+									<caption class="screen_out"></caption>
+									<colgroup>
+										<col width="24%">
+										<col width="26%">
+										<col width="24%">
+										<col>
+									</colgroup>
+									<tbody>
+										<tr>
+											<th>ESTG PRI</th>
+											<td class="text_right">17,800</td>
+											<th>ESTG VOL</th>
+											<td class="text_right">355,677</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<!-- 예상 체결, 체결량 -->
+						</div>
+
+						<div class="pull_left">
+							<div class="group_table type1">
+								<table class="table">
+									<caption></caption>
+									<colgroup>
+										<col>
+										<col>
+									</colgroup>
+									<tbody>
+										<tr>
+											<th>Close</th>
+											<td>000</td>
+											<th>Credit pri.</th>
+											<td>000</td>
+										</tr>
+										<tr>
+											<th>Mkt Cap</th>
+											<td>000</td>
+											<th>FL. Room</th>
+											<td>000</td>
+										</tr>
+										<tr>
+											<th>Face val</th>
+											<td>000</td>
+											<th>T. Room</th>
+											<td>000</td>
+										</tr>
+										<tr>
+											<th>PER</th>
+											<td>000</td>
+											<th>For. Room</th>
+											<td>000</td>
+										</tr>
+										<tr>
+											<th>For. Buy</th>
+											<td>000</td>
+											<th>For. Sell</th>
+											<td>000</td>
+										</tr>
+										<tr>
+											<th>Total PRI</th>
+											<td>000</td>
+											<th>Issued Shs</th>
+											<td>000</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<!-- tabs -->
+							<div name="tabs">
+								<ul class="nav nav_tabs " role="tablist">
+									<li role="presentation" class="active"><a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">Trader</a></li>
+									<li role="presentation"><a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">Finance info.</a></li>
+								</ul>
+								<div class="tab_content">
+									<div role="tabpanel" class="tab_pane" id="tab1">
+										<div class="grid_area" style="height:127px;">
+											<div class="group_table type2">
+												<table class="table">
+													<colgroup>
+														<col>
+														<col width="50%">
+													</colgroup>
+													<thead>
+														<tr>
+															<th>Sell Top</th>
+															<th>Buy Top</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td>00,000,000</td>
+															<td>100,000,000</td>
+														</tr>
+														<tr>
+															<td>00,000,000</td>
+															<td>100,000,000</td>
+														</tr>
+														<tr>
+															<td>00,000,000</td>
+															<td>100,000,000</td>
+														</tr>
+														<tr>
+															<td>00,000,000</td>
+															<td>100,000,000</td>
+														</tr>
+														<tr>
+															<td>00,000,000</td>
+															<td>100,000,000</td>
+														</tr>
+														<tr>
+															<td>00,000,000</td>
+															<td>100,000,000</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+									<div role="tabpanel" class="tab_pane" id="tab2">
+									ssss
+									</div>
+								</div>
+							</div>
+							<!-- //tabs -->
+						</div>
+
+						<div class="chart_area" style="height:274px;">
+							chart
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- //템플릿 사용부분 -->
+
+
+  	</div>
+
+<script src="/resources/js/jquery.min.js"></script>
+<script src="/resources/js/jquery-ui.min.js"></script>
+<script>
+//$(".group_table.type2 tbody tr:even").addClass("even");
+$( "div[name=tabs]" ).tabs();
+</script>
+  </body>
+</html>

@@ -1,0 +1,30 @@
+package com.vn.app.commons;
+
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+ 
+@Component
+public class VnConst {
+    @Autowired
+    @Resource(name="prop")
+    public Prop prop;   
+
+    @PostConstruct
+    public void init() {
+    	VnConst.SYSTEM_USER_AGENT	=	prop.get("SYSTEM.USER.AGENT");
+    	VnConst.SYSTEM_TTL_SERVER_IP=	prop.get("SYSTEM.TTL.SERVER.IP");
+    	VnConst.SYSTEM_TTL_SERVER 	= 	prop.get("SYSTEM.TTL.SERVER");
+    }
+     
+    public static String SYSTEM_USER_AGENT;
+    public static String SYSTEM_TTL_SERVER_IP;
+    public static String SYSTEM_TTL_SERVER;
+     
+    public static final int SEARCH_RESULT_TEXT 		= 1;
+    public static final int SEARCH_RESULT_XML 		= 2;
+    public static final int SEARCH_RESULT_JSON 		= 3;
+    public static final int SEARCH_TYPE_INTEGRATE 	= 4;
+}

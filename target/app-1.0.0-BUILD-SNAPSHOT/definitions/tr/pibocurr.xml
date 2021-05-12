@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!--   종목 현재가(시세)  -->
+<!--  대비
+	     대비기호 + 대비 값 
+   	     대비기호 -    1: 상한가, 2: 상승, 3: 보합, 4:하한가, 5:하락
+      ex) "1  2300", "3     0", "5   400"-->
+<!--  등락율
+	     부호 + 대비값 
+   	  ex) "+   400", "-  1000"
+ -->
+ <!-- 
+<transaction trcode="pibohmax" servicecode="pibocurr"  type="row">
+-->
+<transaction trcode="pibocurr" servicecode=""  type="row">
+	<value io="in"		name="symb"		type="string"	length="12"	comment="종목코드"/>
+	<value io="in"		name="lang"		type="string"	length="1"	comment="Language  0:VN  1:EN"/>
+	
+	<value io="out"		name="rcod"		type="string"	length="12"	comment="실시간 심볼"/>
+	<value io="out"		name="symb"		type="string"	length="12"	comment="종목코드"/>
+	<value io="out"		name="snam"		type="string"	length="120"	comment="종목명"/>
+	<value io="out"		name="mark"		type="string"	length="12"	comment="시장구분('HOSE','HNX')"/>
+	<value io="out"		name="curr"		type="string"	length="9"	comment="현재가"/>
+	<value io="out"		name="diff"		type="string"	length="7"	comment="대비"/>
+	<value io="out"		name="rate"		type="string"	length="7"	comment="등락율"/>
+	<value io="out"		name="avol"		type="string"	length="9"	comment="누적거래량"/>
+	<value io="out"		name="mrgn"		type="string"	length="5"	comment="Magin Ratio"/>
+	<value io="out"		name="xvol"		type="string"	length="9"	comment="Previous Volume"/>
+	<value io="out"		name="from"		type="string"	length="16"	comment="Foreign Room	"/>
+	<value io="out"		name="eprc"		type="string"	length="9"	comment="Estimated Price"/>
+	<value io="out"		name="evol"		type="string"	length="9"	comment="Estimated Volume"/>
+	<value io="out"		name="styp"		type="string"	length="4"	comment="Estimated Volume"/>
+	<value io="out"		name="mvol"		type="string"	length="9"	comment="Matching Volume"/>
+	<value io="out"		name="opin"		type="string"	length="9"	comment="Opening Interest for Future"/>
+	<value io="out"		name="days"		type="string"	length="12"	comment="Listing Date"/>
+	<value io="out"		name="daye"		type="string"	length="12"	comment="Delisting Date"/>
+	
+</transaction>

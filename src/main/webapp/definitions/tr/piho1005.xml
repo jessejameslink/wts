@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!--  관심종목 상세조회 : PIHO1005	-->
+
+<transaction trcode="piho1005" servicecode=""  type="row">
+	<value io="in"		name="usid"			type="string"	length="16"	comment="USER ID"/>
+	<value io="in"		name="grpn"			type="string"	length="2"	comment="Group Number (1~10)"/>
+	<value io="in"		name="lang"			type="string"	length="1"	comment="Language  0:VN  1:EN"/>
+	<value io="out"		name="nrec"			type="string"	length="4"	comment="그룹 개수"/>
+	<table name="list1" count="nrec">
+		<value io="out"	name="rcod"		type="string"	length="12"	comment="RTS Symbol"/>
+		<value io="out"	name="symb"		type="string"	length="12"	comment="Security Symbol"/>
+		<value io="out"	name="snam"		type="string"	length="32"	comment="Security Name"/>
+		<value io="out"	name="curr"		type="string"	length="9"	comment="Current Price"/>
+		<value io="out"	name="diff"		type="string"	length="7"	comment="Change"/>
+		<value io="out"	name="rate"		type="string"	length="7"	comment="% Change"/>
+		<value io="out"	name="mark"		type="string"	length="9"	comment="Market"/>
+		<value io="out"	name="ceil"		type="string"	length="9"	comment="Ceiling Price"/>
+		<value io="out"	name="floo"		type="string"	length="9"	comment="Floor Price"/>
+		<value io="out"	name="pcpr"		type="string"	length="9"	comment="Prior Close Price"/>
+		<value io="out"	name="buye"		type="string"	length="9"	comment="Buy Top Price"/>
+		<value io="out"	name="bvol"		type="string"	length="9"	comment="Buy Top Lot Volume "/>
+		<value io="out"	name="buye2"		type="string"	length="9"	comment="Buy Top Price"/>
+		<value io="out"	name="bvol2"		type="string"	length="9"	comment="Buy Top Lot Volume "/>
+		<value io="out"	name="buye3"		type="string"	length="9"	comment="Buy Top Price"/>
+		<value io="out"	name="bvol3"		type="string"	length="9"	comment="Buy Top Lot Volume "/>		
+		<value io="out"	name="mpic"		type="string"	length="9"	comment="Matching Price "/>
+		<value io="out"	name="mvol"		type="string"	length="9"	comment="Matching Lot Volume"/>
+		<value io="out"	name="mdif"		type="string"	length="9"	comment="Matching Change (sign + diff) sign      1: 상한  2: 상승   3: 보합 4: 하한  5: 하락  "/>
+		<value io="out"	name="mrat"		type="string"	length="9"	comment="Matching % Change"/>
+		<value io="out"	name="avol"		type="string"	length="9"	comment="Accumulate Volume"/>
+		<value io="out"	name="sell"		type="string"	length="9"	comment="Buy Top Price"/>
+		<value io="out"	name="svol"		type="string"	length="9"	comment="Buy Top Lot Volume"/>		
+		<value io="out"	name="sell2"		type="string"	length="9"	comment="Buy Top Price"/>
+		<value io="out"	name="svol2"		type="string"	length="9"	comment="Buy Top Lot Volume"/>
+		<value io="out"	name="sell3"		type="string"	length="9"	comment="Buy Top Price"/>
+		<value io="out"	name="svol3"		type="string"	length="9"	comment="Buy Top Lot Volume"/>		
+		<value io="out"	name="open"		type="string"	length="9"	comment="Open Price"/>
+		<value io="out"	name="high"		type="string"	length="9"	comment="Highest Price"/>
+		<value io="out"	name="lowe"		type="string"	length="9"	comment="Lowest Price"/>
+		<value io="out"	name="buyf"		type="string"	length="9"	comment="Buy Foreign"/>
+		<value io="out"	name="self"		type="string"	length="9"	comment="Sell Foreign"/>
+		<value io="out"	name="trom"		type="string"	length="16"	comment="Total Room"/>
+		<value io="out"	name="eprc"		type="string"	length="9"	comment="Estimate Price "/>
+		<value io="out"	name="evol"		type="string"	length="9"	comment="Estimate Volume"/>
+	</table>
+</transaction>

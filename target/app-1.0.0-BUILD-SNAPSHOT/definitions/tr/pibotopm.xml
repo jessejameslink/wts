@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!--   변동량 순위  -->
+<transaction trcode="pibotopm" servicecode=""  type="row">
+	<value io="in"		name="fymd"		type="string"		length="10"	comment="From YMD 'DD/MM/YYYY'"/>
+	<value io="in"		name="tymd"		type="string"		length="10"	comment="To   YMD 'DD/MM/YYYY'"/>
+	<value io="in"		name="mark"		type="string"		length="1"	comment="'0':ALL   '1':UPCOM  '2':HNX   '3':HOSE  '4':VN    '5':VN30   "/>
+	<value io="in"		name="updn"		type="string"		length="1"	comment="'0':UP    '1':DOWN "/>
+	<value io="in"		name="skey"		type="string"		length="12"	comment="Search key "/>
+	
+	<value io="out"		name="fymd"		type="string"		length="10"	comment="From YMD"/>
+	<value io="out"		name="tymd"		type="string"		length="10"	comment="To   YMD"/>
+	<value io="out"		name="nrec"		type="string"		length="4"	comment="# of record"/>
+	<value io="out"		name="next"		type="string"		length="1"	comment="Next Data ? (Y/N)"/>
+	<value io="out"		name="skey"		type="string"		length="12"	comment="Search Key"/>
+	
+	<table name="list1" count="nrec">
+		<value io="out"	name="rcod"		type="string"	length="12"	comment="RTS Symbol"/>
+		<value io="out"	name="symb"		type="string"	length="12"	comment="Security Symbol"/>
+		<value io="out"	name="curr"		type="string"	length="9"	comment="Current Price"/>
+		<value io="out"	name="diff"		type="string"	length="7"	comment="Change"/>
+		<value io="out"	name="rate"		type="string"	length="7"	comment="% Change"/>
+		<value io="out"	name="avol"		type="string"	length="9"	comment="Accumulate Volume"/>
+		<value io="out"	name="advr"		type="string"	length="9"	comment="Adv.Rate"/>
+		<value io="out"	name="advn"		type="string"	length="9"	comment="Adv.Rng"/>
+		
+		<value io="out"	name="flst"		type="string"	length="9"	comment="Last of From YMD"/>
+		<value io="out"	name="tlst"		type="string"	length="9"	comment="Last of To   YMD"/>
+		<value io="out"	name="mark"		type="string"	length="9"	comment="Market"/>
+	</table>
+	
+</transaction>

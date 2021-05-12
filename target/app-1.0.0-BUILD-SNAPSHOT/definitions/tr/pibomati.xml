@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!--   체결  -->
+<transaction trcode="pibomati" servicecode=""  type="row">
+	<value io="in"		name="symb"		type="string"		length="12"	comment="Security Symbol"/>
+	<value io="in"		name="skey"		type="string"		length="32"	comment="Search Key"/>
+	
+	<value io="out"		name="next"		type="string"		length="1"	comment="Next Data ? (Y/N)"/>
+	<value io="out"		name="nrec"		type="string"		length="4"	comment="of Record"/>
+	<value io="out"		name="skey"		type="string"		length="32"	comment="Search Key"/>
+	<value io="out"		name="rcod"		type="string"		length="12"	comment="RTS Symbol"/>
+	
+	<table name="list1" count="nrec">
+		<value io="out"	name="mtim"		type="string"	length="6"	comment="Matching Time"/>
+		<value io="out"	name="curr"		type="string"	length="9"	comment="Current Price"/>
+		<value io="out"	name="diff"		type="string"	length="7"	comment="Change"/>
+		<value io="out"	name="lvol"		type="string"	length="9"	comment="Last Volume"/>
+		<value io="out"	name="rate"		type="string"	length="7"	comment="% Change"/>
+		<value io="out"	name="avol"		type="string"	length="9"	comment="% Change"/>
+	</table>
+</transaction>

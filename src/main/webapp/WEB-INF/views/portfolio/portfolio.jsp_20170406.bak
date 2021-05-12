@@ -1,0 +1,597 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%
+	String langCd = (String) session.getAttribute("LanguageCookie");
+%>
+
+<%--
+<%@ include file = "<c:url value='/include/header.jsp'/>" %>
+ --%>
+<html>
+<head>
+<script type="text/javascript" src="/resources/js/jquery.blockUI.min.js"></script>
+<script>
+	$(document).ready(function() {
+		$(".datepicker").datepicker({
+			showOn      : "button",
+			dateFormat  : "dd/mm/yy",
+			changeYear  : true,
+			changeMonth : true
+		});
+		getPortFolio();
+	});
+
+	function getPortFolio() {
+		$(".mdi_container").block({message: "<span>LOADING...</span>"});
+		var param = {
+				mvLastAction      : "PORTFOLIOENQUIRY",
+				mvChildLastAction : "PORTFOLIO"
+		};
+
+		$.ajax({
+			dataType  : "json",
+			url       : "/trading/data/enquiryportfolio.do",
+			data      : param,
+			success   : function(data) {
+				if(data.jsonObj != null) {
+					if(data.jsonObj.mvPortfolioAccSummaryBean != null) {
+						var accSum = data.jsonObj.mvPortfolioAccSummaryBean;
+						// Summary
+						$("#totalAsset").html(numIntFormat(numDotComma(accSum.totalAsset)));
+						$("#equity").html(numIntFormat(numDotComma(accSum.equity)));
+						$("#stockValue").html(numIntFormat(numDotComma(accSum.stockValue)));
+						$("#totalPL").html(numIntFormat(numDotComma(data.jsonObj.totalPL)));
+						$("#PLPercent").html(accSum.PLPercent + "%");
+						
+						if(Number(accSum.PLPercent) > 0) {
+							$("#totalPL").addClass("up");
+							$("#PLPercent").addClass("up");
+						} else if(Number(accSum.PLPercent) < 0) {
+							$("#totalPL").addClass("low");
+							$("#PLPercent").addClass("low");
+						}
+						
+						
+
+						// Cash information
+						$("#cashBalance").html(numIntFormat(numDotComma(accSum.cashBalance)));
+						$("#mvAvailAdvanceMoney").html(numIntFormat(numDotComma(accSum.mvAvailAdvanceMoney)));
+						$("#mvHoldAmount").html(numIntFormat(numDotComma(accSum.CTodayConfirmBuy)));
+						$("#mvBuyHoldAmount").html(numIntFormat(numDotComma(accSum.mvBuyHoldAmount)));
+						$("#pendingWithdrawal").html(numIntFormat(numDotComma(accSum.pendingWithdrawal)));
+						$("#soldT0").html(numIntFormat(numDotComma(accSum.soldT0)));
+						$("#soldT1").html(numIntFormat(numDotComma(accSum.soldT1)));
+						$("#soldT2").html(numIntFormat(numDotComma(accSum.soldT2)));
+
+						// Portfolio assessment
+						$("#totalAssetMaintenance").html(numIntFormat(numDotComma(accSum.totalAssetMaintenance)));
+						$("#equityMar").html(numIntFormat(numDotComma(accSum.equityMar)));
+						$("#stockMaintenance").html(numIntFormat(numDotComma(accSum.stockMaintenance)));
+						$("#cashMaintenance").html(numIntFormat(numDotComma(accSum.cashMaintenance)));
+						$("#outStandingLoan").html(numIntFormat(numDotComma(accSum.mvOutstandingLoan)));
+						$("#debtIncByPurchase").html(numIntFormat(numDotComma(accSum.debtIncByPurchase)));
+						$("#debitAccruedInterest").html(numIntFormat(numDotComma(accSum.debitAccruedInterest)));
+						$("#creditLimit").html(numIntFormat(numDotComma(accSum.mvCreditLimit)));
+
+						// Margin position
+						$("#mvMarginValue").html(numIntFormat(numDotComma(accSum.mvMarginValue)));
+						
+						var minVal	=	accSum.minMarginReq;
+						if(minVal == null) {
+							minVal	=	0;
+						}
+						
+						$("#minMarginReq").html(Number(minVal) + "%");
+						
+						
+						$("#curLiqMargin").html((accSum.curLiqMargin.length > 5 ? Number(accSum.curLiqMargin.substring(0, accSum.curLiqMargin.length - 1)) : Number(accSum.curLiqMargin)) + "%");
+//						$("#").html(accSum.);
+						$("#cashDeposit").html(numIntFormat(numDotComma(accSum.cashDeposit)));
+						$("#sellStkInMarPort").html(numIntFormat(numDotComma(accSum.sellStkInMarPort)));
+						$("#sellStkNotInMarPort").html(numIntFormat(numDotComma(accSum.sellStkNotInMarPort)));
+					}
+					/* <%--
+					if(data.jsonObj.mvPortfolioBeanList != null) {
+						var htmlStr    = "";
+						var lendValue  = 0;
+						var maintValue = 0;
+						$("#grdPortfolio").replaceAll();
+
+						for(var i=0; i < data.jsonObj.mvPortfolioBeanList.length; i++) {
+							var rowData = data.jsonObj.mvPortfolioBeanList[i];
+							if(i % 2 == 0) {
+								htmlStr += "<tr>";
+							} else {
+								htmlStr += "<tr class=\"even\">";
+							}
+							var totalVolume = parseInt(numDotComma(rowData.mvTSettled)) - parseInt(numDotComma(rowData.mvTUnSettleSell));
+							totalVolume    += (parseInt(numDotComma(rowData.mvTTodayConfirmBuy)) + parseInt(numDotComma(rowData.mvTTodayUnsettleBuy)));
+							totalVolume    += parseInt(numDotComma(rowData.mvTT1UnsettleBuy)) + parseInt(numDotComma(rowData.mvTT2UnsettleBuy));
+							totalVolume    += parseInt(numDotComma(rowData.mvTDueBuy)) + parseInt(numDotComma(rowData.mvTEntitlementQty));
+							var t0Buy       = parseInt(numDotComma(rowData.mvTTodayConfirmBuy)) + parseInt(numDotComma(rowData.mvTTodayUnsettleBuy));
+							var volumeHold  = parseInt(numDotComma(rowData.normalHold)) + parseInt(numDotComma(rowData.conditionalHold));
+							lendValue      += parseInt(numDotComma(rowData.mvMartginValue));
+							maintValue     += parseInt(numDotComma(rowData.maintenanceValue));
+
+							htmlStr += "	<td class=\"text_center\">" + (i + 1) + "</td>";           // No.
+							htmlStr += "	<td class=\"text_center\">" + rowData.mvStockID + "</td>"; // Stock
+							htmlStr += "	<td>";
+							htmlStr += "		<p>" + numIntFormat(totalVolume) + "</p>"; // Volume - Total volume
+							htmlStr += "		<p>" + numIntFormat(numDotComma(rowData.mvTradableQty)) + "</p>"; // Volume - Usable
+							htmlStr += "	</td>";
+							htmlStr += "	<td>";
+							htmlStr += "		<p>" + numIntFormat(numDotComma(rowData.mvQueuingSell)) + "</p>"; // Volume - Hold in day
+							htmlStr += "		<p>" + numIntFormat(t0Buy) + "</p>";   // Volume - T0 Buy
+							htmlStr += "	</td>";
+							htmlStr += "	<td>";
+							htmlStr += "		<p>" + numIntFormat(numDotComma(rowData.mvTT1UnsettleBuy)) + "</p>"; // Volume - T1 Buy
+							htmlStr += "		<p>" + numIntFormat(numDotComma(rowData.mvTDueBuy)) + "</p>";        // Volume - T2 Buy
+							htmlStr += "	</td>";
+							htmlStr += "	<td>";
+							htmlStr += "		<p>" + numIntFormat(numDotComma(rowData.mvTMortgageQty)) + "</p>";   // Volume - Mortgage
+							htmlStr += "		<p>" + numIntFormat(volumeHold) + "</p>"; // Volume - Hold
+							htmlStr += "	</td>";
+							htmlStr += "	<td>";
+							htmlStr += "		<p>" + numIntFormat(numDotComma(rowData.mvTAwaitingTraceCert)) + "</p>";   // Volume - Await trading
+							htmlStr += "		<p>" + numIntFormat(numDotComma(rowData.mvTAwaitingDepositCert)) + "</p>"; // Volume - Await deposit
+							htmlStr += "	</td>";
+							htmlStr += "	<td>";
+							htmlStr += "		<p>" + numIntFormat(numDotComma(rowData.mvTAwaitingWithdrawalCert)) + "</p>"; // Volume - Await withdrawa
+							htmlStr += "		<p>" + numIntFormat(numDotComma(rowData.mvTEntitlementQty)) + "</p>";         // Volume - Pend. entitlemen
+							htmlStr += "	</td>";
+							htmlStr += "	<td>";
+							htmlStr += "		<p>" + numIntFormat(numDotComma(rowData.mvAvgPrice)) + "</p>";    // Price - Avg. price
+							htmlStr += "		<p>" + numIntFormat(numDotComma(rowData.mvMarketPrice)) + "</p>"; // Price - Current price
+							htmlStr += "	</td>";
+							htmlStr += "	<td>";
+							htmlStr += "		<p>" + numIntFormat(numDotComma(rowData.mvWAC)) + "</p>";         // Portfolio Assessment - Buy value
+							htmlStr += "		<p>" + numIntFormat(numDotComma(rowData.mvMarketValue)) + "</p>"; // Portfolio Assessment - Market value
+							htmlStr += "	</td>";
+							htmlStr += "	<td>";
+							htmlStr += "		<p>" + numIntFormat(numDotComma(rowData.mvPL)) + "</p>";        // Portfolio Assessment - Profit/Loss
+							htmlStr += "		<p>" + rowData.mvPLPercent + "</p>"; // Portfolio Assessment - %Profit/Loss
+							htmlStr += "	</td>";
+							htmlStr += "	<td>";
+							htmlStr += "		<p></p>"; // Portfolio Assessment - Total Profit/Loss <!-- Todo 항목확인 필요 -->
+							htmlStr += "		<p></p>"; // Portfolio Assessment - Total %Profit/Loss <!-- Todo 항목확인 필요 -->
+							htmlStr += "	</td>";
+							htmlStr += "	<td></td>"; // Portfolio Assessment - TotalEvaluation Amount <!-- Todo 항목확인 필요 -->
+							htmlStr += "	<td>";
+							htmlStr += "		<p>" + rowData.mvMarginPercentage + "</p>"; // (%) Margin - %Lend.
+							htmlStr += "		<p>" + numIntFormat(numDotComma(rowData.mvMartginValue)) + "</p>"; // (%) Margin - Lending value
+							htmlStr += "	</td>";
+							htmlStr += "	<td>";
+							htmlStr += "		<p>" + rowData.maintenancePercentage + "</p>"; // (%) Margin - %Maint.
+							htmlStr += "		<p>" + numIntFormat(numDotComma(rowData.maintenanceValue)) + "</p>"; // (%) Margin - Maintenance value
+							htmlStr += "	</td>";
+							htmlStr += "</tr>";
+						}
+
+						$("#grdPortfolio").html(htmlStr);
+						$("#tdLendValue").html(numIntFormat(lendValue));
+						$("#tdMaintValue").html(numIntFormat(maintValue));
+					}
+					--%> */
+					if(data.jsonObj.mvPortfolioBeanList != null) {
+						var htmlStr    = "";
+						var lendValue  = 0;
+						var maintValue = 0;
+						$("#grdPortfolio").replaceAll();
+
+						for(var i=0; i < data.jsonObj.mvPortfolioBeanList.length; i++) {
+							var rowData = data.jsonObj.mvPortfolioBeanList[i];
+							if(i % 2 == 0) {
+								htmlStr += "<tr>";
+							} else {
+								htmlStr += "<tr class=\"even\">";
+							}
+							var totalVolume = parseInt(numDotComma(rowData.mvTSettled)) - parseInt(numDotComma(rowData.mvTUnSettleSell));
+							totalVolume    += (parseInt(numDotComma(rowData.mvTTodayConfirmBuy)) + parseInt(numDotComma(rowData.mvTTodayUnsettleBuy)));
+							totalVolume    += parseInt(numDotComma(rowData.mvTT1UnsettleBuy)) + parseInt(numDotComma(rowData.mvTT2UnsettleBuy));
+							totalVolume    += parseInt(numDotComma(rowData.mvTDueBuy)) + parseInt(numDotComma(rowData.mvTEntitlementQty));
+							var t0Buy       = parseInt(numDotComma(rowData.mvTTodayConfirmBuy)) + parseInt(numDotComma(rowData.mvTTodayUnsettleBuy));
+							var volumeHold  = parseInt(numDotComma(rowData.normalHold)) + parseInt(numDotComma(rowData.conditionalHold));
+							lendValue      += parseInt(numDotComma(rowData.mvMartginValue));
+							maintValue     += parseInt(numDotComma(rowData.maintenanceValue));
+
+							htmlStr += "	<td class=\"text_center\">" + (i + 1) + "</td>";           // No.
+							htmlStr += "	<td class=\"text_center\">" + rowData.mvStockID + "</td>"; // Stock
+							htmlStr += "	<td>" + numIntFormat(totalVolume) + "</td>"; // Volume - Total volume
+							htmlStr += "	<td>" + numIntFormat(numDotComma(rowData.mvTradableQty)) + "</td>"; // Volume - Usable
+							htmlStr += "	<td>" + numIntFormat(numDotComma(rowData.mvQueuingSell)) + "</td>"; // Volume - Hold in day
+							htmlStr += "	<td>" + numIntFormat(t0Buy) + "</td>";   // Volume - T0 Buy
+							htmlStr += "	<td>" + numIntFormat(numDotComma(rowData.mvTT1UnsettleBuy)) + "</td>"; // Volume - T1 Buy
+							htmlStr += "	<td>" + numIntFormat(numDotComma(rowData.mvTDueBuy)) + "</td>";        // Volume - T2 Buy
+							htmlStr += "	<td>" + numIntFormat(numDotComma(rowData.mvTMortgageQty)) + "</td>";   // Volume - Mortgage
+							htmlStr += "	<td>" + numIntFormat(volumeHold) + "</td>"; // Volume - Hold
+							htmlStr += "	<td>" + numIntFormat(numDotComma(rowData.mvTAwaitingTraceCert)) + "</td>";   // Volume - Await trading
+							htmlStr += "	<td>" + numIntFormat(numDotComma(rowData.mvTAwaitingDepositCert)) + "</td>"; // Volume - Await deposit
+							htmlStr += "	<td>" + numIntFormat(numDotComma(rowData.mvTAwaitingWithdrawalCert)) + "</td>"; // Volume - Await withdrawa
+							htmlStr += "	<td>" + numIntFormat(numDotComma(rowData.mvTEntitlementQty)) + "</td>";         // Volume - Pend. entitlemen
+							htmlStr += "	<td>" + numIntFormat(numDotComma(rowData.mvAvgPrice)) + "</td>";    // Price - Avg. price
+							htmlStr += "	<td>" + numIntFormat(numDotComma(rowData.mvMarketPrice)) + "</td>"; // Price - Current price
+							htmlStr += "	<td>" + numIntFormat(numDotComma(rowData.mvWAC)) + "</td>";         // Portfolio Assessment - Buy value
+							htmlStr += "	<td>" + numIntFormat(numDotComma(rowData.mvMarketValue)) + "</td>"; // Portfolio Assessment - Market value
+							htmlStr += "	<td>" + numIntFormat(numDotComma(rowData.mvPL)) + "</td>";        // Portfolio Assessment - Profit/Loss
+							
+							if(Number(rowData.mvPLPercent) > 0) {
+								htmlStr	+=	"<td class=\"up\">";
+							} else if(Number(rowData.mvPLPercent) < 0) {
+								htmlStr	+=	"<td class=\"low\">";
+							} else {
+								htmlStr	+=	"<td>";
+							}
+							
+							htmlStr +=  rowData.mvPLPercent + "</td>"; // Portfolio Assessment - %Profit/Loss
+							
+							htmlStr += "	<td>" + rowData.mvMarginPercentage + "</td>"; // (%) Margin - %Lend.
+							htmlStr += "	<td>" + numIntFormat(numDotComma(rowData.mvMartginValue)) + "</td>"; // (%) Margin - Lending value
+							htmlStr += "	<td>" + rowData.maintenancePercentage + "</td>"; // (%) Margin - %Maint.
+							htmlStr += "	<td>" + numIntFormat(Number(numDotComma(rowData.maintenanceValue))*1000) + "</td>"; // (%) Margin - Maintenance value
+							htmlStr += "</tr>";
+						}
+
+						$("#grdPortfolio").html(htmlStr);
+						$("#tdLendValue").html(numIntFormat(lendValue));
+						$("#tdMaintValue").html(numIntFormat(maintValue));
+					}
+					$(".mdi_container").unblock();
+				}
+			},
+			error     :function(e) {
+				console.log(e);
+				$(".mdi_container").unblock();
+			}
+		});
+	}
+</script>
+
+</head>
+<body class="mdi">
+	<div>
+		<!-- 템플릿 사용부분 -->
+		<div class="mdi_container">
+			<h3 class="tit bg"><%= (langCd.equals("en_US") ? "Cash" : "Tiền") %></h3>
+			<div class="cash_wrap margin_top_0">
+				<div class="group_table cash1 radius_top">
+					<table class="table no_bbt list_type_01">
+						<colgroup>
+							<col width="160" />
+							<col />
+						</colgroup>
+						<thead>
+							<tr>
+								<th><%= (langCd.equals("en_US") ? "Summary" : "Tổng quan") %></th>
+								<th><%= (langCd.equals("en_US") ? "Value(VND)" : "Giá trị(VND)") %></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th><%= (langCd.equals("en_US") ? "Total asset" : "Tổng tài sản") %></th>
+								<td id="totalAsset"></td>
+							</tr>
+							<tr>
+								<th><%= (langCd.equals("en_US") ? "Net Asset" : "Tài sản thực có") %></th>
+								<td id="equity"></td>
+							</tr>
+							<tr>
+								<th><%= (langCd.equals("en_US") ? "Total stock market value" : "Tổng giá trị chứng khoán") %></th>
+								<td id="stockValue"></td>
+							</tr>
+							<tr>
+								<th><%= (langCd.equals("en_US") ? "Profit/Loss" : "Lãi/lỗ") %></th>
+								<td id="totalPL"></td>
+							</tr>
+							<tr>
+								<th><%= (langCd.equals("en_US") ? "%Profit/Loss (per equity)" : "% Lãi/lỗ (trên tài sản thực có)") %></th>
+								<td id="PLPercent" class=""></td>
+							</tr>
+							<tr>
+								<th>&nbsp;</th>
+								<td>&nbsp;</td>
+							</tr>
+							<tr>
+								<th>&nbsp;</th>
+								<td>&nbsp;</td>
+							</tr>
+							<tr>
+								<th>&nbsp;</th>
+								<td>&nbsp;</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="group_table cash2 radius_top">
+					<table class="table no_bbt list_type_01">
+						<colgroup>
+							<col width="160" />
+							<col />
+						</colgroup>
+						<thead>
+							<tr>
+								<th><%= (langCd.equals("en_US") ? "Cash information" : "Thông tin tài khoản tiền") %></th>
+								<th><%= (langCd.equals("en_US") ? "Value(VND)" : "Giá trị(VND)") %></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th><%= (langCd.equals("en_US") ? "Cash balance (withdrawable)" : "Số dư tiền mặt (được rút)") %></th>
+								<td id="cashBalance"></td>
+							</tr>
+							<tr>
+								<th><%= (langCd.equals("en_US") ? "Cash advanceable" : "Số dư ứng trước") %></th>
+								<td id="mvAvailAdvanceMoney"></td>
+							</tr>
+							<tr>
+								<th><%= (langCd.equals("en_US") ? "Hold for executed purchase" : "Tiền mua CK đã khớp") %></th>
+								<td id="mvHoldAmount"></td>
+							</tr>
+							<tr>
+								<th><%= (langCd.equals("en_US") ? "Hold for pending purchase" : "Tiền mua CK chờ khớp") %></th>
+								<td id="mvBuyHoldAmount"></td>
+							</tr>
+							<tr>
+								<th><%= (langCd.equals("en_US") ? "Pending approval for withdrawal" : "Tiền (rút, chuyển khoản) chờ duyệt") %></th>
+								<td id="pendingWithdrawal"></td>
+							</tr>
+							<tr>
+								<th><%= (langCd.equals("en_US") ? "Sold T+0" : "Tiền bán T+0") %></th>
+								<td id="soldT0"></td>
+							</tr>
+							<tr>
+								<th><%= (langCd.equals("en_US") ? "Sold T+1" : "Tiền bán T+1") %></th>
+								<td id="soldT1"></td>
+							</tr>
+							<tr>
+								<th><%= (langCd.equals("en_US") ? "Sold T+2" : "Tiền bán T+2") %></th>
+								<td id="soldT2"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="group_table cash3 radius_top">
+					<table class="table no_bbt list_type_01">
+						<colgroup>
+							<col width="160" />
+							<col />
+						</colgroup>
+						<thead>
+							<tr>
+								<th><%= (langCd.equals("en_US") ? "Portfolio assessment" : "Đánh giá tài sản") %></th>
+								<th><%= (langCd.equals("en_US") ? "Value(VND)" : "Giá trị(VND)") %></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th><%= (langCd.equals("en_US") ? "Total asset maintenance" : "Tổng tài sản đảm bảo") %></th>
+								<td id="totalAssetMaintenance"></td>
+							</tr>
+							<tr>
+								<th><%= (langCd.equals("en_US") ? "Equity (margin portfolio)" : "Vốn thực có") %></th>
+								<td id="equityMar"></td>
+							</tr>
+							<tr>
+								<th><%= (langCd.equals("en_US") ? "Stock maintenance" : "Giá trị chứng khoán đảm bảo") %></th>
+								<td id="stockMaintenance"></td>
+							</tr>
+							<tr>
+								<th><%= (langCd.equals("en_US") ? "Cash Maintenance" : "Giá trị tiền mặt đảm bảo") %></th>
+								<td id="cashMaintenance"></td>
+							</tr>
+							<tr>
+								<th><%= (langCd.equals("en_US") ? "Outstanding loan" : "Dư nợ ký quỹ") %></th>
+								<td id="outStandingLoan" class="low"></td>
+							</tr>
+							<tr>
+								<th><%= (langCd.equals("en_US") ? "Debt increased by purchase" : "Tăng nợ do lệnh mua") %></th>
+								<td id="debtIncByPurchase" class="low"></td>
+							</tr>
+							<tr>
+								<th><%= (langCd.equals("en_US") ? "Accured debit interest" : "Lãi vay cộng dồn") %></th>
+								<td id="debitAccruedInterest" class="low"></td>
+							</tr>
+							<tr>
+								<th><%= (langCd.equals("en_US") ? "Credit limit" : "Hạn mức tín dụng") %></th>
+								<td id="creditLimit" class="low"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="group_table cash4 radius_top">
+					<table class="table no_bbt list_type_01">
+						<colgroup>
+							<col width="160" />
+							<col />
+						</colgroup>
+						<thead>
+							<tr>
+								<th><%= (langCd.equals("en_US") ? "Margin position" : "Trạng thái kỹ quỹ") %></th>
+								<th><%= (langCd.equals("en_US") ? "Value(VND)" : "Giá trị(VND)") %></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th><%= (langCd.equals("en_US") ? "Lendable value" : "Khả năng vay ký quỹ") %></th>
+								<td id="mvMarginValue"></td>
+							</tr>
+							<tr>
+								<th><%= (langCd.equals("en_US") ? "Minimum margin requirement" : "Tỷ lệ ký quỹ tối thiểu bắt buộc") %></th>
+								<td id="minMarginReq"></td>
+							</tr>
+							<tr>
+								<th><%= (langCd.equals("en_US") ? "Current liquidating margin" : "Tỷ lệ ký quỹ hiện tại") %></th>
+								<td id="curLiqMargin" class="up"></td>
+							</tr>
+							<tr>
+								<th class="point"><%= (langCd.equals("en_US") ? "Margin call (By Options):" : "Gọi bổ sung ký quỹ (Tùy chọn):") %></th>
+								<td></td> <!-- Todo 항목확인 필요 -->
+							</tr>
+							<tr>
+								<th><%= (langCd.equals("en_US") ? "Cash deposit" : "Nộp tiền mặt") %></th>
+								<td id="cashDeposit" class="low"></td>
+							</tr>
+							<tr>
+								<th><%= (langCd.equals("en_US") ? "Selling stock in margin portfolio" : "Bán CK trong danh mục ký quỹ") %></th>
+								<td id="sellStkInMarPort" class="low"></td>
+							</tr>
+							<tr>
+								<th><%= (langCd.equals("en_US") ? "Selling stock not in margin portfolio" : "Bán CK ngoài danh mục ký quỹ") %></th>
+								<td id="sellStkNotInMarPort" class="low"></td>
+							</tr>
+							<tr>
+								<th>&nbsp;</th>
+								<td>&nbsp;</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="search_area in">
+				
+				<div class="pull_right;" style="display: none;">
+					<label for="fromSearch"><%= (langCd.equals("en_US") ? "From" : "Từ ngày") %></label><input id="fromSearch" type="text" class="datepicker" placeholder="13/05/2016">
+					<label for="toSearch"><%= (langCd.equals("en_US") ? "To" : "Đến ngày") %></label><input id="toSearch" type="text" class="datepicker" placeholder="13/05/2016">
+					<button class="btn" type="button">Search</button>
+				</div>
+			</div>
+			<h3 class="tit bg"><%= (langCd.equals("en_US") ? "Stock" : "Chứng khoán") %></h3>
+			<div class="grid_area margin_top_0 radius_top" style="height:293px;">
+				<div class="group_table double radius_top">
+					<%--
+					<table class="table">
+						<thead>
+							<tr>
+								<th rowspan="3"><%= (langCd.equals("en_US") ? "No." : "STT") %></th>
+								<th rowspan="3"><%= (langCd.equals("en_US") ? "Stock" : "Mã CK") %></th>
+								<th class="bd_bt2" colspan="6"><%= (langCd.equals("en_US") ? "Volume" : "Khối lượng") %></th>
+								<th class="bd_bt2"><%= (langCd.equals("en_US") ? "Price" : "Giá") %></th>
+								<th class="bd_bt2" colspan="4"><%= (langCd.equals("en_US") ? "Portfolio Assessment" : "Đánh giá danh mục") %></th>
+								<th class="bd_bt2" colspan="2"><%= (langCd.equals("en_US") ? "(%) Margin" : "(%) Ký quỹ") %></th>
+							</tr>
+							<tr>
+								<th class="bd_bt2"><%= (langCd.equals("en_US") ? "Total volume" : "Tổng khối lượng") %></th>
+								<th class="bd_bt2"><%= (langCd.equals("en_US") ? "Hold in day" : "Số dư khoanh giữ") %></th>
+								<th class="bd_bt2"><%= (langCd.equals("en_US") ? "T1 Buy" : "Mua T1") %></th>
+								<th class="bd_bt2"><%= (langCd.equals("en_US") ? "Mortgage" : "Cầm cố") %></th>
+								<th class="bd_bt2"><%= (langCd.equals("en_US") ? "Await trading" : "Chờ giao dịch") %></th>
+								<th class="bd_bt2"><%= (langCd.equals("en_US") ? "Await<br> withdrawa" : "Chờ rút") %></th>
+								<th class="bd_bt2"><%= (langCd.equals("en_US") ? "Avg. price" : "Giá TB") %></th>
+								<th class="bd_bt2"><%= (langCd.equals("en_US") ? "Buy value" : "Giá trị mua") %></th>
+								<th class="bd_bt2"><%= (langCd.equals("en_US") ? "Profit/Loss" : "Lãi/Lỗ") %></th>
+								<th class="bd_bt2"><%= (langCd.equals("en_US") ? "Total<br>Profit/Loss" : "Tổng Lãi/Lỗ") %></th>
+								<th class="bd_bt2" rowspan="2"><%= (langCd.equals("en_US") ? "TotalEvaluation Amount" : "Tổng giá trị ước tính") %></th>
+								<th class="bd_bt2"><%= (langCd.equals("en_US") ? "%Lend." : "% Cho vay") %></th>
+								<th class="bd_bt2"><%= (langCd.equals("en_US") ? "%Maint." : "% Đảm bảo") %></th>
+							</tr>
+							<tr>
+								<th><%= (langCd.equals("en_US") ? "Usable" : "Số dư GD") %></th>
+								<th><%= (langCd.equals("en_US") ? "T0 Buy" : "Mua T0") %></th>
+								<th><%= (langCd.equals("en_US") ? "T2 Buy" : "Mua T2") %></th>
+								<th><%= (langCd.equals("en_US") ? "Hold" : "Phong tỏa (BT+ĐK)") %></th>
+								<th><%= (langCd.equals("en_US") ? "Await deposit" : "Chờ lưu ký") %></th>
+								<th><%= (langCd.equals("en_US") ? "Pend. entitlemen" : "Chờ THQ") %></th>
+								<th><%= (langCd.equals("en_US") ? "Current price" : "Giá hiện tại") %></th>
+								<th><%= (langCd.equals("en_US") ? "Market value" : "Giá trị thị trường") %></th>
+								<th><%= (langCd.equals("en_US") ? "%Profit/Loss" : "% Lãi/Lỗ") %></th>
+								<th><%= (langCd.equals("en_US") ? "Total<br>%Profit/Loss" : "Tổng % Lãi/Lỗ") %></th>
+								<th><%= (langCd.equals("en_US") ? "Lending value" : "Giá trị vay") %></th>
+								<th><%= (langCd.equals("en_US") ? "Maintenance value" : "Giá trị đảm bảo") %></th>
+							</tr>
+						</thead>
+						<tfoot>
+							<tr class="bd_t1">
+								<th class="bd_bt0" rowspan="2" colspan="11"><%= (langCd.equals("en_US") ? "Total" : "Tổng") %></th>
+								<td class="text_center">000</td>
+								<td class="bd_bt0 text_center" rowspan="2">000</td>
+								<td class="text_center">000</td>
+								<td class="text_center">000</td>
+							</tr>
+							<tr>
+								<td class="bd_bt0 text_center">000</td>
+								<td class="bd_bt0" id="tdLendValue"></td>
+								<td class="bd_bt0" id="tdMaintValue"></td>
+							</tr>
+						</tfoot>
+						<tbody id="grdPortfolio">
+						</tbody>
+					</table>
+					--%>
+					<table class="table">
+						<thead>
+							<tr>
+								<th rowspan="2"><%= (langCd.equals("en_US") ? "No." : "STT") %></th>
+								<th rowspan="2"><%= (langCd.equals("en_US") ? "Stock" : "Mã CK") %></th>
+								<th colspan="12"><%= (langCd.equals("en_US") ? "Volume" : "Khối lượng") %></th>
+								<th><%= (langCd.equals("en_US") ? "Price" : "Giá") %></th>
+								<th colspan="5"><%= (langCd.equals("en_US") ? "Portfolio Assessment" : "Đánh giá danh mục") %></th>
+								<th colspan="4"><%= (langCd.equals("en_US") ? "(%) Margin" : "(%) Ký quỹ") %></th>
+							</tr>
+							<tr>
+							<%-- 
+								<th><%= (langCd.equals("en_US") ? "Total</BR>volume" : "Tổng khối lượng") %></th>
+								<th><%= (langCd.equals("en_US") ? "Usable" : "Số dư GD") %></th>
+								<th><%= (langCd.equals("en_US") ? "Hold</BR>in day" : "Số dư khoanh giữ") %></th>
+								<th><%= (langCd.equals("en_US") ? "T0 Buy" : "Mua T0") %></th>
+								<th><%= (langCd.equals("en_US") ? "T1 Buy" : "Mua T1") %></th>
+								<th><%= (langCd.equals("en_US") ? "T2 Buy" : "Mua T2") %></th>
+								<th><%= (langCd.equals("en_US") ? "Mortgage" : "Cầm cố") %></th>
+								<th><%= (langCd.equals("en_US") ? "Hold" : "Phong tỏa (BT+ĐK)") %></th>
+								<th><%= (langCd.equals("en_US") ? "Await</BR>trading" : "Chờ giao dịch") %></th>
+								<th><%= (langCd.equals("en_US") ? "Await</BR>deposit" : "Chờ lưu ký") %></th>
+								<th><%= (langCd.equals("en_US") ? "Await</BR> withdrawa" : "Chờ rút") %></th>
+								<th><%= (langCd.equals("en_US") ? "Pend.</BR>entitlemen" : "Chờ THQ") %></th>
+								<th><%= (langCd.equals("en_US") ? "Avg. price" : "Giá TB") %></th>
+								<th><%= (langCd.equals("en_US") ? "Current</BR>price" : "Giá hiện tại") %></th>
+								<th><%= (langCd.equals("en_US") ? "Buy value" : "Giá trị mua") %></th>
+								<th><%= (langCd.equals("en_US") ? "Market value" : "Giá trị thị trường") %></th>
+								<th><%= (langCd.equals("en_US") ? "Profit/Loss" : "Lãi/Lỗ") %></th>
+								<th><%= (langCd.equals("en_US") ? "%Profit/Loss" : "% Lãi/Lỗ") %></th>
+								<th><%= (langCd.equals("en_US") ? "Total Profit/Loss" : "Tổng Lãi/Lỗ") %></th>
+								<th><%= (langCd.equals("en_US") ? "Total %Profit/Loss" : "Tổng % Lãi/Lỗ") %></th>
+								<th><%= (langCd.equals("en_US") ? "Total Evaluation Amount" : "Tổng giá trị ước tính") %></th>
+								<th><%= (langCd.equals("en_US") ? "%Lend." : "% Cho vay") %></th>
+								<th><%= (langCd.equals("en_US") ? "Lending value" : "Giá trị vay") %></th>
+								<th><%= (langCd.equals("en_US") ? "%Maint." : "% Đảm bảo") %></th>
+								<th><%= (langCd.equals("en_US") ? "Maintenance value" : "Giá trị đảm bảo") %></th>
+							 --%>	
+							 	<th><%= (langCd.equals("en_US") ? "Total</BR>volume" : "Tổng</BR>khối lượng") %></th>
+								<th><%= (langCd.equals("en_US") ? "Usable" : "Số dư GD") %></th>
+								<th><%= (langCd.equals("en_US") ? "Hold</BR>in day" : "Số dư</BR>khoanh giữ") %></th>
+								<th><%= (langCd.equals("en_US") ? "T0 Buy" : "Mua T0") %></th>
+								<th><%= (langCd.equals("en_US") ? "T1 Buy" : "Mua T1") %></th>
+								<th><%= (langCd.equals("en_US") ? "T2 Buy" : "Mua T2") %></th>
+								<th><%= (langCd.equals("en_US") ? "Mortgage" : "Cầm cố") %></th>
+								<th><%= (langCd.equals("en_US") ? "Hold" : "Phong tỏa (BT+ĐK)") %></th>
+								<th><%= (langCd.equals("en_US") ? "Await</BR>trading" : "Chờ</BR>giao dịch") %></th>
+								<th><%= (langCd.equals("en_US") ? "Await</BR>deposit" : "Chờ</BR>lưu ký") %></th>
+								<th><%= (langCd.equals("en_US") ? "Await<br>withdrawal" : "Chờ</BR>rút") %></th>
+								<th><%= (langCd.equals("en_US") ? "Pend.</BR>entitlement" : "Chờ</BR>THQ") %></th>
+								<th><%= (langCd.equals("en_US") ? "Avg. price" : "Giá TB") %></th>
+								<th><%= (langCd.equals("en_US") ? "Current</BR>price" : "Giá</BR>hiện tại") %></th>
+								<th><%= (langCd.equals("en_US") ? "Buy value" : "Giá trị mua") %></th>
+								<th><%= (langCd.equals("en_US") ? "Market value" : "Giá trị thị trường") %></th>
+								<th><%= (langCd.equals("en_US") ? "P/L" : "Lãi/Lỗ") %></th>
+								<th><%= (langCd.equals("en_US") ? "%</BR>P/L" : "%</BR>Lãi/Lỗ") %></th>
+								
+								<th><%= (langCd.equals("en_US") ? "%Lend." : "% Cho vay") %></th>
+								<th><%= (langCd.equals("en_US") ? "Lending value" : "Giá trị vay") %></th>
+								<th><%= (langCd.equals("en_US") ? "%Maint." : "% Đảm bảo") %></th>
+								<th><%= (langCd.equals("en_US") ? "Maintenance value" : "Giá trị đảm bảo") %></th>
+							</tr>
+						</thead>
+						<tfoot>
+							<tr class="bd_t1">
+								<th colspan="20"><%= (langCd.equals("en_US") ? "Total" : "Tổng") %></th>
+								<td colspan="2" id="tdLendValue"></td>
+								<td colspan="2" id="tdMaintValue"></td>
+							</tr>
+						</tfoot>
+						<tbody id="grdPortfolio">
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<!-- //템플릿 사용부분 -->
+  	</div>
+</body>
+</html>

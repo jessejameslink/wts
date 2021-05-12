@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!--	홈화면 지수	-->
+
+<transaction trcode="pibosidx" servicecode=""  type="row">
+	<value io="in"		name="lang"		type="string"	length="1"	comment=""/>
+	<value io="out"		name="nrec"		type="string"	length="4"	comment=""/>
+	
+	<table name="list1" count="nrec">
+		<value io="out"	name="idx"			type="string"	length="20"	comment="Index Name"/>
+		<value io="out"	name="fbuy"			type="string"	length="12"	comment="foreigner buy"/>
+		<value io="out"	name="fsel"			type="string"	length="12"	comment="foreigner sell"/>
+		<value io="out"	name="fbuy_val"		type="string"	length="24"	comment="foreigner buy value"/>
+		<value io="out"	name="fsel_val"		type="string"	length="24"	comment="foreigner sell value"/>
+		<value io="out"	name="dbuy"			type="string"	length="12"	comment="domestic buy"/>
+		<value io="out"	name="dsel"			type="string"	length="12"	comment="domestic sell"/>		
+		<value io="out"	name="dbuy_val"		type="string"	length="24"	comment="domestic buy value"/>
+		<value io="out"	name="dsel_val"		type="string"	length="24"	comment="domestic sell value"/>
+		<value io="out"	name="f_net_buy"	type="string"	length="12"	comment="foreigner net buy"/>
+		<value io="out"	name="d_net_buy"	type="string"	length="12"	comment="domestic net sell"/>
+		<value io="out"	name="f_net_value"	type="string"	length="24"	comment="foreigner net buy"/>
+		<value io="out"	name="d_net_value"	type="string"	length="24"	comment="domestic net sell"/>
+	</table>	
+</transaction>

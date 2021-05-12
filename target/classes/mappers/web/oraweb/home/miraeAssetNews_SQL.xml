@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.vn.app.webmain.oraweb.home.service.impl.MiraeAssetNewsDAO">
+
+	<select id="getAllMiraeAssetNews" resultType="MiraeAssetNewsVO" parameterType="SearchVO">
+		SELECT id, created, title
+		FROM (SELECT T.id, T.created, T.title, ROW_NUMBER() OVER(ORDER BY T.created DESC) AS NUM
+			  FROM
+			  (SELECT A.id, A.created, A.title
+			  FROM DATA_MIRAE A
+			  WHERE SUBSTR (A.PATHBYNAME,1,5) =  CASE #{lang} WHEN 'vi_VN' THEN 'vi-VN'
+                                            				  WHEN 'en_US' THEN 'en-US'
+                                            				  WHEN 'kr_KR' THEN 'kr-KR'
+                                            				  ELSE 'vi-VN' END
+              AND A.publisheddate between TO_DATE (#{startDate}, 'yyyy/mm/dd') AND TO_DATE (#{endDate}, 'yyyy/mm/dd') + 1
+              AND upper(A.title) LIKE '%' || upper(#{searchKey}) || '%'
+              UNION
+              SELECT B.id, B.created, B.title
+			  FROM DATA_INVESTOR B
+			  WHERE SUBSTR (B.PATH,1,5) =  CASE #{lang} WHEN 'vi_VN' THEN 'vi-VN'
+                                            				  WHEN 'en_US' THEN 'en-US'
+                                            				  WHEN 'kr_KR' THEN 'kr-KR'
+                                            				  ELSE 'vi-VN' END
+              AND B.created between TO_DATE (#{startDate}, 'yyyy/mm/dd') AND TO_DATE (#{endDate}, 'yyyy/mm/dd') + 1
+              AND upper(B.title) LIKE '%' || upper(#{searchKey}) || '%'
+              AND B.type = 2
+              ) T
+		)
+		WHERE NUM BETWEEN (( #{page} - 1 ) * 20 + 1) AND (( #{page} ) * 20 )
+	</select>
+	
+	<select id="getAllQuestions" resultType="MiraeAssetNewsVO" parameterType="SearchVO">
+		SELECT id, created, title
+		FROM (SELECT T.id, T.created, T.title, ROW_NUMBER() OVER(ORDER BY T.created DESC) AS NUM
+			  FROM
+			  (SELECT A.id, A.created, A.title
+			  FROM DATA_QUESTIONS A
+			  WHERE SUBSTR (A.PATHBYNAME,1,5) =  CASE #{lang} WHEN 'vi_VN' THEN 'vi-VN'
+                                            				  WHEN 'en_US' THEN 'en-US'
+                                            				  WHEN 'kr_KR' THEN 'kr-KR'
+                                            				  ELSE 'vi-VN' END
+              AND A.publisheddate between TO_DATE (#{startDate}, 'yyyy/mm/dd') AND TO_DATE (#{endDate}, 'yyyy/mm/dd') + 1
+              AND upper(A.title) LIKE '%' || upper(#{searchKey}) || '%'              
+              ) T
+		)
+		WHERE NUM BETWEEN (( #{page} - 1 ) * 20 + 1) AND (( #{page} ) * 20 )
+	</select>
+	
+	<select id="getAllInvestmentEdu" resultType="MiraeAssetNewsVO" parameterType="SearchVO">
+		SELECT id, created, title
+		FROM (SELECT T.id, T.created, T.title, ROW_NUMBER() OVER(ORDER BY T.created DESC) AS NUM
+			  FROM
+			  (SELECT A.id, A.created, A.title
+			  FROM DATA_INVESTMENT A
+			  WHERE SUBSTR (A.PATHBYNAME,1,5) =  CASE #{lang} WHEN 'vi_VN' THEN 'vi-VN'
+                                            				  WHEN 'en_US' THEN 'en-US'
+                                            				  WHEN 'kr_KR' THEN 'kr-KR'
+                                            				  ELSE 'vi-VN' END
+              AND A.publisheddate between TO_DATE (#{startDate}, 'yyyy/mm/dd') AND TO_DATE (#{endDate}, 'yyyy/mm/dd') + 1
+              AND upper(A.title) LIKE '%' || upper(#{searchKey}) || '%'              
+              ) T
+		)
+		WHERE NUM BETWEEN (( #{page} - 1 ) * 20 + 1) AND (( #{page} ) * 20 )
+	</select>
+	
+	<select id="getMiraeAssetNewsCnt" resultType="integer" parameterType="SearchVO">
+		SELECT COUNT(*) as CNT
+		FROM 
+		(SELECT A.id
+		FROM DATA_MIRAE A
+		WHERE SUBSTR (A.PATHBYNAME,1,5) =  CASE #{lang} WHEN 'vi_VN' THEN 'vi-VN'
+	                                          		    WHEN 'en_US' THEN 'en-US'
+	                                          			WHEN 'kr_KR' THEN 'kr-KR'
+	                                          			ELSE 'vi-VN' END
+	    AND A.publisheddate between TO_DATE (#{startDate}, 'yyyy/mm/dd') AND TO_DATE (#{endDate}, 'yyyy/mm/dd') + 1
+        AND upper(A.title) LIKE '%' || upper(#{searchKey}) || '%'
+        
+        UNION
+        
+        SELECT B.id
+		FROM DATA_INVESTOR B
+		WHERE SUBSTR (B.PATH,1,5) =  CASE #{lang} WHEN 'vi_VN' THEN 'vi-VN'
+	                                          		    WHEN 'en_US' THEN 'en-US'
+	                                          			WHEN 'kr_KR' THEN 'kr-KR'
+	                                          			ELSE 'vi-VN' END
+	    AND B.created between TO_DATE (#{startDate}, 'yyyy/mm/dd') AND TO_DATE (#{endDate}, 'yyyy/mm/dd') + 1
+        AND upper(B.title) LIKE '%' || upper(#{searchKey}) || '%'
+        AND B.type = 2
+        )
+	</select>
+	
+	<select id="getQuestionsCnt" resultType="integer" parameterType="SearchVO">
+		SELECT COUNT(*) as CNT
+		FROM 
+		(SELECT A.id
+		FROM DATA_QUESTIONS A
+		WHERE SUBSTR (A.PATHBYNAME,1,5) =  CASE #{lang} WHEN 'vi_VN' THEN 'vi-VN'
+	                                          		    WHEN 'en_US' THEN 'en-US'
+	                                          			WHEN 'kr_KR' THEN 'kr-KR'
+	                                          			ELSE 'vi-VN' END
+	    AND A.publisheddate between TO_DATE (#{startDate}, 'yyyy/mm/dd') AND TO_DATE (#{endDate}, 'yyyy/mm/dd') + 1
+        AND upper(A.title) LIKE '%' || upper(#{searchKey}) || '%'        
+        )
+	</select>
+	
+	<select id="getInvestmentEduCnt" resultType="integer" parameterType="SearchVO">
+		SELECT COUNT(*) as CNT
+		FROM 
+		(SELECT A.id
+		FROM DATA_INVESTMENT A
+		WHERE SUBSTR (A.PATHBYNAME,1,5) =  CASE #{lang} WHEN 'vi_VN' THEN 'vi-VN'
+	                                          		    WHEN 'en_US' THEN 'en-US'
+	                                          			WHEN 'kr_KR' THEN 'kr-KR'
+	                                          			ELSE 'vi-VN' END
+	    AND A.publisheddate between TO_DATE (#{startDate}, 'yyyy/mm/dd') AND TO_DATE (#{endDate}, 'yyyy/mm/dd') + 1
+        AND upper(A.title) LIKE '%' || upper(#{searchKey}) || '%'        
+        )
+	</select>
+	
+	<select id="getMiraeAssetNews" resultType="MiraeAssetNewsVO" parameterType="SearchVO">
+		SELECT id, created, title
+		FROM (SELECT T.id, T.created, T.title, ROW_NUMBER() OVER(ORDER BY T.created DESC) AS NUM
+			  FROM
+			  (SELECT A.id, A.created, A.title
+			  FROM DATA_MIRAE A
+			  WHERE SUBSTR (A.PATHBYNAME,1,5) =  CASE #{lang} WHEN 'vi_VN' THEN 'vi-VN'
+                                            				  WHEN 'en_US' THEN 'en-US'
+                                            				  WHEN 'kr_KR' THEN 'kr-KR'
+                                            				  ELSE 'vi-VN' END 
+			  UNION
+			  SELECT B.id, B.created, B.title
+			  FROM DATA_INVESTOR B
+			  WHERE SUBSTR (B.PATH,1,5) =  CASE #{lang} WHEN 'vi_VN' THEN 'vi-VN'
+                                            				  WHEN 'en_US' THEN 'en-US'
+                                            				  WHEN 'kr_KR' THEN 'kr-KR'
+                                            				  ELSE 'vi-VN' END
+              AND B.TYPE = 2
+			  
+			  ) T                                           				  
+		)
+		WHERE NUM &lt;= 3
+	</select>
+	
+	<select id="getMiraeAssetNewsDetail" resultType="MiraeAssetNewsVO"  parameterType="string">
+		SELECT T.id, T.data, T.title, T.created
+		FROM
+		(SELECT id, data, title, created
+		FROM DATA_MIRAE
+		WHERE ID = UPPER(#{sid})
+		UNION ALL
+		SELECT id, data, title, created
+		FROM DATA_INVESTOR
+		WHERE ID = UPPER(#{sid})
+		AND TYPE = 2
+		) T
+	</select>
+	
+	<select id="getQuestionsDetail" resultType="MiraeAssetNewsVO"  parameterType="string">
+		SELECT T.id, T.data, T.title, T.created
+		FROM
+		(SELECT id, data, title, created
+		FROM DATA_QUESTIONS
+		WHERE ID = UPPER(#{sid})		
+		) T
+	</select>
+	
+	<select id="getInvestmentEduDetail" resultType="MiraeAssetNewsVO"  parameterType="string">
+		SELECT T.id, T.data, T.title, T.created
+		FROM
+		(SELECT id, data, title, created
+		FROM DATA_INVESTMENT
+		WHERE ID = UPPER(#{sid})		
+		) T
+	</select>
+</mapper>

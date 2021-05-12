@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!--   거래량 순위  -->
+<transaction trcode="pibopfmj" servicecode=""  type="row">
+	
+	<value io="in"		name="symb"		type="string"		length="12"	comment="Search key "/>
+	<value io="in"		name="lang"		type="string"		length="1"	comment="Language  0:VN  1:EN"/>
+	
+	<value io="out"		name="closeDate"		type="string"		length="10"	comment="last update date"/>
+	<value io="out"		name="nrec"				type="string"		length="4"	comment="# of Record"/>
+		
+	<table name="list1" count="nrec">
+		<value io="out"	name="holder"		type="string"	length="120"	comment="Share Holder"/>
+		<value io="out"	name="share"		type="string"	length="16"		comment="Share"/>
+		<value io="out"	name="rate"			type="string"	length="4"		comment="% Holding"/>		
+	</table>
+	
+</transaction>

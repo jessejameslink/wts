@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!-- TTL -->
+<transaction trcode="stockInfo.action" servicecode=""  type="row">
+	<value io="in"		name="_dc"		              type="string"	length=""	  comment="종목코드"                />
+	<value io="in"		name="key"		              type="string"	length=""	  comment="Language  0:VN  1:EN"    />
+	<value io="in"		name="mvEnableGetStockInfo"	type="string"	length=""	  comment="실시간 심볼"             />
+	<value io="in"		name="mvAction"		          type="string"	length=""	  comment="종목코드"                />
+	<value io="in"		name="mvInstrument"		      type="string"	length=""	  comment="종목명"                  />
+	<value io="in"		name="mvMarketId"		        type="string"	length=""	  comment="시장구분('HOSE','HNX')"  />
+	<value io="in"		name="mvBS"		              type="string"	length=""	  comment="현재가"                  />
+
+	<value io="out"		name="diff"		type="string"	length="7"	comment="대비"/>
+	<value io="out"		name="rate"		type="string"	length="7"	comment="등락율"/>
+	<value io="out"		name="avol"		type="string"	length="9"	comment="누적거래량"/>
+	<value io="out"		name="mrgn"		type="string"	length="5"	comment="Magin Ratio"/>
+</transaction>
